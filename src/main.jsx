@@ -17,27 +17,29 @@ import OrderDetails from './pages/OrderDetails/OrderDetails';
 import PersonalInformation from './pages/PersonalInformation/PersonalInformation';
 
 import './index.css'; // 전역 CSS 스타일
+import StoreMenu from './pages/StoreDetail/StoreMenu';
 
 // 2. React Query 클라이언트 인스턴스 생성
 const queryClient = new QueryClient();
 
 // 3. React 애플리케이션 렌더링
 createRoot(document.getElementById('root')).render(
-    <StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <Provider>
-                <Router>
-                    <Routes>
-                        <Route element={<MainLayout />}>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/favorite" element={<Favorite />} />
-                            <Route path="/payment" element={<PaymentManagement />} />
-                            <Route path="/orders" element={<OrderDetails />} />
-                            <Route path="/personal-info" element={<PersonalInformation />} />
-                        </Route>
-                    </Routes>
-                </Router>
-            </Provider>
-        </QueryClientProvider>
-    </StrictMode>
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <Provider>
+        <Router>
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/favorite" element={<Favorite />} />
+              <Route path="/payment" element={<PaymentManagement />} />
+              <Route path="/orders" element={<OrderDetails />} />
+              <Route path="/personal-info" element={<PersonalInformation />} />
+              <Route path="/storemenu" element={<StoreMenu />} />
+            </Route>
+          </Routes>
+        </Router>
+      </Provider>
+    </QueryClientProvider>
+  </StrictMode>
 );
