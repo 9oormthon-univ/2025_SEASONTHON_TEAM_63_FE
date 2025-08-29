@@ -1,0 +1,42 @@
+/* Header.css */
+.Header-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 5.63vh;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 15px;
+
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    z-index: 1000;
+
+    /* transform 속성이 변경될 때 부드러운 애니메이션 효과 적용 */
+    transition: transform 0.4s ease-in-out;
+}
+
+/* 헤더가 보여질 때의 상태 (기본값) */
+.Header-wrapper.visible {
+    transform: translateY(0);
+}
+
+/* 헤더가 숨겨질 때의 상태 */
+.Header-wrapper.hidden {
+    transform: translateY(-100%);
+}
+
+.logo {
+    text-align: center;
+    font-weight: bold;
+}
+
+.location,
+.alarm {
+    flex-shrink: 0;
+}
