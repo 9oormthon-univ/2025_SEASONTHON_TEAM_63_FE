@@ -1,11 +1,12 @@
+/* Advertisement.css */
+
 .Advertisement-wapper {
     color: black;
     background-color: violet;
-    margin-top: 19px;
     border-radius: 12px;
     height: 11.27vh;
-    width: 90.33vw;
-}
 
-.Advertisement-main {
+    width: 100%;
+
+    box-sizing: border-box;
 }
