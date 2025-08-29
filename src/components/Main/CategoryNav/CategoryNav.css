@@ -17,7 +17,7 @@
     border: none;
     border-radius: 10px;
     padding: 10px;
-    width: 100%;
+    width: 10 0%;
     font-size: 14px;
     color: #888;
     cursor: pointer;
@@ -34,4 +34,16 @@
     color: #8a2be2; /* 보라색 */
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.category-svg-icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+    fill: #888; /* 비활성 상태일 때 SVG 색상 */
+    transition: fill 0.2s;
+}
+
+/* 활성화된 버튼 내부의 SVG 아이콘 색상 변경 */
+.category-btn.active .category-svg-icon {
+    fill: #e61956; /* 활성 상태일 때 SVG 색상을 보라색으로 변경 */
 }

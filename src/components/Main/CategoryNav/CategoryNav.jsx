@@ -1,26 +1,33 @@
+// src/components/Main/CategoryNav.jsx
+
 import React from 'react';
 import './CategoryNav.css';
 
-// 카테고리 데이터 배열
+// SVG 파일을 React 컴포넌트로 불러옵니다. (Vite 방식)
+import FoodIcon from '../../../assets/icon/food.svg?react';
+import BedIcon from '../../../assets/icon/bed.svg?react';
+import BagIcon from '../../../assets/icon/object.svg?react';
+import PlaneIcon from '../../../assets/icon/fly.svg?react';
+
 const categories = [
-    { id: 'food', text: '음식' },
-    { id: 'lodging', text: '숙박' },
-    { id: 'goods', text: '물품' },
-    { id: 'flights', text: '항공' },
+    { id: 'food', Icon: FoodIcon },
+    { id: 'lodging', text: '숙박', Icon: BedIcon },
+    { id: 'goods', text: '물품', Icon: BagIcon },
+    { id: 'flights', text: '항공', Icon: PlaneIcon },
 ];
 
 function CategoryNav({ activeCategory, onSelectCategory }) {
     return (
         <nav className="category-nav">
-            {categories.map((category) => (
+            {categories.map(({ id, text, Icon }) => (
                 <button
-                    key={category.id}
-                    // 현재 활성화된 카테고리면 'active' 클래스 추가
-                    className={`category-btn ${activeCategory === category.id ? 'active' : ''}`}
-                    onClick={() => onSelectCategory(category.id)}
+                    key={id}
+                    className={`category-btn ${activeCategory === id ? 'active' : ''}`}
+                    onClick={() => onSelectCategory(id)}
                 >
-                    <div className="category-icon">{category.icon}</div>
-                    <span>{category.text}</span>
+                    {/* SVG 컴포넌트에 className을 전달하여 CSS로 제어 */}
+                    <Icon className="category-svg-icon" />
+                    <span>{text}</span>
                 </button>
             ))}
         </nav>

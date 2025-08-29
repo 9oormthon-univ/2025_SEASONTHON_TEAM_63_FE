@@ -1,0 +1,8 @@
+/* 수정 후 코드 */
+.home-container {
+    width: 91.79%; /* 화면 너비의 91.79%를 차지하도록 설정 */
+    max-width: 480px; /* PC 등 큰 화면에서 최대 너비를 480px로 제한 */
+    margin: 0 auto; /* 좌우 여백을 자동으로 계산하여 중앙 정렬 */
+    background-color: #ffffff;
+    box-sizing: border-box; /* padding을 포함하여 너비를 계산하도록 설정 */
+}
