@@ -40,7 +40,7 @@ function Header({ setHeaderHeight }) {
         // ref를 연결하고, isVisible 상태에 따라 클래스를 동적으로 변경
         <div ref={headerRef} className={`Header-wrapper ${isVisible ? 'visible' : 'hidden'}`}>
             <div className="location">Location</div>
-            <div className="logo">Logo</div>
+            <div className="logo">RE:visit</div>
             <div className="alarm">Alarm</div>
         </div>
     );

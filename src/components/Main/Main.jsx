@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 
-import './Main.css';
+import CategoryNav from '../../components/Main/CategoryNav/CategoryNav';
+import SearchBar from '../../components/ui/SearchBar/SearchBar';
+import FilterTabs from '../../components/Main/FilterTabs/FilterTabs';
 
-import Advertisement from '../Advertisement/Advertisement';
+import './Main.css';
 
 function Main() {
     // 헤더의 높이를 저장할 state
     const [headerHeight, setHeaderHeight] = useState(0);
+    const [activeCategory, setActiveCategory] = useState('food');
+
+    const subCategoryData = {
+        food: ['한식', '중식', '일식', '양식'],
+        lodging: ['호텔', '모텔', '펜션', '리조트'],
+        goods: ['패션', '가전', '생활용품', '뷰티'],
+        flights: ['국내선', '국제선', '특가', '예약조회'],
+    };
 
     return (
-        <div className="Main-wapper">
-            {/* 메인 콘텐츠 영역 */}
-            <main className="Main-content" style={{ paddingTop: `${headerHeight}px` }}>
-                {/* 여기에 페이지의 실제 콘텐츠가 들어갑니다 */}
-                <Advertisement />
-                <h1>메인 콘텐츠</h1>
-                <p>광고 및 기타 내용이 여기에 표시됩니다.</p>
+        <div className="home-container">
+            <CategoryNav activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
+            <SearchBar placeholder="가게를 입력하세요" />
+            <FilterTabs filters={subCategoryData[activeCategory]} />
 
-                {/* 스크롤을 만들기 위한 임시 콘텐츠 */}
-                <div style={{ height: '1000px', background: '#f0f0f0', paddingTop: '20px' }}>스크롤을 내려보세요.</div>
-            </main>
+            {/* 이후 다른 컨텐츠 (e.g., 실시간 트렌드 가게) */}
         </div>
     );
 }
