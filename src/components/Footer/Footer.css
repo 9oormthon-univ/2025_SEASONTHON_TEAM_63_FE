@@ -1,0 +1,9 @@
+.Footer-wapper {
+    display: flex;
+    justify-content: space-between; /* Pushes location to the left, alarm to the right, and centers the logo */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    height: 60px;
+    gap: 100px;
+}
