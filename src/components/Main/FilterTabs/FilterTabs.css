@@ -5,7 +5,7 @@
     display: flex;
     justify-content: space-between; /* 자식 요소(버튼)들을 균등한 간격으로 정렬 */
     gap: 10px; /* 버튼 사이의 최소 간격 */
-    margin-bottom: 20px;
+    margin-bottom: 33px;
 }
 
 /* 필터 버튼 스타일 */

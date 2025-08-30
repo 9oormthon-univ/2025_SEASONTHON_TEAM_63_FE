@@ -9,6 +9,7 @@
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
+    margin-bottom: 20px;
 }
 
 /* --- 첫 번째 광고판 스타일 --- */

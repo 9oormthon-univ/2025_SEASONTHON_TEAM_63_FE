@@ -4,13 +4,13 @@ import React from 'react';
 import './CategoryNav.css';
 
 // SVG 파일을 React 컴포넌트로 불러옵니다. (Vite 방식)
-import FoodIcon from '../../../assets/icon/food.svg?react';
-import BedIcon from '../../../assets/icon/bed.svg?react';
-import BagIcon from '../../../assets/icon/object.svg?react';
-import PlaneIcon from '../../../assets/icon/fly.svg?react';
+import FoodIcon from '../../../assets/icon/Categoryicon/음식.svg?react';
+import BedIcon from '../../../assets/icon/Categoryicon/숙박.svg?react';
+import BagIcon from '../../../assets/icon/Categoryicon/물품.svg?react';
+import PlaneIcon from '../../../assets/icon/Categoryicon/항공.svg?react';
 
 const categories = [
-    { id: 'food', Icon: FoodIcon },
+    { id: 'food', text: '음식', Icon: FoodIcon },
     { id: 'lodging', text: '숙박', Icon: BedIcon },
     { id: 'goods', text: '물품', Icon: BagIcon },
     { id: 'flights', text: '항공', Icon: PlaneIcon },

@@ -16,9 +16,6 @@ function Advertisement() {
                     </div>
                 </div>
             </div>
-
-            {/* 두 번째 광고판 */}
-            <div className="Advertisement-main-2">광고</div>
         </div>
     );
 }

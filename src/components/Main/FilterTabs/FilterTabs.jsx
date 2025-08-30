@@ -1,19 +1,10 @@
-// src/components/Main/FilterTabs.jsx
+// src/components/Main/FilterTabs/FilterTabs.jsx
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './FilterTabs.css';
 
-function FilterTabs({ filters }) {
-    // 현재 선택된 필터를 저장하는 상태
-    const [activeFilter, setActiveFilter] = useState('');
-
-    // filters prop이 바뀔 때마다 activeFilter를 첫 번째 항목으로 초기화
-    useEffect(() => {
-        if (filters && filters.length > 0) {
-            setActiveFilter(filters[0]);
-        }
-    }, [filters]);
-
+// 부모로부터 activeFilter와 onSelectFilter 함수를 props로 받음
+function FilterTabs({ filters, activeFilter, onSelectFilter }) {
     if (!filters || filters.length === 0) {
         return null;
     }
@@ -23,8 +14,10 @@ function FilterTabs({ filters }) {
             {filters.map((filter, index) => (
                 <button
                     key={index}
+                    // 현재 필터가 활성 필터와 같으면 'active' 클래스 적용
                     className={`filter-tab-btn ${activeFilter === filter ? 'active' : ''}`}
-                    onClick={() => setActiveFilter(filter)}
+                    // 버튼 클릭 시 부모로부터 받은 onSelectFilter 함수를 호출하여 상태 변경
+                    onClick={() => onSelectFilter(filter)}
                 >
                     {filter}
                 </button>
