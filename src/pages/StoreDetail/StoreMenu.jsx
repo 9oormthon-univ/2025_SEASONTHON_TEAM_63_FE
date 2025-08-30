@@ -1,3 +1,5 @@
+import './styles/StoreMenu.css';
+
 const StoreMenu = () => {
   return (
     <>
