@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
-
 function PersonalInformation() {
     // 헤더의 높이를 저장할 state
     const [headerHeight, setHeaderHeight] = useState(0);

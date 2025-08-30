@@ -1,0 +1,9 @@
+<svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- 배경: 기존 색상 유지 -->
+    <path d="M17.0939 0H4.21213C1.88584 0 0 1.88584 0 4.21213V19.7879C0 22.1142 1.88584 24 4.21213 24H17.0939C19.4202 24 21.306 22.1142 21.306 19.7879V4.21213C21.306 1.88584 19.4202 0 17.0939 0Z" fill="currentColor"/>
+    
+    <!-- 내부 선들: stroke 색상을 currentColor로 변경 -->
+    <path d="M4.41187 6.98022H16.8999" stroke="white" stroke-width="1.28" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4.41187 11.9971H16.8999" stroke="white" stroke-width="1.28" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4.41187 17.0142H10.3876" stroke="white" stroke-width="1.28" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
