@@ -25,5 +25,14 @@
     "originalPrice": 20000,
     "discount": "10%할인",
     "image": "/path/to/image-placeholder.png"
+  },
+  {
+    "id": 4,
+    "name": "메뉴이름 4",
+    "description": "우리 가게의 시그니처",
+    "price": 18000,
+    "originalPrice": 20000,
+    "discount": "10%할인",
+    "image": "/path/to/image-placeholder.png"
   }
 ]
