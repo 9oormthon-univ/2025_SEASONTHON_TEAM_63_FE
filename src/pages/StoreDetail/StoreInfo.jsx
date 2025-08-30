@@ -1,4 +1,5 @@
 import infoData from '../../data/storedetail/infoData.json';
+import NaverMap from '../../components/NaverMap';
 import './styles/StoreInfo.css';
 
 const StoreInfo = () => {
@@ -28,7 +29,9 @@ const StoreInfo = () => {
       </ul>
 
       {/* 네이버 지도 컴포넌트 */}
-      <div className="map-container">이 자리에 네이버 지도 컴포넌트 삽입</div>
+      <div className="map-container">
+        <NaverMap />
+      </div>
     </div>
   );
 };
