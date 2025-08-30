@@ -1,5 +1,4 @@
 import infoData from '../../data/storedetail/infoData.json';
-import KakaoMap from '../../components/KakaoMap';
 import './styles/StoreInfo.css';
 
 const StoreInfo = () => {
@@ -28,10 +27,8 @@ const StoreInfo = () => {
         </li>
       </ul>
 
-      {/* 카카오 컴포넌트 */}
-      <div className="map-container">
-        <KakaoMap lat={infoData.latitude} lng={infoData.longitude} />
-      </div>
+      {/* 네이버 지도 컴포넌트 */}
+      <div className="map-container">이 자리에 네이버 지도 컴포넌트 삽입</div>
     </div>
   );
 };
