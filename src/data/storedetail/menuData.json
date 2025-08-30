@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "메뉴이름 1",
+    "description": "사장님이 등록한 메뉴소개",
+    "price": 15000,
+    "originalPrice": 18000,
+    "discount": "30%할인",
+    "image": "/path/to/image-placeholder.png"
+  },
+  {
+    "id": 2,
+    "name": "메뉴이름 2",
+    "description": "신선한 재료로 만든 메뉴",
+    "price": 16000,
+    "originalPrice": 20000,
+    "discount": "20%할인",
+    "image": "/path/to/image-placeholder.png"
+  },
+  {
+    "id": 3,
+    "name": "메뉴이름 3",
+    "description": "우리 가게의 시그니처",
+    "price": 18000,
+    "originalPrice": 20000,
+    "discount": "10%할인",
+    "image": "/path/to/image-placeholder.png"
+  }
+]
