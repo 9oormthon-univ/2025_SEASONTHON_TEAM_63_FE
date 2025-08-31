@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# env 파일 업로드 방지 8.30
+*.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

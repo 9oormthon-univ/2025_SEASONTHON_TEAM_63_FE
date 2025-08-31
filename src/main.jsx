@@ -17,29 +17,39 @@ import OrderDetails from './pages/OrderDetails/OrderDetails';
 import PersonalInformation from './pages/PersonalInformation/PersonalInformation';
 
 import './index.css'; // 전역 CSS 스타일
+import StoreDetail from './pages/StoreDetail/StoreDetail';
 import StoreMenu from './pages/StoreDetail/StoreMenu';
+import StoreChallenge from './pages/StoreDetail/StoreChallenge';
+import StoreReview from './pages/StoreDetail/StoreReview';
+import StoreInfo from './pages/StoreDetail/StoreInfo';
 
 // 2. React Query 클라이언트 인스턴스 생성
 const queryClient = new QueryClient();
 
 // 3. React 애플리케이션 렌더링
 createRoot(document.getElementById('root')).render(
-    <StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <Provider>
-                <Router>
-                    <Routes>
-                        <Route element={<MainLayout />}>
-                            <Route path="/" element={<Main />} />
-                            <Route path="/favorite" element={<Favorite />} />
-                            <Route path="/payment" element={<PaymentManagement />} />
-                            <Route path="/orders" element={<OrderDetails />} />
-                            <Route path="/personal-info" element={<PersonalInformation />} />
-                            <Route path="/storemenu" element={<StoreMenu />} />
-                        </Route>
-                    </Routes>
-                </Router>
-            </Provider>
-        </QueryClientProvider>
-    </StrictMode>
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <Provider>
+        <Router>
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/favorite" element={<Favorite />} />
+              <Route path="/payment" element={<PaymentManagement />} />
+              <Route path="/orders" element={<OrderDetails />} />
+              <Route path="/personal-info" element={<PersonalInformation />} />
+              <Route path="/store/:storeId" element={<StoreDetail />}>
+                <Route index element={<StoreMenu />} />
+                <Route path="menu" element={<StoreMenu />} />
+                <Route path="challenge" element={<StoreChallenge />} />
+                <Route path="review" element={<StoreReview />} />
+                <Route path="info" element={<StoreInfo />} />
+              </Route>
+            </Route>
+          </Routes>
+        </Router>
+      </Provider>
+    </QueryClientProvider>
+  </StrictMode>
 );

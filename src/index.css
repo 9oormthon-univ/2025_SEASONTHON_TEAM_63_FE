@@ -19,5 +19,6 @@ body {
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
+  border: none; /* btn border none 8/30 */
 }
