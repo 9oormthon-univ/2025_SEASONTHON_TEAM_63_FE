@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // --- 추가된 부분 ---
 import MainLayout from './components/MainLayout/MainLayout';
 
-import Home from './pages/home/home';
+import Main from './components/Main/Main';
 import Favorite from './pages/Favorite/Favorite';
 import PaymentManagement from './pages/PaymentManagement/PaymentManagement';
 import OrderDetails from './pages/OrderDetails/OrderDetails';
@@ -24,22 +24,22 @@ const queryClient = new QueryClient();
 
 // 3. React 애플리케이션 렌더링
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Provider>
-        <Router>
-          <Routes>
-            <Route element={<MainLayout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/favorite" element={<Favorite />} />
-              <Route path="/payment" element={<PaymentManagement />} />
-              <Route path="/orders" element={<OrderDetails />} />
-              <Route path="/personal-info" element={<PersonalInformation />} />
-              <Route path="/storemenu" element={<StoreMenu />} />
-            </Route>
-          </Routes>
-        </Router>
-      </Provider>
-    </QueryClientProvider>
-  </StrictMode>
+    <StrictMode>
+        <QueryClientProvider client={queryClient}>
+            <Provider>
+                <Router>
+                    <Routes>
+                        <Route element={<MainLayout />}>
+                            <Route path="/" element={<Main />} />
+                            <Route path="/favorite" element={<Favorite />} />
+                            <Route path="/payment" element={<PaymentManagement />} />
+                            <Route path="/orders" element={<OrderDetails />} />
+                            <Route path="/personal-info" element={<PersonalInformation />} />
+                            <Route path="/storemenu" element={<StoreMenu />} />
+                        </Route>
+                    </Routes>
+                </Router>
+            </Provider>
+        </QueryClientProvider>
+    </StrictMode>
 );

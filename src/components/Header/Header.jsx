@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Header.css';
 
+// SVG 아이콘을 React 컴포넌트로 임포트
+import AlramIcon from '../../assets/icon/alram.svg?react';
+import LocaIcon from '../../assets/icon/loca.svg?react';
+
 // 부모로부터 setHeaderHeight 함수를 props로 받음
 function Header({ setHeaderHeight }) {
     const [isVisible, setIsVisible] = useState(true);
@@ -33,15 +37,22 @@ function Header({ setHeaderHeight }) {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-        // setHeaderHeight가 변경될 때마다 effect를 다시 실행할 필요는 없으므로 의존성 배열에서 제외
     }, [lastScrollY]);
 
     return (
         // ref를 연결하고, isVisible 상태에 따라 클래스를 동적으로 변경
         <div ref={headerRef} className={`Header-wrapper ${isVisible ? 'visible' : 'hidden'}`}>
-            <div className="location">Location</div>
-            <div className="logo">Logo</div>
-            <div className="alarm">Alarm</div>
+            {/* "Location" 텍스트를 <LocaIcon /> 컴포넌트로 교체 */}
+            <div className="location">
+                <LocaIcon />
+            </div>
+
+            <div className="logo">RE:visit</div>
+
+            {/* "Alarm" 텍스트를 <AlramIcon /> 컴포넌트로 교체 */}
+            <div className="alarm">
+                <AlramIcon />
+            </div>
         </div>
     );
 }
