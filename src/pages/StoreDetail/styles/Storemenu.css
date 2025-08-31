@@ -1,7 +1,7 @@
 /* StoreMenu.css */
 
 .store-menu-container {
-  padding-bottom: 20px; /* 푸터 공간 확보 */
+  padding-bottom: 40px; /* 푸터 공간 확보 */
 }
 
 .menu-list {
@@ -117,6 +117,8 @@
   justify-content: space-between;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  z-index: 2000;
 }
 
 .cart-total {
