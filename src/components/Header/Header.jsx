@@ -48,7 +48,7 @@ function Header({ setHeaderHeight }) {
     >
       {/* "Location" 텍스트를 <LocaIcon /> 컴포넌트로 교체 */}
       <div className="location">
-        <Link to="/">
+        <Link to="/locationmap">
           <LocaIcon />
         </Link>
       </div>
