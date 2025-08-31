@@ -34,7 +34,7 @@ createRoot(document.getElementById('root')).render(
         <Router>
           <Routes>
             <Route element={<MainLayout />}>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Main />} />
               <Route path="/favorite" element={<Favorite />} />
               <Route path="/payment" element={<PaymentManagement />} />
               <Route path="/orders" element={<OrderDetails />} />
