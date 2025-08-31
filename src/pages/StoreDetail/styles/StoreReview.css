@@ -1,5 +1,12 @@
 /* StoreReview.css */
 
+/* 리뷰가 없을 때 */
+.review-list-container.empty {
+  text-align: center;
+  padding: 48px;
+  color: #666;
+}
+
 .review-list-container {
   padding: 16px;
 }
@@ -90,5 +97,7 @@
   height: 96px;
   border-radius: 6px;
   background-color: #eeeeee;
+  background-size: cover;
+  background-position: center;
   flex-shrink: 0;
 }
