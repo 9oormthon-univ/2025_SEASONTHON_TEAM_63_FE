@@ -34,7 +34,8 @@ createRoot(document.getElementById('root')).render(
         <Router>
           <Routes>
             <Route element={<MainLayout />}>
-              <Route path="/" element={<Home />} />
+              {/* 홈 화면 element을 Home에서 Main으로 최신화 했습니다. */}
+              <Route path="/" element={<Main />} />
               <Route path="/favorite" element={<Favorite />} />
               <Route path="/payment" element={<PaymentManagement />} />
               <Route path="/orders" element={<OrderDetails />} />
