@@ -23,6 +23,7 @@ import StoreChallenge from './pages/StoreDetail/StoreChallenge';
 import StoreReview from './pages/StoreDetail/StoreReview';
 import StoreInfo from './pages/StoreDetail/StoreInfo';
 import StoreBasket from './pages/StoreDetail/StoreBasket';
+import Position from './pages/MapPosition/Position';
 
 // 2. React Query 클라이언트 인스턴스 생성
 const queryClient = new QueryClient();
@@ -41,6 +42,8 @@ createRoot(document.getElementById('root')).render(
               <Route path="/payment" element={<PaymentManagement />} />
               <Route path="/orders" element={<OrderDetails />} />
               <Route path="/personal-info" element={<PersonalInformation />} />
+
+              {/* 가게 상세 페이지 */}
               <Route path="/store/:storeId" element={<StoreDetail />}>
                 <Route index element={<StoreMenu />} />
                 <Route path="menu" element={<StoreMenu />} />
@@ -48,7 +51,9 @@ createRoot(document.getElementById('root')).render(
                 <Route path="review" element={<StoreReview />} />
                 <Route path="info" element={<StoreInfo />} />
               </Route>
+
               <Route path="/store-basket" element={<StoreBasket />} />
+              <Route path="/locationmap" element={<Position />} />
             </Route>
           </Routes>
         </Router>
