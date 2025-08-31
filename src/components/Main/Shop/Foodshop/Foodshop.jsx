@@ -13,7 +13,7 @@ function Foodshop({ filter }) {
     return (
         <section className="shop-section">
             <header className="shop-header">
-                <h2 className="shop-title">{filter} 맛집</h2>
+                <h2 className="shop-title">{filter} 맛집!</h2>
             </header>
             <div className="shop-list-container">
                 {currentShops.map((shop) => {
