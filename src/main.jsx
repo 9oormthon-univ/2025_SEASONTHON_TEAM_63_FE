@@ -22,6 +22,7 @@ import StoreMenu from './pages/StoreDetail/StoreMenu';
 import StoreChallenge from './pages/StoreDetail/StoreChallenge';
 import StoreReview from './pages/StoreDetail/StoreReview';
 import StoreInfo from './pages/StoreDetail/StoreInfo';
+import StoreBasket from './pages/StoreDetail/StoreBasket';
 
 // 2. React Query 클라이언트 인스턴스 생성
 const queryClient = new QueryClient();
@@ -47,6 +48,7 @@ createRoot(document.getElementById('root')).render(
                 <Route path="review" element={<StoreReview />} />
                 <Route path="info" element={<StoreInfo />} />
               </Route>
+              <Route path="/store-basket" element={<StoreBasket />} />
             </Route>
           </Routes>
         </Router>
