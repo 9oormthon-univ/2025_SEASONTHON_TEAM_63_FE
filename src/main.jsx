@@ -10,14 +10,18 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // --- 추가된 부분 ---
 import MainLayout from './components/MainLayout/MainLayout';
 
-import Home from './pages/home/home';
+import Main from './components/Main/Main';
 import Favorite from './pages/Favorite/Favorite';
 import PaymentManagement from './pages/PaymentManagement/PaymentManagement';
 import OrderDetails from './pages/OrderDetails/OrderDetails';
 import PersonalInformation from './pages/PersonalInformation/PersonalInformation';
 
 import './index.css'; // 전역 CSS 스타일
+import StoreDetail from './pages/StoreDetail/StoreDetail';
 import StoreMenu from './pages/StoreDetail/StoreMenu';
+import StoreChallenge from './pages/StoreDetail/StoreChallenge';
+import StoreReview from './pages/StoreDetail/StoreReview';
+import StoreInfo from './pages/StoreDetail/StoreInfo';
 
 // 2. React Query 클라이언트 인스턴스 생성
 const queryClient = new QueryClient();
@@ -30,12 +34,19 @@ createRoot(document.getElementById('root')).render(
         <Router>
           <Routes>
             <Route element={<MainLayout />}>
-              <Route path="/" element={<Home />} />
+              {/* 홈 화면 element을 Home에서 Main으로 최신화 했습니다. */}
+              <Route path="/" element={<Main />} />
               <Route path="/favorite" element={<Favorite />} />
               <Route path="/payment" element={<PaymentManagement />} />
               <Route path="/orders" element={<OrderDetails />} />
               <Route path="/personal-info" element={<PersonalInformation />} />
-              <Route path="/storemenu" element={<StoreMenu />} />
+              <Route path="/store/:storeId" element={<StoreDetail />}>
+                <Route index element={<StoreMenu />} />
+                <Route path="menu" element={<StoreMenu />} />
+                <Route path="challenge" element={<StoreChallenge />} />
+                <Route path="review" element={<StoreReview />} />
+                <Route path="info" element={<StoreInfo />} />
+              </Route>
             </Route>
           </Routes>
         </Router>

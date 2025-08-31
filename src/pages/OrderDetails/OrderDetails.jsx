@@ -12,7 +12,7 @@ function OrderDetails() {
                 <h1>주문내역</h1>
                 <p>광고 및 기타 내용이 여기에 표시됩니다.</p>
 
-                <div style={{ height: '1000px', background: '#f0f0f0', paddingTop: '20px' }}>스크롤을 내려보세요.</div>
+                <div style={{ height: '100px', background: '#f0f0f0', paddingTop: '20px' }}>스크롤을 내려보세요.</div>
             </main>
         </div>
     );
