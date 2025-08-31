@@ -1,0 +1,12 @@
+/* src/components/MainLayout/MainLayout.css */
+
+.main-layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* 레이아웃의 최소 높이를 화면 전체 높이로 설정 */
+}
+
+.main-content {
+    flex-grow: 1; /* 헤더와 푸터를 제외한 모든 남는 공간을 차지하도록 설정 */
+    /* 이 속성 덕분에 콘텐츠가 짧아도 푸터가 아래로 밀려납니다. */
+}

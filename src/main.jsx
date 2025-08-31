@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // --- 추가된 부분 ---
 import MainLayout from './components/MainLayout/MainLayout';
 
-import Home from './pages/home/home';
+import Main from './components/Main/Main';
 import Favorite from './pages/Favorite/Favorite';
 import PaymentManagement from './pages/PaymentManagement/PaymentManagement';
 import OrderDetails from './pages/OrderDetails/OrderDetails';
