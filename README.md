@@ -11,6 +11,7 @@
 5. react router
 6. tanstack/react-query
 7. vite
+8. zustand
 
 ## vercel
 
@@ -31,3 +32,7 @@ https://ko.vite.dev/guide
 ## react-query
 
 https://tanstack.com/query/v3/
+
+## zustand
+
+https://zustand-demo.pmnd.rs
