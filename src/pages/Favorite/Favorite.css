@@ -13,7 +13,7 @@
 .Favorite-shop-list {
     display: flex;
     flex-direction: column;
-    width: 91.79%; /* 화면 너비의 91.79%를 차지하도록 설정 */
+    width: 100%; /* 화면 너비의 91.79%를 차지하도록 설정 */
     max-width: 500px; /* PC 등 큰 화면에서 최대 너비를 480px로 제한 */
     /* 좌우 여백을 자동으로 계산하여 중앙 정렬 */
     background-color: #ffffff;

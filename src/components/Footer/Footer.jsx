@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+
 import './Footer.css'; // CSS 파일 임포트
 
 // --- 수정된 부분 시작 ---
