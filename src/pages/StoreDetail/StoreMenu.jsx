@@ -1,47 +1,18 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useCartStore from '../../store/cartStore';
 import menuData from '../../data/storedetail/menuData.json';
 import './styles/StoreMenu.css';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const StoreMenu = () => {
-  const [cart, setCart] = useState([]);
-
-  const addToCart = (item) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
-      if (existingItem) {
-        return prevCart.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        );
-      } else {
-        return [...prevCart, { ...item, quantity: 1 }];
-      }
-    });
-  };
-
-  const updateQuantity = (itemId, amount) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item) => {
-          if (item.id === itemId) {
-            const newQuantity = item.quantity + amount;
-            return newQuantity > 0 ? { ...item, quantity: newQuantity } : null;
-          }
-          return item;
-        })
-        .filter(Boolean)
-    );
-  };
-
-  const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
-
-  const getCartItem = (itemId) => {
-    return cart.find((item) => item.id === itemId);
-  };
+  const navigate = useNavigate();
+  const {
+    cart,
+    addToCart,
+    updateQuantity,
+    getTotalPrice,
+    getCartItem,
+  } = useCartStore();
 
   return (
     <>
@@ -105,7 +76,10 @@ const StoreMenu = () => {
               <span>합계금액: </span>
               <strong>{getTotalPrice().toLocaleString()}원</strong>
             </div>
-            <button className="view-cart-btn">
+            <button
+              className="view-cart-btn"
+              onClick={() => navigate('/store-basket')}
+            >
               <ShoppingCartIcon />
               장바구니 보기
             </button>
