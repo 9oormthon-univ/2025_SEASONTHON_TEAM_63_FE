@@ -11,6 +11,7 @@ import TrendShop from '../../components/Main/Shop/TrendShop/TrendShop';
 import CustomizedShop from '../../components/Main/Shop/CustomizedShop/CustomizedShop';
 import DiscountShop from '../../components/Main/Shop/DiscountShop/DiscountShop';
 import SearchPage from '../../components/SearchPage/SearchPage'; // ✨ 1. 검색 페이지 컴포넌트 임포트
+import Advertisement from '../Advertisement/Advertisement';
 
 // 유비님이 선언하신 subCategoryData는 src/data/categoryData.js 으로 그대로 옮기고 중복 제거. / 김성수
 import { subCategoryData } from '../../data/categoryData';
@@ -36,13 +37,14 @@ function Main() {
     setIsSearchOpen(false);
   };
 
-  return (
-    <div className="home-container">
-      <SelectAccount />
-      <CategoryNav
-        activeCategory={activeCategory}
-        onSelectCategory={setActiveCategory}
-      />
+    return (
+        <div className="home-container">
+            <div className="Advertisement ">
+                <Advertisement />
+            </div>
+
+            <SelectAccount />
+            <CategoryNav activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
 
       {/* ✨ 5. onFocus 이벤트 핸들러를 SearchBar에 전달 */}
       <SearchBar placeholder="가게를 입력하세요" onFocus={openSearchPage} />
