@@ -1,9 +1,11 @@
-import reviewData from '../../data/storedetail/reviewData.json';
+import useReviewStore from '../../store/reviewStore';
 import './styles/StoreReview.css';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 
 const StoreReview = () => {
+  const reviews = useReviewStore((state) => state.reviews);
+
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -17,9 +19,18 @@ const StoreReview = () => {
     return stars;
   };
 
+  // 리뷰가 없을 시
+  if (reviews.length === 0) {
+    return (
+      <div className="review-list-container empty">
+        <p>아직 작성된 리뷰가 없습니다.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="review-list-container">
-      {reviewData.map((review) => (
+      {reviews.map((review) => (
         <div key={review.id} className="review-card">
           <div className="review-main-content">
             <div className="review-author">
@@ -35,7 +46,12 @@ const StoreReview = () => {
           </div>
           <div className="review-side-content">
             <span className="review-date">{review.date}</span>
-            {review.imageUrl && <div className="review-photo"></div>}
+            {review.imageUrl && (
+              <div
+                className="review-photo"
+                style={{ backgroundImage: `url(${review.imageUrl})` }}
+              ></div>
+            )}
           </div>
         </div>
       ))}
