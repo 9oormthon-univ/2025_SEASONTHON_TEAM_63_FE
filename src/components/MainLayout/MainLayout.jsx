@@ -23,7 +23,7 @@ const MainLayout = () => {
             */}
             <main className="main-content">
                 {/* 광고와 같은 스크롤되어야 할 콘텐츠는 main 내부에 위치해야 합니다. */}
-                <Advertisement />
+
                 <Outlet />
             </main>
 

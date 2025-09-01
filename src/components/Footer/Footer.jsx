@@ -39,14 +39,15 @@ const Footer = ({ setFooterHeight }) => {
                     <FavoriteIcon />
                     <span>즐겨찾기</span>
                 </NavLink>
-                <NavLink to="/orders" className={getNavLinkClassName}>
-                    <RecordIcon />
-                    <span>주문내역</span>
-                </NavLink>
                 <NavLink to="/payment" className={getNavLinkClassName}>
                     <PayIcon />
                     <span>결제관리</span>
                 </NavLink>
+                <NavLink to="/orders" className={getNavLinkClassName}>
+                    <RecordIcon />
+                    <span>주문내역</span>
+                </NavLink>
+
                 <NavLink to="/personal-info" className={getNavLinkClassName}>
                     <PerinfoIcon />
                     <span>내 정보</span>

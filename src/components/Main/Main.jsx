@@ -11,6 +11,7 @@ import TrendShop from '../../components/Main/Shop/TrendShop/TrendShop';
 import CustomizedShop from '../../components/Main/Shop/CustomizedShop/CustomizedShop';
 import DiscountShop from '../../components/Main/Shop/DiscountShop/DiscountShop';
 import SearchPage from '../../components/SearchPage/SearchPage'; // ✨ 1. 검색 페이지 컴포넌트 임포트
+import Advertisement from '../Advertisement/Advertisement';
 
 function Main() {
     const [activeCategory, setActiveCategory] = useState('food');
@@ -42,6 +43,10 @@ function Main() {
 
     return (
         <div className="home-container">
+            <div className="Advertisement ">
+                <Advertisement />
+            </div>
+
             <SelectAccount />
             <CategoryNav activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
 
