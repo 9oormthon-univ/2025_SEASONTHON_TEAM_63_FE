@@ -1,25 +1,24 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-  text-decoration: inherit;
+    text-decoration: inherit;
 }
 
 html,
 body {
-  margin: 0 auto;
-
-  max-width: 500px;
-  min-width: 320px;
-  min-height: 100vh;
+    margin: 0 auto;
+    max-width: 500px;
+    min-width: 320px;
+    min-height: 100vh;
 }
 
 button {
   cursor: pointer;
+  border: none; /* btn border none 8/30 */
 }

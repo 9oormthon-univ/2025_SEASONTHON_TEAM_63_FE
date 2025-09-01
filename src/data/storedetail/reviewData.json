@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "author": "닉네임1",
+    "avatarUrl": "/path/to/avatar1.png",
+    "date": "2025.08.27",
+    "rating": 5,
+    "content": "너무 맛있어요 잘 먹었습니다. 다음에 또 방문하고 싶어요.",
+    "imageUrl": "/path/to/review-photo1.png"
+  },
+  {
+    "id": 2,
+    "author": "닉네임2",
+    "avatarUrl": "/path/to/avatar2.png",
+    "date": "2025.08.26",
+    "rating": 4,
+    "content": "분위기가 좋고 맛도 괜찮았어요. 다만 양이 조금 적은 느낌?",
+    "imageUrl": "/path/to/review-photo2.png"
+  },
+  {
+    "id": 3,
+    "author": "닉네임3",
+    "avatarUrl": "/path/to/avatar3.png",
+    "date": "2025.08.25",
+    "rating": 5,
+    "content": "인생 맛집 등극입니다. 사장님도 친절하시고 모든게 완벽했어요!",
+    "imageUrl": "/path/to/review-photo2.png"
+  }
+]

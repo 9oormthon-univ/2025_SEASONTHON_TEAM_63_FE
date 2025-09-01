@@ -1,0 +1,103 @@
+/* StoreReview.css */
+
+/* 리뷰가 없을 때 */
+.review-list-container.empty {
+  text-align: center;
+  padding: 48px;
+  color: #666;
+}
+
+.review-list-container {
+  padding: 16px;
+}
+
+.review-card {
+  display: flex;
+  gap: 16px;
+  background-color: white;
+  border: 1px solid #d9dbdc;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.review-main-content {
+  flex-grow: 1;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px; /* 날짜와의 간격 */
+}
+
+.author-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #eee;
+}
+
+.author-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.review-side-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 날짜를 오른쪽으로 정렬 */
+}
+
+.review-date {
+  font-size: 14px;
+  font-weight: 400;
+  color: #9d9d9d;
+  margin-bottom: 8px; /* 사진과의 간격 */
+}
+
+.star-rating {
+  margin-bottom: 12px;
+  color: #ff6835;
+}
+
+.review-text-content p {
+  margin-left: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.review-text-content {
+  flex-grow: 1;
+  position: relative;
+  padding: 0 24px; /* 따옴표 아이콘 공간 확보 */
+}
+
+.quote-start,
+.quote-end {
+  position: absolute;
+  color: #7547ff;
+  font-size: 2rem; /* mui 아이콘 크기 조절 */
+}
+
+.quote-start {
+  top: -10px;
+  left: 0;
+  transform: rotate(180deg); /* 여는 따옴표 모양 */
+}
+
+.quote-end {
+  bottom: -10px;
+  right: 0;
+}
+
+.review-photo {
+  width: 96px;
+  height: 96px;
+  border-radius: 6px;
+  background-color: #eeeeee;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}

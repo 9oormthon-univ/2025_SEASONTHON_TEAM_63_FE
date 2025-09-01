@@ -1,9 +1,53 @@
-.Footer-wapper {
-    display: flex;
-    justify-content: space-between; /* Pushes location to the left, alarm to the right, and centers the logo */
-    align-items: center;
-    padding: 10px 20px;
+/* Footer.css */
+
+.footer-wrapper {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
     background-color: #ffffff;
-    height: 60px;
-    gap: 100px;
+    border-top: 1px solid #e0e0e0;
+    z-index: 1000;
+
+    /* 아이폰 등 하단에 홈 바가 있는 기기를 위한 여백 (safe area) */
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-around; /* 아이템들을 균등한 간격으로 배치 */
+    align-items: center;
+    width: 100%;
+    padding: 8px 0; /* 상하 여백 */
+}
+
+.footer-link {
+    display: flex;
+    flex-direction: column; /* 아이콘과 텍스트를 세로로 정렬 */
+    align-items: center;
+    justify-content: center;
+    gap: 4px; /* 아이콘과 텍스트 사이의 간격 */
+    text-decoration: none;
+    color: #888888; /* 비활성화 시 기본 색상 */
+}
+
+.footer-link svg {
+    width: 24px; /* 아이콘 크기 예시 */
+    height: 24px;
+    fill: #888888; /* 비활성화 시 아이콘 색상 */
+    transition: fill 0.2s; /* 색상 변경 시 부드러운 효과 */
+}
+
+.footer-link span {
+    font-size: 10px;
+}
+
+/* 활성화된 링크의 스타일 */
+.footer-link.active {
+    color: #7547ff; /* 활성화 시 텍스트 색상 (예시) */
+}
+
+.footer-link.active svg {
+    fill: #007bff; /* 활성화 시 아이콘 색상 (예시) */
 }

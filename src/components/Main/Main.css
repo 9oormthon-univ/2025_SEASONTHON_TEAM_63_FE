@@ -1,14 +1,11 @@
-/* Main.css */
-
-.Main-wapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column; /* 자식 요소들을 세로로 정렬 */
-    align-items: center; /* 세로 정렬 상태에서 수평 중앙으로 정렬 */
+/* 수정 후 코드 */
+.home-container {
+    width: 91.79%; /* 화면 너비의 91.79%를 차지하도록 설정 */
+    max-width: 480px; /* PC 등 큰 화면에서 최대 너비를 480px로 제한 */
+    margin: 0 auto; /* 좌우 여백을 자동으로 계산하여 중앙 정렬 */
+    background-color: #ffffff;
+    box-sizing: border-box; /* padding을 포함하여 너비를 계산하도록 설정 */
 }
-.Main-content {
-    width: 100%; /* 부모(.main-wapper)의 정렬 기준에 맞게 너비를 채웁니다. */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Main-content 내부의 요소들을 수평 중앙 정렬합니다. */
+.Advertisement {
+    width: 100%;
 }

@@ -1,20 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
+import ShopCard from './ShopCard';
+import './Favorite.css';
 
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
+import useFavoriteStore from '../../store/favoriteStore';
+import { allShopsMap } from '../../data/shops';
+import Advertisement from '../../components/Advertisement/Advertisement';
+
+// 1. [수정] PNG 파일을 import하여 URL 경로를 변수에 저장합니다.
+// 변수 이름을 EmptyFavoriteIconUrl 처럼 명확하게 변경하는 것이 좋습니다.
+import EmptyFavoriteImageUrl from '../../assets/icon/Favorite/찜없음사진.png';
 
 function Favorite() {
-    // 헤더의 높이를 저장할 state
-    const [headerHeight, setHeaderHeight] = useState(0);
+    const { favoriteShopIds } = useFavoriteStore();
+    const favoriteShops = Array.from(favoriteShopIds)
+        .map((id) => allShopsMap.get(id))
+        .filter((shop) => shop);
 
     return (
-        <div className="Main-wapper">
-            <main className="Main-content" style={{ paddingTop: `${headerHeight}px` }}>
-                <h1>Favorite</h1>
-                <p>광고 및 기타 내용이 여기에 표시됩니다.</p>
+        <div className="Favorite-wrapper">
+            <Advertisement />
 
-                <div style={{ height: '1000px', background: '#f0f0f0', paddingTop: '20px' }}>스크롤을 내려보세요.</div>
-            </main>
+            {favoriteShops.length > 0 ? (
+                <div className="Favorite-shop-list">
+                    {favoriteShops.map((shop) => (
+                        <ShopCard key={shop.id} shop={shop} />
+                    ))}
+                </div>
+            ) : (
+                <div className="Favorite-empty-container">
+                    {/* 2. [수정] 컴포넌트 대신 <img> 태그를 사용하고, src 속성에 import한 이미지 URL을 전달합니다. */}
+                    <img
+                        src={EmptyFavoriteImageUrl}
+                        alt="찜한 가게 없음"
+                        className="Favorite-empty-image" // CSS에서 스타일을 적용하기 위해 클래스 이름 추가
+                    />
+                    <p className="Favorite-empty-title">아직 찜한 가게가 없어요</p>
+                    <p className="Favorite-empty-subtitle">
+                        마음에 드는 가게를 찾아서
+                        <br />
+                        하트를 눌러 찜해보세요!
+                    </p>
+                </div>
+            )}
         </div>
     );
 }

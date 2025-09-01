@@ -1,36 +1,56 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
+import './Footer.css'; // CSS 파일 임포트
 
-// Footer.css 파일이 있다면 가져옵니다.
-// import './Footer.css';
+// --- 수정된 부분 시작 ---
 
-const Footer = () => {
-    // NavLink에 적용할 액티브 스타일
-    // 현재 활성화된 링크에 동적으로 스타일을 적용할 수 있습니다.
-    const getNavLinkStyle = ({ isActive }) => ({
-        color: isActive ? '#007bff' : '#333', // 활성화 시 파란색, 비활성화 시 검은색
-        fontWeight: isActive ? 'bold' : 'normal',
-        textDecoration: 'none',
-        padding: '10px',
-    });
+// 아이콘 파일들을 Vite 방식에 맞게 기본(default)으로 임포트하고, 경로 끝에 `?react`를 추가합니다.
+import HomeIcon from '../../assets/icon/footericon/Main.svg?react';
+import FavoriteIcon from '../../assets/icon/footericon/Fov.svg?react';
+import RecordIcon from '../../assets/icon/footericon/Record.svg?react';
+import PayIcon from '../../assets/icon/footericon/Pay.svg?react';
+import PerinfoIcon from '../../assets/icon/footericon/Perinfo.svg?react';
+
+// --- 수정된 부분 끝 ---
+
+// 부모로부터 setFooterHeight 함수를 props로 전달받음
+const Footer = ({ setFooterHeight }) => {
+    const footerRef = useRef(null);
+
+    useEffect(() => {
+        // Footer 컴포넌트가 렌더링된 후, 실제 높이를 측정하여 부모 컴포넌트의 state를 업데이트
+        if (footerRef.current) {
+            setFooterHeight(footerRef.current.clientHeight);
+        }
+        // setFooterHeight 함수는 한 번만 실행되면 되므로 의존성 배열을 비워둡니다.
+    }, [setFooterHeight]);
+
+    // NavLink의 활성화 상태에 따라 클래스 이름을 동적으로 부여하는 함수
+    const getNavLinkClassName = ({ isActive }) => (isActive ? 'footer-link active' : 'footer-link');
 
     return (
-        <footer style={{ display: 'flex', justifyContent: 'center', padding: '20px', borderTop: '1px solid #eee' }}>
-            <nav style={{ display: 'flex', gap: '20px' }}>
-                <NavLink to="/" style={getNavLinkStyle}>
-                    홈
+        <footer ref={footerRef} className="footer-wrapper">
+            <nav className="footer-nav">
+                <NavLink to="/" className={getNavLinkClassName}>
+                    <HomeIcon />
+                    <span>홈</span>
                 </NavLink>
-                <NavLink to="/favorite" style={getNavLinkStyle}>
-                    즐겨찾기
+                <NavLink to="/favorite" className={getNavLinkClassName}>
+                    <FavoriteIcon />
+                    <span>즐겨찾기</span>
                 </NavLink>
-                <NavLink to="/orders" style={getNavLinkStyle}>
-                    주문내역
+                <NavLink to="/payment" className={getNavLinkClassName}>
+                    <PayIcon />
+                    <span>결제관리</span>
                 </NavLink>
-                <NavLink to="/payment" style={getNavLinkStyle}>
-                    결제관리
+                <NavLink to="/orders" className={getNavLinkClassName}>
+                    <RecordIcon />
+                    <span>주문내역</span>
                 </NavLink>
-                <NavLink to="/personal-info" style={getNavLinkStyle}>
-                    내 정보
+
+                <NavLink to="/personal-info" className={getNavLinkClassName}>
+                    <PerinfoIcon />
+                    <span>내 정보</span>
                 </NavLink>
             </nav>
         </footer>

@@ -1,0 +1,145 @@
+/* StoreMenu.css */
+
+.store-menu-container {
+  padding-bottom: 40px; /* 푸터 공간 확보 */
+}
+
+.menu-list {
+  padding: 0 16px;
+}
+
+.menu-item {
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 0;
+}
+
+.menu-item-image {
+  width: 109px;
+  height: 109px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.menu-item-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.menu-item-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.menu-item-description {
+  font-size: 14px;
+  color: #9d9d9d;
+  margin: 0 0 8px 0;
+}
+
+.menu-item-price-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menu-item-discount {
+  color: #5c73ff;
+  font-weight: 400;
+  font-size: 11px;
+  padding: 3px 7px;
+  border: 1px solid #5c73ff;
+  border-radius: 12px;
+}
+
+.menu-item-original-price {
+  text-decoration: line-through;
+  color: #9d9d9d;
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+.menu-item-price {
+  font-size: 16px;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+
+  width: fit-content; /* 내용물에 맞게 너비 조절 */
+  margin-left: auto; /* 오른쪽 정렬 */
+}
+
+.quantity-control button {
+  border-radius: 50%;
+  border: 1px solid #d4d4d4;
+  background-color: white;
+  font-size: 20px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.quantity-control span {
+  padding: 0 12px;
+  font-size: 16px;
+}
+
+.add-to-cart-btn {
+  background-color: #5c73ff;
+  color: white;
+  border-radius: 8px;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 28%;
+}
+
+/* Cart Footer */
+.cart-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #eee;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  z-index: 2000;
+}
+
+.cart-total {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cart-total strong {
+  color: #7d45ff;
+}
+
+.view-cart-btn {
+  background-color: #7d45ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
