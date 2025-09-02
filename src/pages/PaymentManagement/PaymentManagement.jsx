@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import './PaymentManagement.css'; // 스타일링을 위한 CSS 파일을 임포트합니다.
-import { Camera, X, Users, Minus, Plus } from 'lucide-react'; // 아이콘 사용 (lucide-react 라이브러리 필요)
+import './PaymentManagement.css';
+import { X, Minus, Plus } from 'lucide-react';
+
+// --- 추가된 부분: 이미지 파일을 직접 import 합니다. ---
+// 경로 별칭(@)이 설정되어 있다고 가정합니다. 만약 아니라면 상대 경로('./../../assets/...')를 사용하세요.
+import soloPaymentImage from '../../assets/icon/PatmentM/혼자결재.png';
+import groupPaymentImage from '../../assets/icon/PatmentM/공동결재.png';
 
 // QR 스캐너를 흉내 내는 가상 컴포넌트
 const QrScanner = ({ onClose }) => (
@@ -64,17 +69,14 @@ function PaymentManagement() {
     const [showCamera, setShowCamera] = useState(false);
     const [showPeoplePicker, setShowPeoplePicker] = useState(false);
 
-    // '혼자 결제하기' 버튼 클릭 핸들러
     const handleSoloPayment = () => {
         setShowCamera(true);
     };
 
-    // '공동 결제하기' 버튼 클릭 핸들러
     const handleGroupPayment = () => {
         setShowPeoplePicker(true);
     };
 
-    // 인원 설정 후 '확인' 버튼 클릭 핸들러
     const handleConfirmPeople = (count) => {
         console.log(`공동 결제 인원: ${count}명`);
         setShowPeoplePicker(false);
@@ -83,31 +85,28 @@ function PaymentManagement() {
 
     return (
         <div className="payment-management-container">
-            {/* 현장 결제 섹션 */}
             <section className="payment-section">
                 <h2>현장결제</h2>
                 <div className="payment-buttons">
+                    {/* --- 변경된 부분: div 아이콘을 img 태그로 교체 --- */}
                     <button className="payment-btn solo" onClick={handleSoloPayment}>
-                        <div className="btn-icon-wrapper solo-icon"></div>
+                        <img src={soloPaymentImage} alt="혼자 결제하기" className="btn-image" />
                         <span>혼자 결제하기</span>
                     </button>
                     <button className="payment-btn group" onClick={handleGroupPayment}>
-                        <div className="btn-icon-wrapper group-icon"></div>
+                        <img src={groupPaymentImage} alt="공동 결제하기" className="btn-image" />
                         <span>공동 결제하기</span>
                     </button>
                 </div>
             </section>
 
-            {/* 식권 섹션 */}
             <section className="ticket-section">
                 <h2>식권</h2>
-
                 <h3>나의 식권</h3>
                 <div className="ticket-list">
                     <MealTicket store="OO가게 식권" amount="금액: 10000원" type="my-ticket" />
                     <MealTicket store="XX가게 식권" amount="잔액: 100" type="my-ticket" />
                 </div>
-
                 <h3>공동 식권</h3>
                 <div className="ticket-list">
                     <MealTicket store="OO가게 식권" amount="금액: 10000원" type="group-ticket" />
@@ -115,12 +114,9 @@ function PaymentManagement() {
                 </div>
             </section>
 
-            {/* 조건부 렌더링: 인원 선택 모달 */}
             {showPeoplePicker && (
                 <PeoplePicker onConfirm={handleConfirmPeople} onCancel={() => setShowPeoplePicker(false)} />
             )}
-
-            {/* 조건부 렌더링: QR 스캐너 */}
             {showCamera && <QrScanner onClose={() => setShowCamera(false)} />}
         </div>
     );

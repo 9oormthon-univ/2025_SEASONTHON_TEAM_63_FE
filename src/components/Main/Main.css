@@ -6,3 +6,6 @@
     background-color: #ffffff;
     box-sizing: border-box; /* padding을 포함하여 너비를 계산하도록 설정 */
 }
+.Advertisement {
+    width: 100%;
+}

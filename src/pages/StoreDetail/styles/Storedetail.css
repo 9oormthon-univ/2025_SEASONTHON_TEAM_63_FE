@@ -1,24 +1,3 @@
-.storeHeader {
-  position: relative; /* 자식 요소의 position: absolute 기준 */
-  display: flex;
-  align-items: center;
-  justify-content: center; /* 타이틀 중앙 정렬 */
-  padding: 12px;
-}
-
-.storeHeader svg {
-  /* ArrowBackIcon을 svg로 직접 타겟 */
-  position: absolute;
-  left: 16px; /* 왼쪽으로부터의 거리 */
-  cursor: pointer;
-}
-
-.storeTitle {
-  font-size: 20px;
-  font-weight: 700;
-  margin: 0 auto;
-}
-
 .store-img {
   position: relative; /* 아이콘 위치의 기준점 */
   margin: 0 auto;

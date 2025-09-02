@@ -1,0 +1,123 @@
+/* Position.css */
+.position-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden; /* Prevents scrolling of the whole page */
+}
+
+.position-main {
+  flex-grow: 1;
+  position: relative; /* Needed for positioning the bottom sheet */
+  display: flex;
+}
+
+.map-area {
+  flex-grow: 1;
+  position: relative;
+}
+
+.current-location-btn-on-map {
+  position: absolute;
+  right: 16px;
+  background-color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: bottom 0.1s ease-out;
+}
+
+.bottom-sheet.closed {
+  /* 아예 숨기지 않고, 핸들바 높이만큼 남김 */
+  transform: translateY(360px);
+  cursor: pointer;
+}
+
+.bottom-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  padding-top: 8px;
+  touch-action: none; /* Important for custom drag handling */
+  height: 300px; /* Fixed height for the sheet */
+  transition: transform 0.3s ease-out;
+}
+
+.bottom-sheet.closed {
+  transform: translateY(calc(100% - 40px));
+  cursor: pointer;
+}
+
+.bottom-sheet.open {
+  transform: translateY(0);
+}
+
+.drag-handle-bar {
+  width: 40px;
+  height: 4px;
+  background-color: #e0e0e0;
+  border-radius: 2px;
+  margin: 0 auto 12px;
+  cursor: grab;
+}
+
+.bottom-sheet.closed .drag-handle-bar {
+  cursor: pointer;
+}
+
+.sheet-content h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.sheet-content p {
+  font-size: 12px;
+  color: #9d9d9d;
+  margin: 0 0 16px 0;
+}
+
+.search-input-container {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.search-input-container input {
+  width: 100%;
+  padding: 14px 40px 14px 16px;
+  border: 1px solid #7547ff;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.search-input-container .search-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.set-location-btn {
+  width: 100%;
+  padding: 16px;
+  background-color: #7d45ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}

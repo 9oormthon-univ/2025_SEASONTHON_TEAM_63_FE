@@ -1,22 +1,19 @@
 import './styles/Storedetail.css';
 import { Outlet, NavLink } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import PageHeader from '../../components/ui/PageHeader';
 
 // 평점 , 가게 이름
-const grade = 4.5;
-const storeName = 'RE:visit';
+export const grade = 4.5;
+export const storeName = 'RE:visit';
 
 // 가게 상세페이지 전역에 쓰이는 요소
 const StoreDetail = () => {
   return (
     <>
       <main>
-        <div className="storeHeader">
-          <ArrowBackIcon />
-          <p className="storeTitle">가게 정보</p>
-        </div>
+        <PageHeader title="가게 정보" />
 
         {/* 가게 이름, 별점 등 상단 정보 */}
         <section>
