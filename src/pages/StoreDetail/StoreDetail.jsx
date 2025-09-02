@@ -5,8 +5,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import PageHeader from '../../components/ui/PageHeader';
 
 // 평점 , 가게 이름
-const grade = 4.5;
-const storeName = 'RE:visit';
+export const grade = 4.5;
+export const storeName = 'RE:visit';
 
 // 가게 상세페이지 전역에 쓰이는 요소
 const StoreDetail = () => {

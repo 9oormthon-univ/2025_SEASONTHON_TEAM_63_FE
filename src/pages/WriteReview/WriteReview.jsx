@@ -5,6 +5,7 @@ import PageHeader from '../../components/ui/PageHeader';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import './WriteReview.css';
+import { storeName } from '../StoreDetail/StoreDetail';
 
 const WriteReview = () => {
   const navigate = useNavigate();
@@ -48,11 +49,8 @@ const WriteReview = () => {
   return (
     <div className="write-review-container">
       <PageHeader title="리뷰 작성하기" />
+      <p className="store-name-prompt">{storeName}에 대한 리뷰를 남겨주세요!</p>
       <main className="write-review-main">
-        <p className="store-name-prompt">
-          (가게이름)에 대한 리뷰를 남겨주세요!
-        </p>
-
         <div className="rating-section">
           {[1, 2, 3, 4, 5].map((star) => (
             <StarRateIcon
@@ -67,6 +65,7 @@ const WriteReview = () => {
           <AddAPhotoIcon />
           <span>사진 추가하기</span>
         </button>
+
         <input
           type="file"
           ref={fileInputRef}
