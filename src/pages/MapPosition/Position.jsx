@@ -35,21 +35,18 @@ const Position = () => {
     sheetRef.current.style.transition = 'transform 0.3s ease-out';
     if (sheetY > 100) {
       setIsSheetOpen(false);
+    } else {
+      setSheetY(0);
     }
-    setSheetY(0);
     dragStartY.current = 0;
   };
 
   const handleSheetClick = () => {
     if (!isSheetOpen) {
+      setSheetY(0);
       setIsSheetOpen(true);
     }
   };
-
-  useEffect(() => {
-    // Reset sheetY when opening/closing
-    setSheetY(0);
-  }, [isSheetOpen]);
 
   return (
     <div className="position-container">
@@ -58,7 +55,14 @@ const Position = () => {
       <main className="position-main">
         <div className="map-area">
           <NaverMap />
-          <button className="current-location-btn-on-map">
+          <button
+            className="current-location-btn-on-map"
+            style={{
+              bottom: isSheetOpen
+                ? 340 - sheetY // sheet 드래그 시 따라 움직이도록
+                : 60,
+            }}
+          >
             <GpsFixedIcon sx={{ color: '#FF7335' }} />
           </button>
         </div>
@@ -66,7 +70,9 @@ const Position = () => {
         <div
           ref={sheetRef}
           className={`bottom-sheet ${isSheetOpen ? 'open' : 'closed'}`}
-          style={{ transform: isSheetOpen ? `translateY(${sheetY}px)` : '' }}
+          style={{
+            transform: `translateY(${isSheetOpen ? sheetY : 150}px)`,
+          }}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
           onMouseMove={handleDragMove}
