@@ -1,18 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import useCartStore from '../../store/cartStore';
 import menuData from '../../data/storedetail/menuData.json';
-import './styles/StoreMenu.css';
+import './styles/Storemenu.css';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const StoreMenu = () => {
   const navigate = useNavigate();
-  const {
-    cart,
-    addToCart,
-    updateQuantity,
-    getTotalPrice,
-    getCartItem,
-  } = useCartStore();
+  const { cart, addToCart, updateQuantity, getTotalPrice, getCartItem } =
+    useCartStore();
 
   return (
     <>
