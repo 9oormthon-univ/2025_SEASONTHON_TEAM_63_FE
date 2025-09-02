@@ -29,6 +29,7 @@ import StoreBasket from './pages/StoreDetail/StoreBasket';
 import Position from './pages/MapPosition/Position';
 import WriteReview from './pages/WriteReview/WriteReview';
 import FilteredShops from './pages/FilteredShops/FilteredShops';
+import BlankLayout from './components/BlankLayout/BlankLayout';
 
 // 2. React Query 클라이언트 인스턴스 생성
 const queryClient = new QueryClient();
@@ -53,7 +54,9 @@ createRoot(document.getElementById('root')).render(
                                 <Route path="successful-challenges" element={<SuccessfulChallenge />} />
                                 <Route path="coupons" element={<CouponBox />} />
                             </Route>
+                        </Route>
 
+                        <Route element={<BlankLayout />}>
                             <Route path="/store/:storeId" element={<StoreDetail />}>
                                 <Route index element={<StoreMenu />} />
                                 <Route path="menu" element={<StoreMenu />} />
