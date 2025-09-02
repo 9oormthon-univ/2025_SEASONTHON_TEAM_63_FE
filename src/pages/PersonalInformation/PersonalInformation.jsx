@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
+// src/pages/PersonalInformation/PersonalInformation.jsx
+import React from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import './PersonalInformation.css';
 
-function PersonalInformation() {
-    // 헤더의 높이를 저장할 state
-    const [headerHeight, setHeaderHeight] = useState(0);
+export default function PersonalInformation() {
+    const nav = useNavigate();
 
     return (
-        <div className="Main-wapper">
-            <main className="Main-content" style={{ paddingTop: `${headerHeight}px` }}>
-                <h1>개인정보</h1>
-                <p>광고 및 기타 내용이 여기에 표시됩니다.</p>
+        <div className="pi-wrap">
+            {/* 헤더/프로필 UI ... */}
+            <section className="pi-profile-card">
+                {/* ... */}
+                <div className="pi-stats">
+                    <button className="pi-stat" onClick={() => nav('successful-challenges')}>
+                        성공한 챌린지
+                    </button>
+                    <button className="pi-stat" onClick={() => nav('coupons')}>
+                        쿠폰함
+                    </button>
+                    <button className="pi-stat" onClick={() => nav('reviews')}>
+                        내가 쓴 리뷰
+                    </button>
+                </div>
+            </section>
 
-                <div style={{ height: '1000px', background: '#f0f0f0', paddingTop: '20px' }}>스크롤을 내려보세요.</div>
-            </main>
+            {/* 여기서 자식 라우트가 렌더링됨 */}
+            <Outlet />
         </div>
     );
 }
-
-export default PersonalInformation;
