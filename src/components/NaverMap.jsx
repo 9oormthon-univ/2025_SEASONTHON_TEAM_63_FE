@@ -1,28 +1,23 @@
 import { useEffect, useRef } from 'react';
 
-const NaverMap = () => {
-  const mapElement = useRef(null);
+export default function NaverMap() {
+  const mapRef = useRef(null);
 
   useEffect(() => {
-    const { naver } = window;
-    if (!mapElement.current || !naver) return;
+    if (!mapRef.current || !window.naver) return;
 
-    // 지도에 표시할 위치의 위도와 경도 좌표를 파라미터로 넣어줍니다.
-    const location = new naver.maps.LatLng(37.5656, 126.9779);
-    const mapOptions = {
-      center: location,
+    const center = new naver.maps.LatLng(37.5656, 126.9779);
+
+    new naver.maps.Map(mapRef.current, {
+      center,
       zoom: 17,
-      zoomControl: true,
-    };
+    });
 
-    const map = new naver.maps.Map(mapElement.current, mapOptions);
     new naver.maps.Marker({
-      position: location,
-      map,
+      position: center,
+      map: mapRef.current.__naverMap__,
     });
   }, []);
 
-  return <div ref={mapElement} style={{ width: '100%', height: '400px' }} />;
-};
-
-export default NaverMap;
+  return <div ref={mapRef} style={{ width: '100%', height: '100%' }} />;
+}
