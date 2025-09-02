@@ -69,9 +69,9 @@ const FilteredShops = () => {
                   <StarRateIcon />
                   <span>{shop.rating}</span>
                 </div>
-                <p className="list-shop-info">가게 소개글: ~~</p>
-                <p className="list-shop-info">위치: ~~</p>
-                <p className="list-shop-info">진행중인 챌린지: ~~</p>
+                <p className="list-shop-info">가게 소개글: 어쩌고</p>
+                <p className="list-shop-info">위치: 저쩌고</p>
+                <p className="list-shop-info">진행중인 챌린지: 아무개</p>
               </div>
               <button
                 className={`list-like-btn ${isFavorited ? 'liked' : ''}`}
