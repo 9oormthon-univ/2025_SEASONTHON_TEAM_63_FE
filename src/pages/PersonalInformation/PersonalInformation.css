@@ -1,0 +1,77 @@
+/* src/pages/PersonalInformation/PersonalInformation.css */
+.pi-wrap {
+    background: #f4f4f8;
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+.pi-header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    z-index: 5;
+}
+.pi-header h1 {
+    font-size: 18px;
+    margin: 0;
+}
+.pi-profile-card {
+    margin: 16px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #7a57ff, #6e48e8);
+    color: #fff;
+    padding: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.pi-profile-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+}
+.pi-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #fff;
+}
+.pi-nickname {
+    margin-left: 12px;
+    font-weight: 700;
+}
+.pi-stats {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 14px;
+    padding: 10px;
+}
+.pi-stat {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}
+.pi-stat-num {
+    font-weight: 700;
+}
+.pi-bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60px;
+    background: #fff;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.pi-bottom-nav .active {
+    color: #6e48e8;
+}

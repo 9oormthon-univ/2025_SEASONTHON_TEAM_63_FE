@@ -1,9 +1,9 @@
 const NaverMap = () => {
-  return (
-    <>
-      <div>hello navermap</div>
-    </>
-  );
+    return (
+        <>
+            <div>hello navermap</div>
+        </>
+    );
 };
 
 export default NaverMap;
