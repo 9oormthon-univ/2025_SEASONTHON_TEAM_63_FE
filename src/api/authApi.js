@@ -1,6 +1,6 @@
 // src/api/authApi.js
 
-const API_BASE_URL = 'https://43.201.107.27:8080';
+const API_BASE_URL = 'http://43.201.107.27:8080';
 
 // API 요청을 위한 공통 함수 (이 함수는 export하지 않습니다)
 async function request(endpoint, options) {
