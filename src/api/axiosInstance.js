@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-  baseURL: 'https://43.201.107.27:8080', // 기본 API 주소
+  baseURL: 'http://43.201.107.27:8080', // 기본 API 주소
 });
 
 // 요청 인터셉터 (Request Interceptor)
