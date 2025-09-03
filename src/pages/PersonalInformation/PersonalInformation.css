@@ -75,3 +75,13 @@
 .pi-bottom-nav .active {
     color: #6e48e8;
 }
+.pi-logout-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
