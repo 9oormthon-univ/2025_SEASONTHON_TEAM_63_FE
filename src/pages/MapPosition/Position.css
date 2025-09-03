@@ -51,7 +51,7 @@
   padding: 16px;
   padding-top: 8px;
   touch-action: none; /* Important for custom drag handling */
-  height: 300px; /* Fixed height for the sheet */
+  height: 240px; /* Fixed height for the sheet */
   transition: transform 0.3s ease-out;
 }
 

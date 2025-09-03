@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import './Position.css';
 import SearchIcon from '@mui/icons-material/Search';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
@@ -59,7 +59,7 @@ const Position = () => {
             className="current-location-btn-on-map"
             style={{
               bottom: isSheetOpen
-                ? 340 - sheetY // sheet 드래그 시 따라 움직이도록
+                ? 300 - sheetY // sheet 드래그 시 따라 움직이도록
                 : 60,
             }}
           >
@@ -71,7 +71,7 @@ const Position = () => {
           ref={sheetRef}
           className={`bottom-sheet ${isSheetOpen ? 'open' : 'closed'}`}
           style={{
-            transform: `translateY(${isSheetOpen ? sheetY : 150}px)`,
+            transform: `translateY(${isSheetOpen ? sheetY : 240}px)`,
           }}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}

@@ -1,3 +1,16 @@
+/* StoreDetail 컨테이너 */
+.store-detail-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* 메인 컨텐츠 영역 */
+.store-detail-main {
+  flex: 1;
+  overflow-y: auto;
+}
+
 .store-img {
   position: relative; /* 아이콘 위치의 기준점 */
   margin: 0 auto;
