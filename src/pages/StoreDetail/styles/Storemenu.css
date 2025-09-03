@@ -102,6 +102,142 @@
   width: 28%;
 }
 
+/* ===========================================
+로딩 상태 스타일 (기존 디자인과 동일한 구조)
+=========================================== */
+
+.loading-container {
+  padding: 0;
+}
+
+.menu-item-skeleton {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.skeleton-image {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+.skeleton-text {
+  height: 14px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeleton-name {
+  width: 60%;
+  height: 16px;
+}
+
+.skeleton-description {
+  width: 80%;
+  height: 14px;
+}
+
+.skeleton-price {
+  width: 40%;
+  height: 16px;
+}
+
+.skeleton-button {
+  width: 60px;
+  height: 32px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 8px;
+  margin-left: auto;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ===========================================
+에러 상태 스타일 (기존 디자인과 일치)
+=========================================== */
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 16px;
+}
+
+.error-message {
+  text-align: center;
+  color: #666;
+}
+
+.error-message p:first-child {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.error-detail {
+  font-size: 14px;
+  color: #9d9d9d;
+  margin: 0 0 24px 0;
+}
+
+.retry-button {
+  background-color: #5c73ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.retry-button:hover {
+  background-color: #4a61e6;
+}
+
+/* ===========================================
+빈 메뉴 상태 스타일 (기존 디자인과 일치)
+   =========================================== */
+
+.empty-menu-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 16px;
+  min-height: 30vh;
+}
+
+.empty-menu-message {
+  text-align: center;
+}
+
+.empty-menu-message p {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #7d45ff;
+}
+
+.empty-menu-message .empty-detail {
+  font-size: 14px;
+  color: #9d9d9d;
+  margin: 0;
+}
+
 /* Cart Footer */
 .cart-footer {
   position: fixed;
