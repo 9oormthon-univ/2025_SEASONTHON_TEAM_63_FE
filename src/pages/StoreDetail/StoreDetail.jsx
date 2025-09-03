@@ -16,10 +16,7 @@ const StoreDetail = () => {
 
   return (
     <div className="store-detail-container">
-      <main
-        className="store-detail-main"
-        style={{ paddingBottom: footerHeight }}
-      >
+      <main className="store-detail-main">
         <PageHeader title="가게 정보" />
 
         {/* 가게 이름, 별점 등 상단 정보 */}
