@@ -4,6 +4,7 @@ import PageHeader from '../../components/ui/PageHeader';
 import Footer from '../../components/Footer/Footer';
 import { getStoreInfo } from '../../api/storedetail/storeApi'; // API 함수 임포트
 import './styles/ChallengeDetailPage.css';
+import CheckIcon from '@mui/icons-material/Check';
 
 const ChallengeDetailPage = () => {
   const { storeId, challengeId } = useParams();
@@ -71,7 +72,7 @@ const ChallengeDetailPage = () => {
 
         <div className="challenge-progress-section">
           <div className="progress-header">
-            <span>진행률</span>
+            <p>진행률</p>
             <span>
               {challenge.progress}/{challenge.total}
             </span>
@@ -91,21 +92,21 @@ const ChallengeDetailPage = () => {
           <div className="info-item">
             <span className="info-icon">?</span>
             <div>
-              <p className="info-title">목표</p>
+              <strong className="info-title">목표</strong>
               <p>{challenge.goal}</p>
             </div>
           </div>
           <div className="info-item">
             <span className="info-icon">🎁</span>
             <div>
-              <p className="info-title">달성시 리워드</p>
+              <strong className="info-title">달성시 리워드</strong>
               <p>{challenge.reward}</p>
             </div>
           </div>
           <div className="info-item">
             <span className="info-icon">📅</span>
             <div>
-              <p className="info-title">기간</p>
+              <strong className="info-title">기간</strong>
               <p>{challenge.period}</p>
             </div>
           </div>
@@ -115,7 +116,10 @@ const ChallengeDetailPage = () => {
           <h4>참여 규칙</h4>
           <ul>
             {challenge.rules.map((rule, index) => (
-              <li key={index}>✓ {rule}</li>
+              <li key={index}>
+                <CheckIcon sx={{ color: '#FF6835', marginRight: '12px' }} />
+                {rule}
+              </li>
             ))}
           </ul>
         </div>

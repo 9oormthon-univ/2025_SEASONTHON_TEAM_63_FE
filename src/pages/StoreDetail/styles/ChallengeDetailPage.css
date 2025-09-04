@@ -1,7 +1,6 @@
 .challenge-detail-main-content {
-  max-width: 480px;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: white;
   padding: 16px;
   box-sizing: border-box;
 }
@@ -18,7 +17,7 @@
 }
 
 .challenge-banner {
-  background: #6a5acd;
+  background: #5c73ff;
   color: white;
   padding: 20px;
   border-radius: 15px;
@@ -41,34 +40,31 @@
   margin-bottom: 8px;
 }
 .challenge-banner-text h3 {
+  margin-top: 12px;
   font-size: 18px;
   font-weight: bold;
-}
-
-.challenge-banner img {
-  border-radius: 10px;
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
+  color: #ff6835;
 }
 
 .challenge-progress-section,
 .challenge-info-section,
 .challenge-rules-section {
-  background-color: #ffffff;
-  padding: 20px;
+  padding: 18px;
   border-radius: 15px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 18px;
+  border: 1px solid #d9dbdc;
 }
 
 .progress-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
   font-size: 14px;
   font-weight: 600;
-  color: #333;
+}
+
+.progress-header span {
+  color: #5c73ff;
 }
 
 .progress-bar-container {
@@ -80,16 +76,15 @@
 }
 
 .progress-bar {
-  background-color: #6a5acd;
+  background-color: #5c73ff;
   height: 100%;
   border-radius: 10px;
   transition: width 0.5s ease-in-out;
 }
 
 .progress-text {
-  text-align: center;
-  color: #555;
-  font-size: 14px;
+  text-align: start;
+  font-size: 12px;
 }
 
 .info-item {
@@ -103,10 +98,10 @@
 
 .info-icon {
   font-size: 20px;
-  margin-right: 15px;
-  background-color: #f0f0f0;
-  width: 40px;
-  height: 40px;
+  margin-right: 10px;
+  background-color: rgba(125, 69, 255, 0.5);
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,20 +110,21 @@
 
 .info-title {
   font-weight: 600;
-  font-size: 14px;
-  color: #555;
+  font-size: 16px;
+  color: black;
   margin: 0 0 4px 0;
 }
 
 .info-item p {
-  margin: 0;
-  font-size: 16px;
-  color: #1c1c1e;
+  margin: 0 auto;
+  font-size: 14px;
+  color: #9d9d9d;
 }
 
 .challenge-rules-section h4 {
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
+  margin-left: 6px;
   font-size: 16px;
   font-weight: 600;
 }
@@ -141,7 +137,7 @@
 
 .challenge-rules-section li {
   margin-bottom: 10px;
-  color: #333;
+  color: #9d9d9d;
   font-size: 15px;
   display: flex;
   align-items: center;
@@ -150,12 +146,11 @@
 .challengeDetail-btn {
   width: 100%;
   padding: 16px;
-  background-color: #6a5acd;
+  background-color: #7547ff;
   color: white;
-  border: none;
   border-radius: 12px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 12px;
 }
