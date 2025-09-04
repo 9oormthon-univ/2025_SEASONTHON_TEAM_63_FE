@@ -18,7 +18,6 @@ const StoreMenu = () => {
 
     // 메뉴 데이터 API 호출
     useEffect(() => {
-        // storeId가 없으면 API를 호출하지 않습니다.
         if (!storeId) {
             setError('가게 ID가 올바르지 않습니다.');
             setLoading(false);
@@ -29,11 +28,8 @@ const StoreMenu = () => {
             setLoading(true);
             setError(null);
             try {
-                // 실제 메뉴 API를 호출합니다.
                 const response = await axiosInstance.get(`/api/stores/${storeId}/menus`);
-
                 if (response.data && response.data.success) {
-                    // API 응답 데이터는 response.data.data 에 배열로 들어있습니다.
                     setMenuData(response.data.data || []);
                 } else {
                     throw new Error('메뉴 정보를 가져오는 데 실패했습니다.');
@@ -47,16 +43,15 @@ const StoreMenu = () => {
         };
 
         fetchMenuData();
-    }, [storeId]); // storeId가 변경될 때마다 effect를 다시 실행합니다.
+    }, [storeId]);
 
-    // 장바구니에 담을 아이템 객체 생성 (API 데이터 구조에 맞게)
+    // 장바구니에 담을 아이템 객체 생성
     const handleAddToCart = (menu) => {
         const cartItem = {
             id: menu.id,
             name: menu.name,
             price: menu.discountedPrice > 0 ? menu.discountedPrice : menu.basePrice,
             imageUrl: menu.imageUrl,
-            // 필요한 다른 정보 추가
         };
         addToCart(cartItem);
     };
@@ -66,13 +61,40 @@ const StoreMenu = () => {
             <div className="store-menu-container">
                 <main className="menu-list">
                     {loading ? (
-                        <div className="loading-container">{/* 로딩 스켈레톤 UI (기존 코드 유지) */}</div>
+                        <div className="loading-container">
+                            {[1, 2, 3].map((index) => (
+                                <div key={index} className="menu-item menu-item-skeleton">
+                                    <div className="menu-item-image skeleton-image"></div>
+                                    <div className="menu-item-content">
+                                        <div className="menu-item-info">
+                                            <div className="skeleton-text skeleton-name"></div>
+                                            <div className="skeleton-text skeleton-description"></div>
+                                            <div className="skeleton-text skeleton-price"></div>
+                                        </div>
+                                        <div className="skeleton-button"></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     ) : error ? (
-                        <div className="error-container">{/* 에러 UI (기존 코드 유지) */}</div>
+                        <div className="error-container">
+                            <div className="error-message">
+                                <p>😅 메뉴를 불러올 수 없습니다</p>
+                                <p className="error-detail">{error}</p>
+                                <button className="retry-button" onClick={() => window.location.reload()}>
+                                    다시 시도
+                                </button>
+                            </div>
+                        </div>
                     ) : menuData.length === 0 ? (
-                        <div className="empty-menu-container">{/* 메뉴 없음 UI (기존 코드 유지) */}</div>
+                        <div className="empty-menu-container">
+                            <div className="empty-menu-message">
+                                <FoodBankIcon sx={{ fontSize: 40 }} />
+                                <p>등록된 메뉴가 없습니다</p>
+                                <p className="empty-detail">곧 맛있는 메뉴들이 준비될 예정입니다!</p>
+                            </div>
+                        </div>
                     ) : (
-                        // API 응답 데이터로 메뉴 목록을 렌더링합니다.
                         menuData.map((menu) => {
                             const cartItem = getCartItem(menu.id);
                             const price = menu.discountedPrice > 0 ? menu.discountedPrice : menu.basePrice;
@@ -81,7 +103,6 @@ const StoreMenu = () => {
                             return (
                                 <div key={menu.id} className="menu-item">
                                     <div className="menu-item-image">
-                                        {/* 메뉴 이미지 표시 */}
                                         <img src={menu.imageUrl} alt={menu.name} />
                                     </div>
                                     <div className="menu-item-content">
@@ -89,7 +110,6 @@ const StoreMenu = () => {
                                             <p className="menu-item-name">{menu.name}</p>
                                             <p className="menu-item-description">{menu.description}</p>
                                             <div>
-                                                {/* 할인율은 API에 없으므로, 할인 가격이 있을 경우 원래 가격을 함께 표시 */}
                                                 {originalPrice && (
                                                     <span className="menu-item-original-price">
                                                         {originalPrice.toLocaleString()}원
@@ -101,7 +121,9 @@ const StoreMenu = () => {
                                         <div>
                                             {cartItem ? (
                                                 <div className="quantity-control">
-                                                    {/* 수량 조절 UI (기존 코드 유지) */}
+                                                    <button onClick={() => updateQuantity(menu.id, -1)}>−</button>
+                                                    <span>{cartItem.quantity}</span>
+                                                    <button onClick={() => updateQuantity(menu.id, 1)}>+</button>
                                                 </div>
                                             ) : (
                                                 <button
@@ -119,7 +141,19 @@ const StoreMenu = () => {
                     )}
                 </main>
 
-                {/* 결제 / 장바구니 footer 팝업 (기존 코드 유지) */}
+                {/* 결제 / 장바구니 footer 팝업 */}
+                {cart.length > 0 && (
+                    <footer className="cart-footer">
+                        <div className="cart-total">
+                            <span>합계금액: </span>
+                            <strong>{getTotalPrice().toLocaleString()}원</strong>
+                        </div>
+                        <button className="view-cart-btn" onClick={() => navigate('/store-basket')}>
+                            <ShoppingCartIcon />
+                            장바구니 보기
+                        </button>
+                    </footer>
+                )}
             </div>
         </>
     );
