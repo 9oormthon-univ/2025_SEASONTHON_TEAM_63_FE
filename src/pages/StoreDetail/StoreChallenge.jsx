@@ -1,6 +1,10 @@
+import { useNavigate, useParams } from 'react-router-dom';
 import './styles/StoreChallenge.css';
 
 const StoreChallenge = () => {
+  const navigate = useNavigate();
+  const { storeId } = useParams();
+
   const challenges = [
     {
       id: 1,
@@ -25,6 +29,10 @@ const StoreChallenge = () => {
     },
   ];
 
+  const handleDetailsClick = (challengeId) => {
+    navigate(`/store/${storeId}/challenge/${challengeId}`);
+  };
+
   return (
     <div className="challenge-container">
       {challenges.map((challenge) => (
@@ -38,7 +46,12 @@ const StoreChallenge = () => {
           </div>
 
           <div className="challenge-actions">
-            <button className="details-button outline">상세보기</button>
+            <button
+              onClick={() => handleDetailsClick(challenge.id)}
+              className="details-button"
+            >
+              상세보기
+            </button>
             <button className="participate-button">참여하기</button>
           </div>
         </div>
