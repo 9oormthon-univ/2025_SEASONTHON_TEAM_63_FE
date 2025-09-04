@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // axios를 직접 임포트하는 대신, 새로 만든 axiosInstance를 임포트합니다.
-import axiosInstance from '../../../../api/axiosInstance';
+import axiosInstance from '../../../../api/auth/axiosInstance';
 import '../Shop.css';
 import HeartIcon from '../../../../assets/icon/하트.svg?react';
 
