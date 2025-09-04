@@ -29,10 +29,10 @@ import WriteReview from './pages/WriteReview/WriteReview';
 import FilteredShops from './pages/FilteredShops/FilteredShops';
 
 // --- 인증 관련 페이지 컴포넌트 ---
-import LoginPage from './pages/LoginPage';
-import SignUpForm from './pages/SignUpForm';
-import SignUpStep2Page from './pages/SignUpStep2Page';
-import CompleteUserSignUpForm from './pages/CompleteUserSignUpForm';
+import LoginPage from './pages/Auth/LoginPage';
+import SignUpForm from './pages/Auth/SignUpForm';
+import SignUpStep2Page from './pages/Auth/SignUpStep2Page';
+import CompleteUserSignUpForm from './pages/Auth/CompleteUserSignUpForm';
 // import CompleteCorpSignUpForm from './pages/CompleteCorpSignUpForm'; // 기업 가입 기능 구현 시 주석 해제
 
 import './index.css'; // 전역 CSS 스타일
