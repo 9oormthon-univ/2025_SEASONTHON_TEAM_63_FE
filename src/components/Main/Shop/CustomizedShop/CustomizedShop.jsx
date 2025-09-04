@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../../../api/axiosInstance'; // axios 인스턴스 사용
+import axiosInstance from '../../../../api/auth/axiosInstance'; // axios 인스턴스 사용
 import '../Shop.css';
 import HeartIcon from '../../../../assets/icon/하트.svg?react';
 
