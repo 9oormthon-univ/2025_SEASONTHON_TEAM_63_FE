@@ -19,7 +19,8 @@ const StoreDetail = () => {
   // 가게 정보 상태 관리
   const [storeInfo, setStoreInfo] = useState({
     name: 'RE:visit',
-    bannerImageUrl: '',
+    bannerImageUrl:
+      'https://revisit63.s3.ap-northeast-2.amazonaws.com/public/store-banners/test-fixed.png',
     averageRating: 4.5,
   });
   const [loading, setLoading] = useState(true);

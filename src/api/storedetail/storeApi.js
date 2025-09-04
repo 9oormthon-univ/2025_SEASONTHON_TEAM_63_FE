@@ -21,8 +21,23 @@ export const getStoreInfo = async (storeId) => {
         averageRating: storeData.averageRating || 0,
         category: storeData.category || '',
         description: storeData.description || '',
-        address: storeData.address || '',
+        // address가 객체인 경우 문자열로 변환
+        address:
+          typeof storeData.address === 'object'
+            ? storeData.address?.fullAddress ||
+              storeData.address?.roadAddress ||
+              '주소 정보 없음'
+            : storeData.address || '주소 정보 없음',
+        // 좌표 정보 추출
+        coordinates:
+          typeof storeData.address === 'object'
+            ? {
+                latitude: storeData.address?.latitude || null,
+                longitude: storeData.address?.longitude || null,
+              }
+            : { latitude: null, longitude: null },
         phoneNumber: storeData.phoneNumber || '',
+        openingHours: storeData.openingHours || null,
         isOpen: storeData.isOpen || false,
         isSubscribed: storeData.isSubscribed || false,
         totalReviewCount: storeData.totalReviewCount || 0,
