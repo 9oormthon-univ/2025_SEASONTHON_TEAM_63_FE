@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { completeUserSignUp } from '../api/authApi'; // 삭제
 import axiosInstance from '../../api/auth/axiosInstance'; // axiosInstance 임포트
-import './Auth.css';
 
 export default function CompleteUserSignUpForm() {
     // ... (state 선언은 동일)
