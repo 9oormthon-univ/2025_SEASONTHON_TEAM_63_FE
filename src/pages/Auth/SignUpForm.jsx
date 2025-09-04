@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axiosInstance from '../api/axiosInstance';
+import axiosInstance from '../../api/auth/axiosInstance';
 
 // 이전 답변에서 빠졌던 './Auth.css' import 추가
 import './Auth.css';
