@@ -4,7 +4,9 @@
 .review-list-container.empty {
   text-align: center;
   padding: 48px;
-  color: #666;
+  color: black;
+  font-weight: 600;
+  height: 35vh;
 }
 
 .review-list-container {
@@ -100,4 +102,129 @@
   background-size: cover;
   background-position: center;
   flex-shrink: 0;
+}
+
+/* ===========================================
+   스켈레톤 로딩 애니메이션 (기존 디자인 유지)
+   =========================================== */
+.review-skeleton {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.skeleton-text {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+  color: transparent;
+}
+
+.skeleton-avatar {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+.skeleton-name {
+  width: 60px;
+  height: 14px;
+  display: inline-block;
+}
+
+.skeleton-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.skeleton-star {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 2px;
+}
+
+.skeleton-content-line1 {
+  width: 80%;
+  height: 12px;
+  margin: 8px 0 4px 6px;
+}
+
+.skeleton-content-line2 {
+  width: 60%;
+  height: 12px;
+  margin: 4px 0 8px 6px;
+}
+
+.skeleton-date {
+  width: 70px;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ===========================================
+   에러 상태 스타일 (기존 디자인과 일치)
+   =========================================== */
+.review-list-container.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 16px;
+}
+
+.error-message {
+  text-align: center;
+  color: #666;
+}
+
+.error-message p:first-child {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.error-detail {
+  font-size: 14px;
+  color: #9d9d9d;
+  margin: 0 0 24px 0;
+}
+
+.retry-button {
+  background-color: #7547ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.retry-button:hover {
+  background-color: #6a3edb;
+}
+
+/* ===========================================
+   페이징 정보 스타일
+   =========================================== */
+.review-pagination-info {
+  text-align: center;
+  padding: 16px;
+  margin-top: 8px;
+  color: #9d9d9d;
+  font-size: 14px;
+  border-top: 1px solid #f0f0f0;
 }
