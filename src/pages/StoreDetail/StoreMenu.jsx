@@ -100,19 +100,20 @@ const StoreMenu = () => {
                       <p className="menu-item-description">
                         {item.description}
                       </p>
+                      {/* 할인률 */}
                       <div>
                         {item.discount && (
                           <span className="menu-item-discount">
                             {item.discount}
                           </span>
                         )}
-                        {item.originalPrice && (
+                        {item.basePrice && (
                           <span className="menu-item-original-price">
-                            {item.originalPrice.toLocaleString()}원
+                            {item.basePrice.toLocaleString()}원
                           </span>
                         )}
                         <span className="menu-item-price">
-                          {item.price.toLocaleString()}원
+                          {item.discountedPrice.toLocaleString()}원
                         </span>
                       </div>
                     </div>
