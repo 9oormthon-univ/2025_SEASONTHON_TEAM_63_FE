@@ -62,7 +62,7 @@
 .details-button {
   flex: 1;
   padding: 12px 20px;
-  border: 2px solid #7d45ff;
+  border: 1px solid #7d45ff;
   background-color: transparent;
   color: #7d45ff;
   border-radius: 12px;
@@ -74,12 +74,11 @@
 
 .participate-button {
   flex: 1;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #7d45ff 0%, #9d6bff 100%);
+  padding: 12px 24px;
+  background-color: #7d45ff;
   color: white;
-  border: none;
   border-radius: 12px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
