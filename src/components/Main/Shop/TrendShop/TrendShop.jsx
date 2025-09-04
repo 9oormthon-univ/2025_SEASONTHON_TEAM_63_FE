@@ -83,15 +83,15 @@ function TrendShop() {
             </header>
             <div className="shop-list-container">
                 {shops.map((shop) => (
-                    <div key={shop.id} className="shop-item-card" onClick={() => navigate(`/shop/${shop.id}`)}>
+                    // ***** 바로 이 부분을 수정합니다! *****
+                    // '/shop/:storeId' -> '/store/:storeId'
+                    <div key={shop.id} className="shop-item-card" onClick={() => navigate(`/store/${shop.id}`)}>
                         <div className="shop-image-placeholder">
-                            {/* API 응답에 맞는 이미지 URL 필드 사용 */}
                             <img src={shop.bannerImageUrl} alt={shop.name} className="shop-image" />
                             <button
-                                // API 응답의 isSubscribed 값을 사용
                                 className={`shop-like-btn ${shop.isSubscribed ? 'liked' : ''}`}
                                 onClick={(e) => {
-                                    e.stopPropagation(); // 카드 클릭 이벤트 전파 방지
+                                    e.stopPropagation();
                                     handleToggleSubscribe(shop.id, shop.isSubscribed);
                                 }}
                             >
