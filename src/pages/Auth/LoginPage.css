@@ -1,0 +1,106 @@
+/* 전체 화면 컨테이너 */
+.login-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 화면 전체 높이 사용 */
+    width: 100%;
+    background-color: #ffffff;
+}
+
+/* 상단 40% 이미지 영역 */
+.login-top-section {
+    height: 40%;
+    background-color: #f3e9ff; /* 이미지 대신 사용할 임시 배경색 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #7e57c2;
+    font-weight: bold;
+}
+
+/* 하단 60% 컨텐츠 영역 */
+.login-bottom-section {
+    height: 60%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top-left-radius: 30px; /* 상단 모서리를 둥글게 */
+    border-top-right-radius: 30px;
+    background-color: #ffffff;
+    margin-top: -30px; /* 상단 영역을 살짝 겹치게 */
+    position: relative;
+}
+
+/* 로그인 폼 */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    gap: 15px; /* 입력 필드 사이 간격 */
+    margin-top: 20px;
+}
+
+.login-form input {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.login-button {
+    margin-top: 10px;
+    background-color: #7e57c2;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 소셜 로그인 텍스트 */
+.social-login-divider {
+    margin-top: 30px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.social-login-text-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 20px;
+}
+
+.social-login-text-buttons button {
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* 회원가입 링크 */
+.signup-link {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #888;
+}
+
+.signup-link a {
+    color: #7e57c2;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    height: 20px;
+}
