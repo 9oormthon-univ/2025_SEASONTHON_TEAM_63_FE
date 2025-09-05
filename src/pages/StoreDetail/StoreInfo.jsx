@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getStoreInfo } from '../../api/storedetail/storeApi';
-import NaverMap from '../../components/NaverMap';
+import StoreinfoMap from '../../components/Map/StoreinfoMap';
 import './styles/StoreInfo.css';
 
 const StoreInfo = () => {
@@ -14,18 +14,30 @@ const StoreInfo = () => {
     phoneNumber: '',
     description: '',
     openingHours: null,
+    coordinates: { latitude: null, longitude: null }, // 좌표 추가
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // 시간 포맷팅 함수
-  const formatTime = (timeObj) => {
-    if (!timeObj) return '-';
-    const { hour, minute } = timeObj;
-    return `${String(hour).padStart(2, '0')}:${String(minute).padStart(
-      2,
-      '0'
-    )}`;
+  // 시간 포맷팅 함수 - 백엔드에서 "HH:mm:ss" 형태로 오는 문자열을 "HH:mm" 형태로 변환
+  const formatTime = (timeString) => {
+    if (!timeString) return '-';
+
+    // "10:00:00" -> "10:00" 형태로 변환
+    if (typeof timeString === 'string') {
+      return timeString.substring(0, 5); // 처음 5글자만 가져와서 "HH:mm" 형태로 만듦
+    }
+
+    // 혹시 기존 객체 형태로 올 경우를 대비한 호환성 코드
+    if (typeof timeString === 'object' && timeString.hour !== undefined) {
+      const { hour, minute } = timeString;
+      return `${String(hour).padStart(2, '0')}:${String(minute).padStart(
+        2,
+        '0'
+      )}`;
+    }
+
+    return '-';
   };
 
   // 가게 정보 API 호출
@@ -45,6 +57,10 @@ const StoreInfo = () => {
           phoneNumber: data.phoneNumber || '전화번호 없음',
           description: data.description || '',
           openingHours: data.openingHours || null,
+          coordinates: {
+            latitude: data.coordinates?.latitude || null,
+            longitude: data.coordinates?.longitude || null,
+          },
         });
       } catch (err) {
         console.error('가게 정보 로딩 에러:', err);
@@ -131,9 +147,13 @@ const StoreInfo = () => {
             )}
           </ul>
 
-          {/* 네이버 지도 컴포넌트 - 주소 기반 표시 */}
+          {/* 네이버 지도 컴포넌트 - 좌표 기반 표시 */}
           <div className="map-container">
-            <NaverMap address={storeInfo.address} />
+            <StoreinfoMap
+              latitude={storeInfo.coordinates.latitude}
+              longitude={storeInfo.coordinates.longitude}
+              storeName={storeInfo.name}
+            />
           </div>
         </>
       )}

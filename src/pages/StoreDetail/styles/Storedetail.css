@@ -82,6 +82,42 @@
   cursor: pointer;
 }
 
+/* 찜 버튼 스타일 */
+.heart-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heart-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.heart-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.heart-btn.liked svg {
+  color: #ff6835 !important;
+  filter: drop-shadow(0 2px 4px rgba(255, 104, 53, 0.3));
+}
+
+.heart-btn:not(.liked) svg {
+  color: #999 !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
 .store-name {
   font-size: 20px;
   font-weight: 700;

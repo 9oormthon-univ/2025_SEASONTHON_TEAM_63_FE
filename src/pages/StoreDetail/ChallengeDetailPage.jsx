@@ -5,11 +5,15 @@ import Footer from '../../components/Footer/Footer';
 import { getStoreInfo } from '../../api/storedetail/storeApi'; // API 함수 임포트
 import './styles/ChallengeDetailPage.css';
 import CheckIcon from '@mui/icons-material/Check';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 
 const ChallengeDetailPage = () => {
   const { storeId, challengeId } = useParams();
   const [footerHeight, setFooterHeight] = useState(0);
   const [storeName, setStoreName] = useState('');
+  const [showModal, setShowModal] = useState(false); // 팝업 모달 상태 추가
+  const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지 상태 추가
 
   useEffect(() => {
     const fetchStoreName = async () => {
@@ -46,6 +50,64 @@ const ChallengeDetailPage = () => {
   };
 
   const progressPercentage = (challenge.progress / challenge.total) * 100;
+
+  // 팝업 열기/닫기 핸들러
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  // 사진 첨부 핸들러
+  const handlePhotoUpload = () => {
+    // hidden input을 클릭하여 파일 선택창 열기
+    document.getElementById('photo-upload-input').click();
+  };
+
+  // 파일 선택 핸들러
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // 파일 타입 검증 (이미지만 허용)
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setSelectedImage({
+            file: file,
+            preview: e.target.result,
+            name: file.name,
+          });
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('이미지 파일만 업로드 가능합니다.');
+      }
+    }
+  };
+
+  // 이미지 제거 핸들러
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    // input 값도 초기화
+    document.getElementById('photo-upload-input').value = '';
+  };
+
+  // 등록하기 핸들러
+  const handleSubmit = () => {
+    if (selectedImage) {
+      console.log('등록하기 클릭됨 - 선택된 이미지:', selectedImage.name);
+      // 실제 구현에서는 API 호출 로직 추가
+      // FormData를 사용하여 파일 업로드
+    } else {
+      alert('사진을 먼저 선택해주세요.');
+      return;
+    }
+
+    setShowModal(false);
+    setSelectedImage(null); // 모달 닫을 때 이미지도 초기화
+  };
 
   return (
     <>
@@ -124,8 +186,80 @@ const ChallengeDetailPage = () => {
           </ul>
         </div>
 
-        <button className="challengeDetail-btn">참여하기</button>
+        <button className="challengeDetail-btn" onClick={handleOpenModal}>
+          참여하기
+        </button>
       </div>
+
+      {/* 바텀 시트 모달 팝업 */}
+      {showModal && (
+        <div className="modal-overlay" onClick={handleCloseModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="photo-upload-section">
+              {selectedImage ? (
+                // 이미지가 선택된 경우
+                <div className="selected-image-container">
+                  <div className="selected-image-preview">
+                    <img
+                      src={selectedImage.preview}
+                      alt="선택된 이미지"
+                      className="preview-image"
+                    />
+                    <button
+                      className="remove-image-btn"
+                      onClick={handleRemoveImage}
+                      type="button"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className="image-info">
+                    <p className="image-name">{selectedImage.name}</p>
+                    <button
+                      className="change-image-btn"
+                      onClick={handlePhotoUpload}
+                      type="button"
+                    >
+                      📷 다른 사진 선택하기
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                // 이미지가 선택되지 않은 경우
+                <>
+                  <div className="upload-area" onClick={handlePhotoUpload}>
+                    <div className="camera-icon">
+                      <CameraAltIcon />
+                    </div>
+                    <div className="upload-text">사진을 업로드해주세요</div>
+                  </div>
+                  <button
+                    className="photo-upload-btn"
+                    onClick={handlePhotoUpload}
+                    type="button"
+                  >
+                    <InsertPhotoIcon />
+                    사진 첨부하기
+                  </button>
+                </>
+              )}
+
+              {/* 숨겨진 파일 input */}
+              <input
+                id="photo-upload-input"
+                type="file"
+                accept="image/*"
+                onChange={handleFileSelect}
+                style={{ display: 'none' }}
+              />
+            </div>{' '}
+            <button className="modal-submit-btn" onClick={handleSubmit}>
+              등록하기
+            </button>
+          </div>
+        </div>
+      )}
+
       <Footer setFooterHeight={setFooterHeight} />
     </>
   );

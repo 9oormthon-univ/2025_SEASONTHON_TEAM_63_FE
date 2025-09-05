@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import './Position.css';
 import SearchIcon from '@mui/icons-material/Search';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
-import NaverMap from '../../components/NaverMap';
+import NaverMap from '../../components/Map/NaverMap';
 import PageHeader from '../../components/ui/PageHeader';
 
 const Position = () => {
