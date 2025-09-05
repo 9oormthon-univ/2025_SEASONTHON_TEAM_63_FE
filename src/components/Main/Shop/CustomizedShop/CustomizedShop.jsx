@@ -11,17 +11,20 @@ function CustomizedShop({ userName = 'OO' }) {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchCustomizedShops = async () => {
+        // 함수의 이름을 더 명확하게 변경합니다.
+        const fetchRecommendedStores = async () => {
             setLoading(true);
+            setError(null);
             try {
-                const response = await axiosInstance.get('/api/stores');
+                // 1. '맞춤 추천 가게' API를 호출합니다.
+                const response = await axiosInstance.get('/api/stores/recommendations');
+
                 if (response.data && response.data.success) {
-                    const allShops = response.data.data.content || [];
-                    // 주문 수(orderCount)가 높은 순으로 정렬하고 상위 5개만 선택
-                    const sortedShops = [...allShops].sort((a, b) => b.orderCount - a.orderCount).slice(0, 5);
-                    setShops(sortedShops);
+                    // 2. API 응답 경로(response.data.data.stores)에서 데이터를 가져옵니다.
+                    //    서버에서 이미 추천 목록을 만들어 주므로 추가 정렬이 필요 없습니다.
+                    setShops(response.data.data.stores || []);
                 } else {
-                    throw new Error('추천 가게 정보를 가져오는데 실패했습니다.');
+                    throw new Error('추천 가게 정보를 가져오는 데 실패했습니다.');
                 }
             } catch (err) {
                 console.error('맞춤 추천 가게 데이터를 불러오는 데 실패했습니다.', err);
@@ -31,8 +34,8 @@ function CustomizedShop({ userName = 'OO' }) {
             }
         };
 
-        fetchCustomizedShops();
-    }, []);
+        fetchRecommendedStores();
+    }, []); // 컴포넌트 마운트 시 한 번만 실행합니다.
 
     const handleToggleSubscribe = async (shopId, isSubscribed) => {
         // 낙관적 업데이트
@@ -48,12 +51,14 @@ function CustomizedShop({ userName = 'OO' }) {
         } catch (err) {
             console.error('구독 상태 변경 실패', err);
             // 에러 시 원래 상태로 복구
+            alert('구독 상태 변경에 실패했습니다. 다시 시도해주세요.');
             setShops((currentShops) =>
                 currentShops.map((s) => (s.id === shopId ? { ...s, isSubscribed: isSubscribed } : s))
             );
         }
     };
 
+    // 로딩 및 에러 UI
     if (loading)
         return (
             <section className="shop-section">
@@ -74,7 +79,8 @@ function CustomizedShop({ userName = 'OO' }) {
             </header>
             <div className="shop-list-container">
                 {shops.map((shop) => (
-                    <div key={shop.id} className="shop-item-card" onClick={() => navigate(`/shop/${shop.id}`)}>
+                    // 3. navigate 경로를 올바르게 수정합니다. ('/shop/' -> '/store/')
+                    <div key={shop.id} className="shop-item-card" onClick={() => navigate(`/store/${shop.id}`)}>
                         <div className="shop-image-placeholder">
                             <img src={shop.bannerImageUrl} alt={shop.name} className="shop-image" />
                             <button
