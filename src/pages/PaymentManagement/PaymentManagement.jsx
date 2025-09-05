@@ -1,26 +1,83 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Html5QrcodeScanner } from 'html5-qrcode'; // React 19와 호환되는 라이브러리
 import './PaymentManagement.css';
 import { X, Minus, Plus } from 'lucide-react';
 
-// --- 추가된 부분: 이미지 파일을 직접 import 합니다. ---
-// 경로 별칭(@)이 설정되어 있다고 가정합니다. 만약 아니라면 상대 경로('./../../assets/...')를 사용하세요.
 import soloPaymentImage from '../../assets/icon/PatmentM/혼자결재.png';
 import groupPaymentImage from '../../assets/icon/PatmentM/공동결재.png';
 
-// QR 스캐너를 흉내 내는 가상 컴포넌트
-const QrScanner = ({ onClose }) => (
-    <div className="qr-scanner-overlay">
-        <div className="qr-scanner-modal">
-            <button onClick={onClose} className="close-btn">
-                <X size={24} />
-            </button>
-            <div className="camera-view">
-                <div className="qr-frame"></div>
-                <p>QR 코드를 스캔해주세요.</p>
+// --- html5-qrcode를 사용하는 새로운 QR 스캐너 컴포넌트 ---
+const RealQrScanner = ({ onClose }) => {
+    const scannerRef = useRef(null);
+
+    useEffect(() => {
+        // 컴포넌트가 마운트될 때 스캐너 인스턴스 생성
+        const scanner = new Html5QrcodeScanner(
+            'qr-reader-container', // 스캐너를 렌더링할 DOM 요소의 ID
+            {
+                qrbox: {
+                    width: 250,
+                    height: 250,
+                },
+                fps: 10, // 초당 스캔 프레임 수
+            },
+            false // verbose, 상세 로그 출력 여부
+        );
+
+        scannerRef.current = scanner;
+
+        // 스캔 성공 콜백
+        const onScanSuccess = (decodedText, decodedResult) => {
+            console.log(`스캔 성공: ${decodedText}`, decodedResult);
+            alert(`QR 코드 내용: ${decodedText}`);
+
+            // QR 코드에 있는 주소로 이동하려면 아래 주석을 해제하세요.
+            // if (decodedText.startsWith('http')) {
+            //   window.location.href = decodedText;
+            // }
+
+            // 스캔 후 리소스 정리 및 모달 닫기
+            handleClose();
+        };
+
+        // 스캔 실패 콜백 (필요 시 사용)
+        const onScanFailure = (error) => {
+            // 스캔 실패는 계속 발생하므로 일반적으로 콘솔에 로그를 남기지 않습니다.
+            // console.warn(`Code scan error = ${error}`);
+        };
+
+        // 스캐너 렌더링
+        scanner.render(onScanSuccess, onScanFailure);
+
+        // 컴포넌트 언마운트 시 스캐너 정리
+        return () => {
+            handleClose();
+        };
+    }, []);
+
+    const handleClose = () => {
+        if (scannerRef.current && scannerRef.current.getState() === 2) {
+            // 2: SCANNING 상태
+            scannerRef.current.clear().catch((error) => {
+                console.error('스캐너 정리 실패:', error);
+            });
+        }
+        onClose();
+    };
+
+    return (
+        <div className="qr-scanner-overlay">
+            <div className="qr-scanner-modal">
+                <button onClick={handleClose} className="close-btn">
+                    <X size={24} />
+                </button>
+                {/* 스캐너가 렌더링될 컨테이너 */}
+                <div id="qr-reader-container" className="camera-view"></div>
+                <p className="scan-guide-text">QR 코드를 사각형 안에 맞춰주세요.</p>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 // 공동 결제 시 인원 수를 선택하는 모달 컴포넌트
 const PeoplePicker = ({ onConfirm, onCancel }) => {
@@ -88,7 +145,6 @@ function PaymentManagement() {
             <section className="payment-section">
                 <h2>현장결제</h2>
                 <div className="payment-buttons">
-                    {/* --- 변경된 부분: div 아이콘을 img 태그로 교체 --- */}
                     <button className="payment-btn solo" onClick={handleSoloPayment}>
                         <img src={soloPaymentImage} alt="혼자 결제하기" className="btn-image" />
                         <span>혼자 결제하기</span>
@@ -117,7 +173,8 @@ function PaymentManagement() {
             {showPeoplePicker && (
                 <PeoplePicker onConfirm={handleConfirmPeople} onCancel={() => setShowPeoplePicker(false)} />
             )}
-            {showCamera && <QrScanner onClose={() => setShowCamera(false)} />}
+
+            {showCamera && <RealQrScanner onClose={() => setShowCamera(false)} />}
         </div>
     );
 }
