@@ -33,6 +33,13 @@ const StoreChallenge = () => {
     navigate(`/store/${storeId}/challenge/${challengeId}`);
   };
 
+  const handleParticipateClick = (challengeId) => {
+    // 참여하기 버튼 클릭 시 팝업이 열린 상태로 페이지 이동
+    navigate(`/store/${storeId}/challenge/${challengeId}`, {
+      state: { openModal: true },
+    });
+  };
+
   return (
     <div className="challenge-container">
       {challenges.map((challenge) => (
@@ -52,7 +59,12 @@ const StoreChallenge = () => {
             >
               상세보기
             </button>
-            <button className="participate-button">참여하기</button>
+            <button
+              onClick={() => handleParticipateClick(challenge.id)}
+              className="participate-button"
+            >
+              참여하기
+            </button>
           </div>
         </div>
       ))}

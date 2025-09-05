@@ -156,3 +156,9 @@
   border-bottom: 2px solid #7d45ff;
   margin-bottom: -2px;
 }
+
+@media screen and (max-width: 366px) {
+  .store-nav a {
+    font-size: 10.6px;
+  }
+}
