@@ -147,11 +147,7 @@ function PaymentManagement() {
                 <div className="payment-buttons">
                     <button className="payment-btn solo" onClick={handleSoloPayment}>
                         <img src={soloPaymentImage} alt="혼자 결제하기" className="btn-image" />
-                        <span>혼자 결제하기</span>
-                    </button>
-                    <button className="payment-btn group" onClick={handleGroupPayment}>
-                        <img src={groupPaymentImage} alt="공동 결제하기" className="btn-image" />
-                        <span>공동 결제하기</span>
+                        <span>결제하기</span>
                     </button>
                 </div>
             </section>

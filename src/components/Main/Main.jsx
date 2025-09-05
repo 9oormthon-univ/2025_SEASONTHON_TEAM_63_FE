@@ -17,25 +17,25 @@ import Advertisement from '../Advertisement/Advertisement';
 import { subCategoryData } from '../../data/categoryData';
 
 function Main() {
-  const [activeCategory, setActiveCategory] = useState('food');
-  const [activeFilter, setActiveFilter] = useState('한식');
-  const [isSearchOpen, setIsSearchOpen] = useState(false); // ✨ 2. 검색 페이지 표시 상태 추가
+    const [activeCategory, setActiveCategory] = useState('food');
+    const [activeFilter, setActiveFilter] = useState('한식');
+    const [isSearchOpen, setIsSearchOpen] = useState(false); // ✨ 2. 검색 페이지 표시 상태 추가
 
-  useEffect(() => {
-    if (subCategoryData[activeCategory]) {
-      setActiveFilter(subCategoryData[activeCategory][0]);
-    }
-  }, [activeCategory]);
+    useEffect(() => {
+        if (subCategoryData[activeCategory]) {
+            setActiveFilter(subCategoryData[activeCategory][0]);
+        }
+    }, [activeCategory]);
 
-  // ✨ 3. 검색 페이지를 여는 핸들러
-  const openSearchPage = () => {
-    setIsSearchOpen(true);
-  };
+    // ✨ 3. 검색 페이지를 여는 핸들러
+    const openSearchPage = () => {
+        setIsSearchOpen(true);
+    };
 
-  // ✨ 4. 검색 페이지를 닫는 핸들러
-  const closeSearchPage = () => {
-    setIsSearchOpen(false);
-  };
+    // ✨ 4. 검색 페이지를 닫는 핸들러
+    const closeSearchPage = () => {
+        setIsSearchOpen(false);
+    };
 
     return (
         <div className="home-container">
@@ -46,23 +46,23 @@ function Main() {
             <SelectAccount />
             <CategoryNav activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
 
-      {/* ✨ 5. onFocus 이벤트 핸들러를 SearchBar에 전달 */}
-      <SearchBar placeholder="가게를 입력하세요" onFocus={openSearchPage} />
+            {/* ✨ 5. onFocus 이벤트 핸들러를 SearchBar에 전달 */}
+            <SearchBar placeholder="가게를 입력하세요" onFocus={openSearchPage} />
 
-      <FilterTabs
-        filters={subCategoryData[activeCategory]}
-        activeFilter={activeFilter}
-        onSelectFilter={setActiveFilter}
-      />
-      <Foodshop filter={activeFilter} />
-      <TrendShop />
-      <CustomizedShop />
-      <DiscountShop />
+            <FilterTabs
+                filters={subCategoryData[activeCategory]}
+                activeFilter={activeFilter}
+                onSelectFilter={setActiveFilter}
+            />
+            <Foodshop filter={activeFilter} />
+            <TrendShop />
+            <CustomizedShop />
+            <DiscountShop />
 
-      {/* ✨ 6. isSearchOpen 상태에 따라 SearchPage를 조건부 렌더링 */}
-      {isSearchOpen && <SearchPage onClose={closeSearchPage} />}
-    </div>
-  );
+            {/* ✨ 6. isSearchOpen 상태에 따라 SearchPage를 조건부 렌더링 */}
+            {isSearchOpen && <SearchPage onClose={closeSearchPage} />}
+        </div>
+    );
 }
 
 export default Main;
