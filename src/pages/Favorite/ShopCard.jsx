@@ -1,20 +1,27 @@
 import React from 'react';
 import './Favorite.css';
 import HeartIcon from '../../assets/icon/하트.svg?react';
-import useFavoriteStore from '../../store/favoriteStore';
+import useFavoriteStore from '../../store/favoriteStore'; //실제 경로 확인
 
 function ShopCard({ shop }) {
-    const { toggleFavorite } = useFavoriteStore();
+    // [수정] 스토어에서 올바른 함수 이름인 toggleSubscription을 가져옵니다.
+    const { toggleSubscription, isStoreLoading } = useFavoriteStore();
+
+    // 이 컴포넌트는 Favorite 페이지에 있으므로, 항상 '찜 된 상태(true)'입니다.
+    const isSubscribed = true;
+    const isLoading = isStoreLoading(shop.id);
 
     return (
-        // 1. 부모 컨테이너
         <div className="ShopCard-container">
-            {/* 2. 버튼을 컨테이너의 최상단으로 이동 */}
-            <button className="shop-like-btn liked" onClick={() => toggleFavorite(shop.id)}>
+            <button
+                className="shop-like-btn liked"
+                // [수정] toggleSubscription 함수를 호출하고, 찜 해제를 위해 현재 상태(true)를 전달합니다.
+                onClick={() => toggleSubscription(shop.id, isSubscribed)}
+                disabled={isLoading} // API 처리 중에는 버튼 비활성화
+            >
                 <HeartIcon />
             </button>
 
-            {/* --- 기존 레이아웃 --- */}
             <div className="ShopCard-image-placeholder">{/* 실제 이미지는 여기에 렌더링 됩니다. */}</div>
 
             <div className="ShopCard-details">
