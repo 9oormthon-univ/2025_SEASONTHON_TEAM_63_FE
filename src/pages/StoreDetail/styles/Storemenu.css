@@ -44,6 +44,27 @@
   font-size: 14px;
   color: #9d9d9d;
   margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 할인 배지 스타일 */
+.discount-badge {
+  background-color: #ff6835;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* 가격 섹션 */
+.price-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .menu-item-price-info {

@@ -1,72 +1,87 @@
 .Main-wapper {
-    width: 91.79%; /* 화면 너비의 91.79%를 차지하도록 설정 */
-    max-width: 480px; /* PC 등 큰 화면에서 최대 너비를 480px로 제한 */
-    margin: 0 auto; /* 좌우 여백을 자동으로 계산하여 중앙 정렬 */
-    background-color: #ffffff;
-    box-sizing: border-box;
+  width: 91.79%; /* 화면 너비의 91.79%를 차지하도록 설정 */
+  max-width: 480px; /* PC 등 큰 화면에서 최대 너비를 480px로 제한 */
+  margin: 0 auto; /* 좌우 여백을 자동으로 계산하여 중앙 정렬 */
+  background-color: #ffffff;
+  box-sizing: border-box;
 }
 
 .Order-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 17px 18px;
-    margin-bottom: 16px;
-    box-shadow: 0 7px 12px rgb(216, 216, 216);
-    min-height: 245px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px 18px;
+  margin-bottom: 28px;
+  min-height: 210px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.Order-date {
-    font-size: 12px;
-    color: #9d9d9d;
-    margin-bottom: 18px;
-}
+
 .Order-restaurant {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 11px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 12px;
 }
+
 .Order-menu {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 16px;
+  color: #9d9d9d;
+  font-size: 14px;
+  margin-bottom: 12px;
 }
+
 .Order-price {
-    margin-bottom: 18px;
-    font-size: 14px;
+  margin-bottom: 18px;
+  font-size: 14px;
 }
+
 .Original-price {
-    text-decoration: line-through;
-    color: #bbb;
+  margin-left: 8px;
+  text-decoration: line-through;
+  color: #bbb;
 }
+
 .Discounted-price {
-    margin-left: 6px;
-    font-weight: bold;
-    color: #684cf6;
+  margin-left: 6px;
+  font-weight: bold;
+  color: #684cf6;
 }
+
 .Discount-badge {
-    background: #e7ecff;
-    color: #5988f7;
-    border-radius: 8px;
-    padding: 2px 8px;
-    margin-left: 8px;
-    font-size: 0.9em;
+  border: 1px solid #5c73ff;
+  color: #5988f7;
+  border-radius: 8px;
+  padding: 2px 8px;
+  margin-left: 12px;
+  font-size: 11px;
 }
+
 .Order-time {
-    margin-bottom: 18px;
-    font-size: 14px;
+  margin-bottom: 28px;
+  font-size: 14px;
 }
-.Review-btn {
-    box-sizing: border-box;
-    background: #5c73ff;
-    color: #fff;
-    border-radius: 10px;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    font-size: 1em;
-    font-weight: bold;
-    text-align: center;
-    min-height: 48px;
-    display: block; /* NavLink(a 태그)에 꼭 추가 */
-    text-decoration: none; /* NavLink의 밑줄 제거 */
+
+.Order-time span {
+  margin-left: 12px;
+  color: #9d9d9d;
+}
+
+.review-contain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-btn {
+  height: 48px;
+  box-sizing: border-box;
+  background: #5c73ff;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }

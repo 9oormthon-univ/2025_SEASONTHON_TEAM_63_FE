@@ -216,3 +216,107 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+/* 결제 모달 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.payment-modal {
+  background-color: white;
+  width: 90%;
+  max-width: 350px;
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: fadeInScale 0.3s ease-out;
+}
+
+.basket-modal-content {
+  position: relative;
+  padding: 44px 27px 18px;
+  text-align: center;
+  background-color: white;
+  border-radius: 12px;
+}
+
+.basket-modal-content .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.basket-modal-content .close-btn:hover {
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+.basket-modal-content h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.basket-modal-content p {
+  font-size: 14px;
+  color: #9d9d9d;
+  line-height: 1.4;
+  margin-bottom: 30px;
+}
+
+.payment-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.payment-option-btn {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background-color: #7d45ff;
+  color: white;
+}
+
+.continue-btn {
+  background-color: #5c73ff;
+  color: white;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

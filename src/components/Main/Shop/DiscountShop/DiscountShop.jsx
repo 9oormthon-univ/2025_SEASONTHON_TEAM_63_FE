@@ -11,28 +11,31 @@ function DiscountShop() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchTopRatedShops = async () => {
+        // 함수의 이름을 더 명확하게 변경합니다.
+        const fetchDiscountStores = async () => {
             setLoading(true);
+            setError(null);
             try {
-                const response = await axiosInstance.get('/api/stores');
+                // 1. '할인율 높은 가게' API를 호출합니다.
+                const response = await axiosInstance.get('/api/stores/discounts');
+
                 if (response.data && response.data.success) {
-                    const allShops = response.data.data.content || [];
-                    // 평균 평점(averageRating)이 높은 순으로 정렬하고 상위 5개만 선택
-                    const sortedShops = [...allShops].sort((a, b) => b.averageRating - a.averageRating).slice(0, 5);
-                    setShops(sortedShops);
+                    // 2. API 응답 경로(response.data.data.stores)에서 데이터를 가져옵니다.
+                    //    서버에서 이미 정렬된 데이터를 주므로 추가적인 정렬이 필요 없습니다.
+                    setShops(response.data.data.stores || []);
                 } else {
-                    throw new Error('가게 정보를 가져오는데 실패했습니다.');
+                    throw new Error('할인 가게 정보를 가져오는 데 실패했습니다.');
                 }
             } catch (err) {
-                console.error('평점 높은 가게 데이터를 불러오는 데 실패했습니다.', err);
+                console.error('할인 가게 데이터를 불러오는 데 실패했습니다.', err);
                 setError('가게 정보를 불러오는 중 오류가 발생했습니다.');
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchTopRatedShops();
-    }, []);
+        fetchDiscountStores();
+    }, []); // 컴포넌트 마운트 시 한 번만 실행합니다.
 
     const handleToggleSubscribe = async (shopId, isSubscribed) => {
         // 낙관적 업데이트
@@ -48,12 +51,14 @@ function DiscountShop() {
         } catch (err) {
             console.error('구독 상태 변경 실패', err);
             // 에러 시 원래 상태로 복구
+            alert('구독 상태 변경에 실패했습니다. 다시 시도해주세요.');
             setShops((currentShops) =>
                 currentShops.map((s) => (s.id === shopId ? { ...s, isSubscribed: isSubscribed } : s))
             );
         }
     };
 
+    // 로딩 및 에러 UI
     if (loading)
         return (
             <section className="shop-section">
@@ -70,12 +75,12 @@ function DiscountShop() {
     return (
         <section className="shop-section">
             <header className="shop-header">
-                {/* 기능 변경에 따라 제목도 수정 */}
-                <h2 className="shop-title">평점 높은 가게</h2>
+                <h2 className="shop-title">할인율 높은 가게</h2>
             </header>
             <div className="shop-list-container">
                 {shops.map((shop) => (
-                    <div key={shop.id} className="shop-item-card" onClick={() => navigate(`/shop/${shop.id}`)}>
+                    // 3. navigate 경로를 올바르게 수정합니다. ('/shop/' -> '/store/')
+                    <div key={shop.id} className="shop-item-card" onClick={() => navigate(`/store/${shop.id}`)}>
                         <div className="shop-image-placeholder">
                             <img src={shop.bannerImageUrl} alt={shop.name} className="shop-image" />
                             <button

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import PageHeader from '../../components/ui/PageHeader';
 import Footer from '../../components/Footer/Footer';
@@ -10,6 +10,7 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 
 const ChallengeDetailPage = () => {
   const { storeId, challengeId } = useParams();
+  const location = useLocation();
   const [footerHeight, setFooterHeight] = useState(0);
   const [storeName, setStoreName] = useState('');
   const [showModal, setShowModal] = useState(false); // 팝업 모달 상태 추가
@@ -30,6 +31,13 @@ const ChallengeDetailPage = () => {
       fetchStoreName();
     }
   }, [storeId]);
+
+  // 참여하기 버튼을 통해 들어온 경우 자동으로 팝업 열기
+  useEffect(() => {
+    if (location.state?.openModal) {
+      setShowModal(true);
+    }
+  }, [location.state]);
 
   // 실제 앱에서는 API 호출을 통해 challengeId에 맞는 데이터를 가져옵니다.
   const challenge = {

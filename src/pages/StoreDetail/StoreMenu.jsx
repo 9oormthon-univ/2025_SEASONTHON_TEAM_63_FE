@@ -50,10 +50,15 @@ const StoreMenu = () => {
 
   // 장바구니에 담을 아이템 객체 생성
   const handleAddToCart = (menu) => {
+    const price =
+      menu.discountedPrice > 0 ? menu.discountedPrice : menu.basePrice;
+    const originalPrice = menu.discountedPrice > 0 ? menu.basePrice : null;
+
     const cartItem = {
       id: menu.id,
       name: menu.name,
-      price: menu.discountedPrice > 0 ? menu.discountedPrice : menu.basePrice,
+      price: price,
+      originalPrice: originalPrice,
       imageUrl: menu.imageUrl,
     };
     addToCart(cartItem);
@@ -112,6 +117,11 @@ const StoreMenu = () => {
               const originalPrice =
                 menu.discountedPrice > 0 ? menu.basePrice : null;
 
+              // 할인율 계산
+              const discountRate = originalPrice
+                ? Math.round(((originalPrice - price) / originalPrice) * 100)
+                : 0;
+
               return (
                 <div key={menu.id} className="menu-item">
                   <div className="menu-item-contian">
@@ -127,7 +137,12 @@ const StoreMenu = () => {
                       <p className="menu-item-description">
                         {menu.description}
                       </p>
-                      <div>
+                      <div className="price-section">
+                        {discountRate > 0 && (
+                          <span className="menu-item-discount">
+                            {discountRate}% 할인
+                          </span>
+                        )}
                         {originalPrice && (
                           <span className="menu-item-original-price">
                             {originalPrice.toLocaleString()}원
@@ -174,7 +189,7 @@ const StoreMenu = () => {
             </div>
             <button
               className="view-cart-btn"
-              onClick={() => navigate('/store-basket')}
+              onClick={() => navigate(`/store/${storeId}/basket`)}
             >
               <ShoppingCartIcon />
               장바구니 보기

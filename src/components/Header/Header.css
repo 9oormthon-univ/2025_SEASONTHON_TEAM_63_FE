@@ -4,28 +4,22 @@
     position: sticky;
     top: 0;
     width: 100%;
-    height: 5.63vh; /* 이 값도 vw나 rem 등 다른 단위로 통일하는 것을 고려해볼 수 있습니다. */
-
+    height: 5.63vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 10px 15px;
-
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
     box-sizing: border-box;
     z-index: 1000;
-
     transition: transform 0.4s ease-in-out;
 }
 
-/* 헤더가 보여질 때의 상태 */
 .Header-wrapper.visible {
     transform: translateY(0);
 }
 
-/* 헤더가 숨겨질 때의 상태 */
 .Header-wrapper.hidden {
     transform: translateY(-100%);
 }
@@ -33,32 +27,47 @@
 .logo {
     text-align: center;
     font-weight: bold;
-    /* 로고와 아이콘 사이의 공간을 확보하기 위해 */
     flex-grow: 1;
 }
 
 /* --- 아이콘 스타일 시작 --- */
-
-/* 아이콘을 감싸는 div에 정렬 속성 추가 */
+/* 아이콘을 감싸는 div 공통 스타일 */
 .location,
 .alarm {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0; /* 아이콘이 찌그러지지 않도록 설정 */
+    flex-shrink: 0;
+    cursor: pointer; /* 클릭 가능하다는 것을 시각적으로 표시 */
 }
 
-/* 아이콘(SVG) 자체에 반응형 크기 적용 */
-/* 아이콘(SVG) 자체에 반응형 크기 적용 */
-.location svg,
+/* LocaIcon 개별 스타일 */
+.location svg {
+    margin-left: 8px;
+    width: 8.31vw; /* 기존과 동일 */
+    height: 10.31vw;
+    max-width: 30px;
+    max-height: 25px;
+    color: #7d45ff; /* 기본 색상 (비활성 상태) */
+    transition: color 0.3s ease; /* 색상 변경 애니메이션 */
+}
+
+/* LocaIcon 활성 상태 스타일 */
+.location.active svg {
+    color: #7d45ff; /* 활성 상태 색상 (초록색 예시) */
+}
+
+/* 마우스를 올렸을 때 색상 변경 (선택사항) */
+.location:hover svg {
+    color: #7d45ff; /* 마우스 오버 색상 */
+}
+
+/* AlarmIcon 개별 스타일 */
 .alarm svg {
-    /* 화면 너비의 10.31%를 차지하도록 값을 줄임 */
     width: 10.31vw;
     height: 10.31vw;
-
-    /* 최대 크기도 함께 조절하는 것을 권장합니다 */
-    max-width: 35px; /* 예시: 48px -> 40px */
-    max-height: 35px; /* 예시: 48px -> 40px */
+    max-width: 35px;
+    max-height: 35px;
+    color: #333333; /* 알람 아이콘 기본 색상 */
 }
-
 /* --- 아이콘 스타일 끝 --- */
