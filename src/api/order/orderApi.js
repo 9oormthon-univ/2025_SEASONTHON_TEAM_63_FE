@@ -26,3 +26,11 @@ export const completePayment = async (paymentData) => {
   );
   return response.data;
 };
+
+/**
+ * 사용자 주문 목록 조회 API
+ */
+export const getUserOrders = async () => {
+  const response = await axiosInstance.get('/api/orders/me');
+  return response.data;
+};
