@@ -233,3 +233,35 @@ h3 {
     background-color: #8a2be2;
     color: white;
 }
+.camera-view {
+    width: 100%;
+    /* height는 라이브러리가 자동으로 조절하므로 제거하거나 auto로 설정 */
+    background: #fff; /* 배경을 흰색으로 변경 */
+    border-radius: 8px;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+/* html5-qrcode가 생성하는 UI 요소들의 스타일을 필요에 따라 커스터마이징 할 수 있습니다. */
+#qr-reader-container video {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 8px;
+}
+
+#qr-reader-container button {
+    /* 라이브러리가 생성하는 버튼들의 스타일을 여기서 수정할 수 있습니다. */
+    background-color: #8a2be2;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.scan-guide-text {
+    color: #333; /* 텍스트 색상 변경 */
+    margin-top: 1rem;
+    font-size: 1rem;
+}
