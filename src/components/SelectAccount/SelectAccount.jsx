@@ -10,7 +10,7 @@ const WeeklyReportModal = ({ isOpen, onClose, weeklyData }) => {
     const maxAmount = Math.max(...weeklyData.map((d) => d.amount));
     return (
         <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-content2" onClick={(e) => e.stopPropagation()}>
                 <button className="modal-close-button" onClick={onClose}>
                     ×
                 </button>
