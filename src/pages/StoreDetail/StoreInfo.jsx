@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getStoreInfo } from '../../api/storedetail/storeApi';
-import StoreinfoMap from '../../components/StoreinfoMap';
+import StoreinfoMap from '../../components/Map/StoreinfoMap';
 import './styles/StoreInfo.css';
 
 const StoreInfo = () => {
