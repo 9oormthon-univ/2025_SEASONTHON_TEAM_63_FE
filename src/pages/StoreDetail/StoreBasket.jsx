@@ -146,8 +146,12 @@ const StoreBasket = () => {
         setPaymentStatus('SUCCESS');
         alert('결제가 완료되었습니다!');
         setShowPaymentModal(false);
+
+        // 장바구니 비우기
+        cart.forEach((item) => removeFromCart(item.id));
+
         // 주문내역 페이지로 이동
-        navigate('/orders');
+        navigate('/orders', { replace: true });
       } else {
         throw new Error(
           completeResponse.message || '결제 완료 처리에 실패했습니다.'
