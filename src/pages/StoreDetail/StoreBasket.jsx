@@ -2,6 +2,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import useCartStore from '../../store/cartStore';
 import { getStoreInfo } from '../../api/storedetail/storeApi';
+import { createOrder, completePayment } from '../../api/order/orderApi';
+import PortOne from '@portone/browser-sdk/v2';
 import './styles/StoreBasket.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -18,6 +20,7 @@ const StoreBasket = () => {
   });
   const [loading, setLoading] = useState(true);
   const [showPaymentModal, setShowPaymentModal] = useState(false); // 결제 모달 상태
+  const [paymentStatus, setPaymentStatus] = useState('IDLE'); // 결제 상태 관리
 
   // 가게 정보 API 호출
   useEffect(() => {
@@ -62,14 +65,99 @@ const StoreBasket = () => {
 
   const handleCloseModal = () => {
     setShowPaymentModal(false);
+    setPaymentStatus('IDLE');
   };
 
-  const handleConfirmPayment = () => {
-    // 실제 결제 로직 구현
-    console.log('결제 진행...');
-    alert('결제가 완료되었습니다!');
-    setShowPaymentModal(false);
-    // 결제 완료 후 장바구니 비우기나 다른 페이지로 이동 등
+  // 로그인 상태 확인 함수
+  const isLoggedIn = () => {
+    return localStorage.getItem('authToken') !== null;
+  };
+
+  // 랜덤 ID 생성 함수
+  const randomId = () => {
+    return [...crypto.getRandomValues(new Uint32Array(2))]
+      .map((word) => word.toString(16).padStart(8, '0'))
+      .join('');
+  };
+
+  const handleConfirmPayment = async () => {
+    try {
+      // 1. 로그인 체크
+      if (!isLoggedIn()) {
+        alert('로그인이 필요합니다.');
+        if (window.confirm('로그인 페이지로 이동하시겠습니까?')) {
+          navigate('/');
+        }
+        return;
+      }
+
+      setPaymentStatus('PENDING');
+
+      // 2. 주문 생성
+      const orderRequest = {
+        storeId: parseInt(storeId) || 123,
+        items: cart.map((item) => ({
+          menuId: item.id,
+          quantity: item.quantity,
+        })),
+      };
+
+      const orderResponse = await createOrder(orderRequest);
+
+      if (!orderResponse.success) {
+        throw new Error(orderResponse.message || '주문 생성에 실패했습니다.');
+      }
+
+      const { data: order } = orderResponse;
+      const merchantUid = order.MerchantUid;
+
+      // 3. 포트원 결제 요청
+      const payment = await PortOne.requestPayment({
+        storeId: import.meta.env.VITE_PORTONE_STORE_ID,
+        channelKey: import.meta.env.VITE_PORTONE_CHANNEL_KEY,
+        paymentId: merchantUid,
+        orderName: `${storeInfo.name} 주문`,
+        totalAmount: getTotalPrice(),
+        currency: 'KRW',
+        payMethod: 'CARD',
+        customer: {
+          customerId: 'customer_' + Date.now(),
+        },
+        redirectUrl: `${window.location.origin}/orders`, // 결제 완료 후 리디렉션 URL
+        customData: {
+          orderId: order.id,
+          storeId: storeId,
+        },
+      });
+
+      // 4. 결제 결과 처리
+      if (payment.code !== undefined) {
+        setPaymentStatus('FAILED');
+        alert(`결제 실패: ${payment.message}`);
+        return;
+      }
+
+      // 5. 결제 완료 처리
+      const completeResponse = await completePayment({
+        paymentId: payment.paymentId,
+      });
+
+      if (completeResponse.success) {
+        setPaymentStatus('SUCCESS');
+        alert('결제가 완료되었습니다!');
+        setShowPaymentModal(false);
+        // 주문내역 페이지로 이동
+        navigate('/orders');
+      } else {
+        throw new Error(
+          completeResponse.message || '결제 완료 처리에 실패했습니다.'
+        );
+      }
+    } catch (error) {
+      console.error('결제 에러:', error);
+      setPaymentStatus('FAILED');
+      alert(`결제 중 오류가 발생했습니다: ${error.message}`);
+    }
   };
 
   const handleContinueShopping = () => {
@@ -187,8 +275,11 @@ const StoreBasket = () => {
                 <button
                   className="payment-option-btn confirm-btn"
                   onClick={handleConfirmPayment}
+                  disabled={paymentStatus === 'PENDING'}
                 >
-                  혼자 결제하기
+                  {paymentStatus === 'PENDING'
+                    ? '결제 진행 중...'
+                    : '혼자 결제하기'}
                 </button>
                 <button
                   className="payment-option-btn continue-btn"
