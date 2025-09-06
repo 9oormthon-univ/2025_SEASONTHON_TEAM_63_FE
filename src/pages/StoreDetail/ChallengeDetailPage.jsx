@@ -2,11 +2,8 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import PageHeader from '../../components/ui/PageHeader';
 import Footer from '../../components/Footer/Footer';
-import { getStoreInfo } from '../../api/storedetail/storeApi'; // API 함수 임포트
-import {
-  participateChallenge,
-  getParticipatingChallenges,
-} from '../../api/storedetail/challengeRegistration';
+import { getStoreInfo } from '../../api/storedetail/storeApi';
+import useChallengeStore from '../../store/challengeStore'; // 새로운 챌린지 스토어
 import './styles/ChallengeDetailPage.css';
 import CheckIcon from '@mui/icons-material/Check';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -16,12 +13,27 @@ const ChallengeDetailPage = () => {
   const { storeId, challengeId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Zustand 스토어 사용
+  const {
+    isParticipating,
+    getChallengeData,
+    refreshParticipatingChallenges,
+    participateInChallenge,
+    isLoading: challengeLoading,
+    isCacheValid,
+  } = useChallengeStore();
+
+  // 로컬 상태들
   const [footerHeight, setFooterHeight] = useState(0);
   const [storeName, setStoreName] = useState('');
-  const [showModal, setShowModal] = useState(false); // 팝업 모달 상태 추가
-  const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지 상태 추가
-  const [isSubmitting, setIsSubmitting] = useState(false); // 등록 중 상태
-  const [isParticipating, setIsParticipating] = useState(false); // 참여 중 상태
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 챌린지 데이터 가져오기 (스토어에서)
+  const challengeData = getChallengeData(challengeId);
+  const isCurrentlyParticipating = isParticipating(challengeId);
 
   useEffect(() => {
     const fetchStoreName = async () => {
@@ -30,7 +42,7 @@ const ChallengeDetailPage = () => {
         setStoreName(data.name);
       } catch (error) {
         console.error('Failed to fetch store name:', error);
-        setStoreName('RE:visit'); // 에러 시 기본값
+        setStoreName('RE:visit');
       }
     };
 
@@ -39,62 +51,82 @@ const ChallengeDetailPage = () => {
     }
   }, [storeId]);
 
-  // 참여 여부 확인
+  // 챌린지 데이터 가져오기 (캐시 확인 후 필요시에만 API 호출)
   useEffect(() => {
-    const checkParticipationStatus = async () => {
-      try {
-        // API에서 참여중인 챌린지 확인
-        const response = await getParticipatingChallenges();
-        if (response.success) {
-          const isAlreadyParticipating = response.data.some(
-            (challenge) => challenge.challengeId === parseInt(challengeId)
-          );
-          setIsParticipating(isAlreadyParticipating);
+    const loadChallengeData = async () => {
+      if (challengeId) {
+        // 캐시가 유효하지 않거나 해당 챌린지 데이터가 없으면 새로고침
+        if (!isCacheValid() || !getChallengeData(challengeId)) {
+          await refreshParticipatingChallenges();
         }
-      } catch (error) {
-        console.error('참여 상태 확인 API 실패, localStorage 확인:', error);
-        // API 실패 시 localStorage에서 확인
-        const localData = JSON.parse(
-          localStorage.getItem('participatingChallenges') || '[]'
-        );
-        const isAlreadyParticipating = localData.some(
-          (challenge) => challenge.challengeId === parseInt(challengeId)
-        );
-        setIsParticipating(isAlreadyParticipating);
       }
     };
 
-    if (challengeId) {
-      checkParticipationStatus();
-    }
-  }, [challengeId]);
-
-  // 참여하기 버튼을 통해 들어온 경우 자동으로 팝업 열기
+    loadChallengeData();
+  }, [
+    challengeId,
+    refreshParticipatingChallenges,
+    isCacheValid,
+    getChallengeData,
+  ]); // 참여하기 버튼을 통해 들어온 경우 자동으로 팝업 열기
   useEffect(() => {
     if (location.state?.openModal) {
       setShowModal(true);
     }
   }, [location.state]);
 
-  // 실제 앱에서는 API 호출을 통해 challengeId에 맞는 데이터를 가져옵니다.
-  const challenge = {
-    id: challengeId,
-    storeName: '토핑맛집 [피자헛]', // 이 부분은 챌린지 데이터에 따라 다를 수 있습니다.
-    title: '주말에는 1+1!!',
-    dateRange: '40주년 이벤트',
-    progress: 3,
-    total: 5,
-    goal: 'OO가게 5회이상 방문',
-    reward: '30% 할인쿠폰 발급',
-    period: '2025.08.31 ~',
-    rules: [
-      '이벤트는 무조건 주말에만 참여 가능합니다.',
-      '오프라인에서 리뷰 작성히 확인 받아야 합니다.',
-      '이벤트 잘 즐겨주세요 😀',
-    ],
+  // 안전한 숫자 변환 함수
+  const safeNumber = (value, defaultValue = 0) => {
+    if (value === null || value === undefined || value === '') {
+      return defaultValue;
+    }
+    const num = Number(value);
+    return isNaN(num) ? defaultValue : num;
   };
 
-  const progressPercentage = (challenge.progress / challenge.total) * 100;
+  // 챌린지 데이터 (API에서 가져온 데이터가 있으면 사용, 없으면 기본값)
+  const challenge = challengeData
+    ? {
+        id: challengeData.challengeId,
+        storeName: '토핑맛집 [피자헛]',
+        title: '주말에는 1+1!!', // 이벤트 제목은 하드코딩 (API에 없음)
+        dateRange: '40주년 이벤트', // 이벤트 기간도 하드코딩 (API에 없음)
+        progress: safeNumber(challengeData.currentOrderCount, 0),
+        total: safeNumber(challengeData.targetOrderCount, 0) || 5, // 0이면 기본값 5 사용
+        goal: challengeData.challengeDescription || 'OO가게 5회이상 방문',
+        reward: challengeData.reward?.discount?.percentage
+          ? `${challengeData.reward.discount.percentage}% 할인쿠폰 발급`
+          : '30% 할인쿠폰 발급',
+        period: '2025.08.31 ~',
+        rules: [
+          '이벤트는 무조건 주말에만 참여 가능합니다.',
+          '오프라인에서 리뷰 작성히 확인 받아야 합니다.',
+          '이벤트 잘 즐겨주세요 😀',
+        ],
+      }
+    : {
+        // 기본값 (API 데이터가 없을 때)
+        id: challengeId,
+        storeName: '토핑맛집 [피자헛]',
+        title: '주말에는 1+1!!',
+        dateRange: '40주년 이벤트',
+        progress: 0,
+        total: 5,
+        goal: 'OO가게 5회이상 방문',
+        reward: '30% 할인쿠폰 발급',
+        period: '2025.08.31 ~',
+        rules: [
+          '이벤트는 무조건 주말에만 참여 가능합니다.',
+          '오프라인에서 리뷰 작성히 확인 받아야 합니다.',
+          '이벤트 잘 즐겨주세요 😀',
+        ],
+      };
+
+  // 진행률 계산 (targetOrderCount가 0인 경우 기본값 사용)
+  const progressPercentage =
+    challenge.total > 0
+      ? Math.round((challenge.progress / challenge.total) * 100)
+      : 0; // total이 0이면 진행률도 0%
 
   // 팝업 열기/닫기 핸들러
   const handleOpenModal = () => {
@@ -139,7 +171,7 @@ const ChallengeDetailPage = () => {
     document.getElementById('photo-upload-input').value = '';
   };
 
-  // 등록하기 핸들러
+  // 등록하기 핸들러 (스토어 사용)
   const handleSubmit = async () => {
     if (!selectedImage) {
       alert('사진을 먼저 선택해주세요.');
@@ -155,103 +187,24 @@ const ChallengeDetailPage = () => {
       formData.append('challengeId', challengeId);
       formData.append('storeId', storeId);
 
-      // API 호출
-      const response = await participateChallenge(challengeId, formData);
+      // 스토어를 통한 챌린지 참여
+      const result = await participateInChallenge(
+        challengeId,
+        storeId,
+        formData
+      );
 
-      if (response.success) {
-        // 등록 성공 시 참여 정보를 localStorage에 저장 (임시)
-        const participationData = {
-          challengeId: challengeId,
-          storeId: storeId,
-          storeName: challenge.storeName,
-          challengeDescription: challenge.title,
-          challengeType: 'REVIEW', // 예시, 실제로는 API에서 받아온 값
-          currentOrderCount: challenge.progress,
-          targetOrderCount: challenge.total,
-          status: 'PARTICIPATING',
-          participatedAt: new Date().toISOString(),
-        };
+      alert(result.message);
 
-        // 기존 참여중인 챌린지 가져오기
-        const existingChallenges = JSON.parse(
-          localStorage.getItem('participatingChallenges') || '[]'
-        );
-
-        // 중복 체크 후 추가
-        const isAlreadyParticipating = existingChallenges.some(
-          (c) => c.challengeId === challengeId
-        );
-        if (!isAlreadyParticipating) {
-          existingChallenges.push(participationData);
-          localStorage.setItem(
-            'participatingChallenges',
-            JSON.stringify(existingChallenges)
-          );
-        }
-
-        alert('챌린지 등록이 완료되었습니다!');
-
-        // 참여 상태를 true로 설정
-        setIsParticipating(true);
-
+      if (result.success) {
         // 모달 닫기 및 상태 초기화
         setShowModal(false);
         setSelectedImage(null);
-
-        // 마이페이지로 이동
-        navigate('/personal-info');
+        // 현재 페이지에 머물면서 업데이트된 상태 확인
       }
     } catch (error) {
       console.error('챌린지 등록 오류:', error);
-
-      // 409 에러 (이미 참여중인 챌린지) 처리
-      if (error.response && error.response.status === 409) {
-        alert('이미 참여중인 챌린지입니다. 마이페이지에서 확인해보세요!');
-
-        // 참여 상태를 true로 설정
-        setIsParticipating(true);
-
-        // 이미 참여중이므로 localStorage에 추가하고 마이페이지로 이동
-        const participationData = {
-          challengeId: challengeId,
-          storeId: storeId,
-          storeName: challenge.storeName,
-          challengeDescription: challenge.title,
-          challengeType: 'REVIEW',
-          currentOrderCount: challenge.progress,
-          targetOrderCount: challenge.total,
-          status: 'PARTICIPATING',
-          participatedAt: new Date().toISOString(),
-        };
-
-        const existingChallenges = JSON.parse(
-          localStorage.getItem('participatingChallenges') || '[]'
-        );
-        const isAlreadyInLocal = existingChallenges.some(
-          (c) => c.challengeId === challengeId
-        );
-
-        if (!isAlreadyInLocal) {
-          existingChallenges.push(participationData);
-          localStorage.setItem(
-            'participatingChallenges',
-            JSON.stringify(existingChallenges)
-          );
-        }
-
-        // 모달 닫기 및 상태 초기화
-        setShowModal(false);
-        setSelectedImage(null);
-
-        // 마이페이지로 이동
-        navigate('/personal-info');
-      } else {
-        // 다른 에러들 처리
-        const errorMessage =
-          error.response?.data?.message ||
-          '챌린지 등록 중 오류가 발생했습니다.';
-        alert(errorMessage);
-      }
+      alert('챌린지 등록 중 오류가 발생했습니다.');
     } finally {
       setIsSubmitting(false);
     }
@@ -298,9 +251,7 @@ const ChallengeDetailPage = () => {
         <div className="challenge-progress-section">
           <div className="progress-header">
             <p>진행률</p>
-            <span>
-              {challenge.progress}/{challenge.total}
-            </span>
+            <span>{challenge.progress}/5</span>
           </div>
           <div className="progress-bar-container">
             <div
@@ -309,7 +260,7 @@ const ChallengeDetailPage = () => {
             ></div>
           </div>
           <p className="progress-text">
-            {challenge.total - challenge.progress}회 더 방문하면 챌린지 완료!
+            {5 - challenge.progress}회 더 방문하면 챌린지 완료!
           </p>
         </div>
 
@@ -351,12 +302,12 @@ const ChallengeDetailPage = () => {
 
         <button
           className={`challengeDetail-btn ${
-            isParticipating ? 'participating' : ''
+            isCurrentlyParticipating ? 'participating' : ''
           }`}
-          onClick={isParticipating ? undefined : handleOpenModal}
-          disabled={isParticipating}
+          onClick={isCurrentlyParticipating ? undefined : handleOpenModal}
+          disabled={isCurrentlyParticipating}
         >
-          {isParticipating ? '진행중' : '참여하기'}
+          {isCurrentlyParticipating ? '진행중' : '참여하기'}
         </button>
       </div>
 
