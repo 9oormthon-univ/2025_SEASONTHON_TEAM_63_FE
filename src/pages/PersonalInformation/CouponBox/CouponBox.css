@@ -1,7 +1,7 @@
 /* src/pages/PersonalInformation/CouponBox/CouponBox.css */
 .cp-wrap {
-    background: #f8f8fb;
-    min-height: 100vh;
+    background: #ffffff;
+    min-height: 200px;
 }
 .sub-header {
     position: sticky;
@@ -94,4 +94,10 @@
 }
 .cp-issued {
     color: #9aa2b2;
+}
+.title-C {
+    font-size: 16px;
+    color: #1c1b1f;
+    font-weight: bold;
+    margin-bottom: 10px;
 }

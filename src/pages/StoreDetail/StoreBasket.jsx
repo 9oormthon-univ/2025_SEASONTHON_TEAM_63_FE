@@ -1,46 +1,39 @@
+import PortOne from '@portone/browser-sdk/v2';
+
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import useCartStore from '../../store/cartStore';
 import { getStoreInfo } from '../../api/storedetail/storeApi';
 import { createOrder, completePayment } from '../../api/order/orderApi';
-import PortOne from '@portone/browser-sdk/v2';
+import { getMyCorporation } from '../../api/corps/corpsApi';
 import './styles/StoreBasket.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const StoreBasket = () => {
   const navigate = useNavigate();
-  const { storeId } = useParams(); // URL에서 storeId 가져오기
+  const { storeId } = useParams();
   const { cart, updateQuantity, removeFromCart, getTotalPrice } =
     useCartStore();
 
-  // 가게 정보 상태 관리
-  const [storeInfo, setStoreInfo] = useState({
-    name: 'RE:visit', // 기본값
-  });
+  const [storeInfo, setStoreInfo] = useState({ name: 'RE:visit' });
   const [loading, setLoading] = useState(true);
-  const [showPaymentModal, setShowPaymentModal] = useState(false); // 결제 모달 상태
-  const [paymentStatus, setPaymentStatus] = useState('IDLE'); // 결제 상태 관리
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState('IDLE');
 
-  // 가게 정보 API 호출
   useEffect(() => {
     const fetchStoreInfo = async () => {
       try {
         setLoading(true);
-        const currentStoreId = storeId || '123'; // StoreDetail에서와 동일한 로직
+        const currentStoreId = storeId || '123';
         const data = await getStoreInfo(currentStoreId);
-
-        setStoreInfo({
-          name: data.name || 'RE:visit',
-        });
+        setStoreInfo({ name: data.name || 'RE:visit' });
       } catch (error) {
         console.error('가게 정보 로딩 에러:', error);
-        // 에러 시 기본값 유지
       } finally {
         setLoading(false);
       }
     };
-
     fetchStoreInfo();
   }, [storeId]);
 
@@ -51,15 +44,11 @@ const StoreBasket = () => {
 
   const totalDiscount = totalOriginalPrice - getTotalPrice();
 
-  // 결제 모달 핸들러
   const handleCheckout = () => {
-    const totalPrice = getTotalPrice();
-
-    if (totalPrice === 0) {
+    if (getTotalPrice() === 0) {
       alert('결제 금액이 0원입니다.');
       return;
     }
-
     setShowPaymentModal(true);
   };
 
@@ -68,21 +57,10 @@ const StoreBasket = () => {
     setPaymentStatus('IDLE');
   };
 
-  // 로그인 상태 확인 함수
-  const isLoggedIn = () => {
-    return localStorage.getItem('authToken') !== null;
-  };
-
-  // 랜덤 ID 생성 함수
-  const randomId = () => {
-    return [...crypto.getRandomValues(new Uint32Array(2))]
-      .map((word) => word.toString(16).padStart(8, '0'))
-      .join('');
-  };
+  const isLoggedIn = () => localStorage.getItem('authToken') !== null;
 
   const handleConfirmPayment = async () => {
     try {
-      // 1. 로그인 체크
       if (!isLoggedIn()) {
         alert('로그인이 필요합니다.');
         if (window.confirm('로그인 페이지로 이동하시겠습니까?')) {
@@ -90,10 +68,7 @@ const StoreBasket = () => {
         }
         return;
       }
-
       setPaymentStatus('PENDING');
-
-      // 2. 주문 생성
       const orderRequest = {
         storeId: parseInt(storeId) || 123,
         items: cart.map((item) => ({
@@ -101,61 +76,40 @@ const StoreBasket = () => {
           quantity: item.quantity,
         })),
       };
-
       const orderResponse = await createOrder(orderRequest);
-
-      if (!orderResponse.success) {
-        throw new Error(orderResponse.message || '주문 생성에 실패했습니다.');
-      }
+      if (!orderResponse.success)
+        throw new Error(orderResponse.message || '주문 생성 실패');
 
       const { data: order } = orderResponse;
-      const merchantUid = order.MerchantUid;
-
-      // 3. 포트원 결제 요청
       const payment = await PortOne.requestPayment({
         storeId: import.meta.env.VITE_PORTONE_STORE_ID,
         channelKey: import.meta.env.VITE_PORTONE_CHANNEL_KEY,
-        paymentId: merchantUid,
+        paymentId: order.MerchantUid,
         orderName: `${storeInfo.name} 주문`,
         totalAmount: getTotalPrice(),
         currency: 'KRW',
-        payMethod: 'CARD',
-        customer: {
-          customerId: 'customer_' + Date.now(),
-        },
-        redirectUrl: `${window.location.origin}/orders`, // 결제 완료 후 리디렉션 URL
-        customData: {
-          orderId: order.id,
-          storeId: storeId,
-        },
+        payMethod: 'TRANSFER',
+        redirectUrl: `${window.location.origin}/orders`,
+        customData: { orderId: order.id, storeId: storeId },
       });
 
-      // 4. 결제 결과 처리
       if (payment.code !== undefined) {
         setPaymentStatus('FAILED');
         alert(`결제 실패: ${payment.message}`);
         return;
       }
 
-      // 5. 결제 완료 처리
       const completeResponse = await completePayment({
         paymentId: payment.paymentId,
       });
-
       if (completeResponse.success) {
         setPaymentStatus('SUCCESS');
         alert('결제가 완료되었습니다!');
         setShowPaymentModal(false);
-
-        // 장바구니 비우기
         cart.forEach((item) => removeFromCart(item.id));
-
-        // 주문내역 페이지로 이동
         navigate('/orders', { replace: true });
       } else {
-        throw new Error(
-          completeResponse.message || '결제 완료 처리에 실패했습니다.'
-        );
+        throw new Error(completeResponse.message || '결제 완료 처리 실패');
       }
     } catch (error) {
       console.error('결제 에러:', error);
@@ -164,8 +118,22 @@ const StoreBasket = () => {
     }
   };
 
-  const handleContinueShopping = () => {
-    setShowPaymentModal(false);
+  // ✨ 공동 결제하기 버튼 핸들러
+  const handleJointPayment = async () => {
+    try {
+      // 기업 회원인지 확인
+      const corpResponse = await getMyCorporation();
+      if (!corpResponse.success || !corpResponse.data) {
+        alert('공동 결제하기는 기업회원만 결제 가능합니다.');
+        return;
+      }
+
+      setShowPaymentModal(false); // 모달을 닫고
+      navigate(`/joint-payment/${storeId || '123'}`); // storeId와 함께 공동 결제자 선택 페이지로 이동
+    } catch (error) {
+      console.error('법인 정보 확인 에러:', error);
+      alert('공동 결제하기는 기업회원만 결제 가능합니다.');
+    }
   };
 
   return (
@@ -176,22 +144,18 @@ const StoreBasket = () => {
         </button>
         <h1>장바구니</h1>
       </header>
-
       <main className="basket-main">
         <p className="basket-store-name">
           {loading ? '가게 이름 로딩중...' : `${storeInfo.name}에서 담은 메뉴`}
         </p>
-
         <ul className="basket-item-list">
           {cart.map((item) => {
-            // 할인율 계산
             const originalPrice = item.originalPrice || item.price;
             const discountRate = item.originalPrice
               ? Math.round(
                   ((item.originalPrice - item.price) / item.originalPrice) * 100
                 )
               : 0;
-
             return (
               <li key={item.id} className="basket-item">
                 <div className="item-top-section">
@@ -239,7 +203,6 @@ const StoreBasket = () => {
             );
           })}
         </ul>
-
         <div className="order-summary">
           <h2 className="summary-title">결제 금액</h2>
           <div className="summary-row">
@@ -256,15 +219,11 @@ const StoreBasket = () => {
           </div>
         </div>
       </main>
-
-      {/* 결제 버튼 */}
       <footer className="basket-footer">
         <button className="checkout-btn" onClick={handleCheckout}>
           결제하기
         </button>
       </footer>
-
-      {/* 결제 확인 모달 */}
       {showPaymentModal && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div onClick={(e) => e.stopPropagation()}>
@@ -274,7 +233,6 @@ const StoreBasket = () => {
               </button>
               <h2>결제 방식을 선택해주세요!</h2>
               <p>선택하신 방식으로 결제가 진행됩니다.</p>
-
               <div className="payment-buttons">
                 <button
                   className="payment-option-btn confirm-btn"
@@ -287,8 +245,10 @@ const StoreBasket = () => {
                 </button>
                 <button
                   className="payment-option-btn continue-btn"
-                  onClick={handleContinueShopping}
+                  onClick={handleJointPayment}
                 >
+                  {' '}
+                  {/* ✨ 핸들러 변경 */}
                   공동 결제하기
                 </button>
               </div>

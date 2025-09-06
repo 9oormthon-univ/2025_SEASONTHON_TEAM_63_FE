@@ -46,6 +46,7 @@
 }
 
 .skeleton-text {
+  margin-top: 12px;
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: skeleton-loading 1.5s infinite;
@@ -62,6 +63,7 @@
 .store-rating-skeleton {
   height: 16px;
   width: 30px;
+  margin-top: 6px;
   margin: 0;
 }
 

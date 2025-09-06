@@ -7,13 +7,11 @@ import './CategoryNav.css';
 import FoodIcon from '../../../assets/icon/Categoryicon/음식.svg?react';
 import BedIcon from '../../../assets/icon/Categoryicon/숙박.svg?react';
 import BagIcon from '../../../assets/icon/Categoryicon/물품.svg?react';
-import PlaneIcon from '../../../assets/icon/Categoryicon/항공.svg?react';
 
 const categories = [
     { id: 'food', text: '음식', Icon: FoodIcon },
     { id: 'lodging', text: '숙박', Icon: BedIcon },
     { id: 'goods', text: '물품', Icon: BagIcon },
-    { id: 'flights', text: '항공', Icon: PlaneIcon },
 ];
 
 function CategoryNav({ activeCategory, onSelectCategory }) {

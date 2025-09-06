@@ -1,7 +1,7 @@
 /* src/pages/PersonalInformation/PersonalInformation-review/PersonalInformation-review.css */
 .rv-wrap {
-    background: #f8f8fb;
-    min-height: 100vh;
+    background: #ffffff;
+    min-height: 200px;
 }
 .sub-header {
     position: sticky;

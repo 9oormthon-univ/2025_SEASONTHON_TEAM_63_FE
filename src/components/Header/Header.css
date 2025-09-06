@@ -12,7 +12,7 @@
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
     box-sizing: border-box;
-    z-index: 1000;
+    z-index: 999;
     transition: transform 0.4s ease-in-out;
 }
 
@@ -49,7 +49,6 @@
     max-width: 30px;
     max-height: 25px;
     color: #7d45ff; /* 기본 색상 (비활성 상태) */
-    transition: color 0.3s ease; /* 색상 변경 애니메이션 */
 }
 
 /* LocaIcon 활성 상태 스타일 */
@@ -64,10 +63,14 @@
 
 /* AlarmIcon 개별 스타일 */
 .alarm svg {
-    width: 10.31vw;
+    width: 12.31vw;
     height: 10.31vw;
     max-width: 35px;
     max-height: 35px;
-    color: #333333; /* 알람 아이콘 기본 색상 */
+    background-color: #7d45ff;
 }
 /* --- 아이콘 스타일 끝 --- */
+.header-icon-btn {
+    padding: 0;
+    background-color: rgba(255, 255, 255, 0);
+}

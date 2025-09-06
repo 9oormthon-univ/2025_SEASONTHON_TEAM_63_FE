@@ -66,7 +66,7 @@
 
 .list-shop-item {
   display: flex;
-  gap: 16px;
+  align-items: center;
   padding: 16px 0;
   border: 1px solid #d9dbdc;
   border-radius: 12px;
@@ -83,7 +83,10 @@
 }
 
 .list-shop-details {
+  flex-shrink: 0;
+
   flex-grow: 1;
+  margin-left: 12px;
 }
 
 .list-shop-name {
@@ -115,7 +118,7 @@
   border: none;
   cursor: pointer;
   align-self: flex-end;
-  margin-right: 12px;
+  margin-right: 18px;
 }
 
 .list-like-btn svg {
@@ -128,4 +131,87 @@
 
 .list-like-btn.liked svg {
   fill: #ff7e7e;
+}
+
+/* 로딩 및 에러 메시지 스타일 */
+.loading-message,
+.error-message,
+.no-shops-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.loading-message p,
+.error-message p,
+.no-shops-message p {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.error-message button {
+  padding: 8px 16px;
+  background-color: #7d45ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.error-message button:hover {
+  background-color: #6a3ccc;
+}
+
+/* 이미지 플레이스홀더 스타일 */
+.placeholder-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+  color: #999;
+  font-size: 12px;
+}
+
+/* 페이징 스타일 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 16px;
+  border-top: 1px solid #eee;
+  margin-top: auto;
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  background-color: #7d45ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #6a3ccc;
+}
+
+.pagination-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
 }
