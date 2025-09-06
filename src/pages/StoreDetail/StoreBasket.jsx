@@ -119,7 +119,7 @@ const StoreBasket = () => {
         orderName: `${storeInfo.name} 주문`,
         totalAmount: getTotalPrice(),
         currency: 'KRW',
-        payMethod: 'CARD',
+        payMethod: 'TRANSFER',
         customer: {
           customerId: 'customer_' + Date.now(),
         },
