@@ -15,14 +15,6 @@ export default function CouponBox() {
     const nav = useNavigate();
     return (
         <div className="cp-wrap">
-            <header className="sub-header">
-                <button className="icon-btn" onClick={() => nav(-1)}>
-                    ←
-                </button>
-                <h1>쿠폰함</h1>
-                <span className="icon-btn">⋯</span>
-            </header>
-
             <main className="cp-list">
                 {coupons.map((c) => (
                     <article key={c.id} className="cp-card">

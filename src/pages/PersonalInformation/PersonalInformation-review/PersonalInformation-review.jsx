@@ -94,13 +94,6 @@ export default function ReviewPage() {
     // --- JSX 렌더링 부분 (이전과 동일) ---
     return (
         <div className="rv-wrap">
-            <header className="sub-header">
-                <button className="icon-btn" onClick={() => nav(-1)}>
-                    ←
-                </button>
-                <h1>내가 쓴 리뷰</h1>
-                <span className="icon-btn">⋯</span>
-            </header>
             <main className="rv-list">
                 {reviews.map((item) => (
                     <article key={item.id} className="rv-card">

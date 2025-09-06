@@ -13,14 +13,6 @@ export default function SuccessfulChallenge() {
     const nav = useNavigate();
     return (
         <div className="sc-wrap">
-            <header className="sub-header">
-                <button className="icon-btn" onClick={() => nav(-1)}>
-                    ←
-                </button>
-                <h1>성공한 챌린지</h1>
-                <span className="icon-btn">⋯</span>
-            </header>
-
             <main className="sc-list">
                 {list.map((it) => (
                     <article key={it.id} className="sc-card">
