@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import useChallengeStore from '../../store/challengeStore';
+import axiosInstance from '../../api/auth/axiosInstance'; // 설정된 axios 인스턴스 import
 import './PersonalInformation.css';
 
 export default function PersonalInformation() {
     const nav = useNavigate();
 
-    // --- 추가된 상태 변수 ---
+    // --- 상태 변수 ---
     const [completedChallengesCount, setCompletedChallengesCount] = useState(0);
     const [couponCount, setCouponCount] = useState(0);
+    const [reviewCount, setReviewCount] = useState(0);
 
     // Zustand 챌린지 스토어 사용
     const { participatingChallenges, refreshParticipatingChallenges, isLoading, isCacheValid } = useChallengeStore();
@@ -22,34 +24,34 @@ export default function PersonalInformation() {
             }
         };
 
-        // --- 추가된 API 호출 로직 ---
+        // 완료 챌린지, 쿠폰, 리뷰 개수 조회 API 호출 (axiosInstance 사용)
         const fetchCounts = async () => {
-            // 인증 토큰 가져오기
-            const token = localStorage.getItem('authToken');
-            const headers = {
-                'Content-Type': 'application/json',
-                // 토큰이 있으면 Authorization 헤더 추가
-                ...(token && { Authorization: `Bearer ${token}` }),
-            };
-
             try {
-                // 완료한 챌린지 수 조회 API 호출
-                const challengeRes = await fetch('http://43.201.107.27:8080/api/challenges/completed/count', {
-                    headers,
-                });
-                const challengeData = await challengeRes.json();
-                if (challengeData.success) {
-                    setCompletedChallengesCount(challengeData.data);
+                // 세 개의 API를 동시에 호출
+                const [challengeRes, couponRes, reviewRes] = await Promise.all([
+                    axiosInstance.get('/api/challenges/completed/count'),
+                    axiosInstance.get('/api/coupons/my/count'),
+                    axiosInstance.get('/api/reviews/my/count'),
+                ]);
+
+                // 각 API 응답 처리
+                if (challengeRes.data && challengeRes.data.success) {
+                    setCompletedChallengesCount(challengeRes.data.data);
                 }
 
-                // 보유 쿠폰 수 조회 API 호출
-                const couponRes = await fetch('http://43.201.107.27:8080/api/coupons/my/count', { headers });
-                const couponData = await couponRes.json();
-                if (couponData.success && couponData.data) {
-                    setCouponCount(couponData.data.totalCouponCount);
+                if (couponRes.data && couponRes.data.success) {
+                    setCouponCount(couponRes.data.data.totalCouponCount);
+                }
+
+                if (reviewRes.data && reviewRes.data.success) {
+                    // API 응답 키가 totalReviewCount라고 가정
+                    setReviewCount(reviewRes.data.data.totalReviewCount || 0);
                 }
             } catch (error) {
-                console.error('Failed to fetch counts:', error);
+                // axios 인터셉터에서 401 에러를 처리하므로 여기서는 그 외의 오류만 로깅
+                if (error.response?.status !== 401) {
+                    console.error('카운트 정보를 불러오는 중 오류가 발생했습니다:', error);
+                }
             }
         };
 
@@ -57,16 +59,15 @@ export default function PersonalInformation() {
         fetchCounts();
     }, [refreshParticipatingChallenges, isCacheValid]);
 
-    // 로그아웃 핸들러 함수
+    // 로그아웃 핸들러
     const handleLogout = () => {
         localStorage.removeItem('authToken');
-        window.location.href = '/';
+        window.location.href = '/'; // 로그인 페이지로 리디렉션하며 상태 초기화
     };
 
     // 챌린지 상세보기 핸들러
     const handleChallengeDetail = (challenge) => {
-        const storeId = challenge.storeId;
-        const challengeId = challenge.challengeId;
+        const { storeId, challengeId } = challenge;
         nav(`/store/${storeId}/challenge/${challengeId}`);
     };
 
@@ -79,7 +80,7 @@ export default function PersonalInformation() {
                     <p>나의 활동 내역을 확인해보세요.</p>
                 </div>
 
-                {/* --- UI가 업데이트된 통계 버튼 --- */}
+                {/* 통계 버튼 */}
                 <div className="pi-stats">
                     <button className="pi-stat" onClick={() => nav('successful-challenges')}>
                         성공한 챌린지 {completedChallengesCount}
@@ -88,7 +89,7 @@ export default function PersonalInformation() {
                         쿠폰함 {couponCount}
                     </button>
                     <button className="pi-stat" onClick={() => nav('reviews')}>
-                        내가 쓴 리뷰
+                        내가 쓴 리뷰 {reviewCount}
                     </button>
                 </div>
 
@@ -100,7 +101,7 @@ export default function PersonalInformation() {
                 </div>
             </section>
 
-            {/* 자식 라우트가 렌더링되는 영역 */}
+            {/* 자식 라우트 렌더링 영역 */}
             <Outlet />
 
             {/* 참여중인 챌린지 섹션 */}
@@ -156,7 +157,7 @@ export default function PersonalInformation() {
                 )}
             </section>
 
-            {/* 계정관리 섹션 */}
+            {/* 계정관리 및 고객지원 섹션 */}
             <section className="pi-account-section">
                 <h3>계정관리</h3>
                 <div className="pi-menu-list">
@@ -168,8 +169,6 @@ export default function PersonalInformation() {
                     </button>
                 </div>
             </section>
-
-            {/* 고객지원 섹션 */}
             <section className="pi-support-section">
                 <h3>고객지원</h3>
                 <div className="pi-menu-list">
