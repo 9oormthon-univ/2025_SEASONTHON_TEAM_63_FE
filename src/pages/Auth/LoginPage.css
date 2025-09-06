@@ -10,13 +10,20 @@
 /* 상단 40% 이미지 영역 */
 .login-top-section {
     height: 40%;
-    background-color: #f3e9ff; /* 이미지 대신 사용할 임시 배경색 */
+    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: #7e57c2;
-    font-weight: bold;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    /* 아래쪽으로 조금 이동시키기 위해 padding-top 사용 */
+    padding-top: 50px;
+    box-sizing: border-box;
+}
+
+/* LogoIcon 크기 키우기 */
+.login-top-section svg {
+    width: 250px; /* 기존 300px에서 크기 확대 */
+    height: auto; /* 너비에 맞춰 높이 자동 조절 */
+    color: #7d45ff;
 }
 
 /* 하단 60% 컨텐츠 영역 */
@@ -53,7 +60,7 @@
 
 .login-button {
     margin-top: 10px;
-    background-color: #7e57c2;
+    background-color: #7d45ff;
     border: none;
     border-radius: 10px;
     padding: 15px;
@@ -63,37 +70,78 @@
     cursor: pointer;
 }
 
-/* 소셜 로그인 텍스트 */
+.sssss {
+    font-size: 14px;
+    color: #4b5563;
+}
+
+/* "또는" 구분선 스타일 */
+/* ... 기존의 .login-page-container, .login-top-section, .login-bottom-section, .login-form 등은 동일 ... */
+
+/* "또는" 구분선 스타일 */
 .social-login-divider {
-    margin-top: 30px;
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
     color: #aaa;
     font-size: 14px;
+    gap: 15px;
 }
 
-.social-login-text-buttons {
+.social-login-divider .line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* "소셜 계정으로 로그인" 텍스트 */
+.social-login-title {
+    margin-top: 20px;
+    color: #888;
+    font-size: 14px;
+}
+
+/* 소셜 로그인 아이콘 버튼 컨테이너 */
+.social-login-icon-buttons {
     margin-top: 15px;
     display: flex;
-    gap: 20px;
+    gap: 25px; /* 아이콘 간격 */
 }
 
-.social-login-text-buttons button {
+/* 소셜 로그인 아이콘 버튼 개별 스타일 */
+.social-icon-button {
     background: none;
-    border: none;
-    color: #555;
-    font-size: 14px;
+    border: 1px solid #eee; /* 아주 연한 테두리 */
+    width: 56px; /* 원 크기 */
+    height: 56px;
+    border-radius: 50%; /* 원형으로 만들기 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    text-decoration: underline;
+    padding: 0;
+    transition: background-color 0.2s ease;
+}
+
+/* 아이콘 이미지 크기 조절 */
+.social-icon-button img {
+    width: 100%; /* 버튼 크기에 맞춤 */
+    height: 100%;
+    object-fit: cover; /* 이미지가 원 안에 꽉 차도록 */
+    border-radius: 50%; /* 이미지 자체도 원형으로 */
 }
 
 /* 회원가입 링크 */
 .signup-link {
-    margin-top: 30px;
+    margin-top: 25px;
     font-size: 14px;
     color: #888;
 }
 
 .signup-link a {
-    color: #7e57c2;
+    color: #3b82f6;
     text-decoration: none;
     font-weight: bold;
 }
