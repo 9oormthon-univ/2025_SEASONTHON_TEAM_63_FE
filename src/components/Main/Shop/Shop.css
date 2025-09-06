@@ -2,97 +2,103 @@
 
 /* 각 가게 섹션의 전체 컨테이너 */
 .shop-section {
-    margin-bottom: 0px;
-    border-top: 1px solid rgba(0, 0, 0, 0.08); /* 반투명한 회색 선 추가 */
+  margin-bottom: 0px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08); /* 반투명한 회색 선 추가 */
 }
 
 /* '실시간 트렌드 가게'와 '더보기' 버튼을 포함하는 헤더 */
 .shop-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* 섹션 제목 스타일 */
 .shop-title {
-    font-size: 18px;
-    font-weight: bold;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 /* '더보기' 버튼 스타일 */
 .shop-see-more-btn {
-    background-color: #f0f2f5;
-    border: none;
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-size: 12px;
-    color: #555;
-    cursor: pointer;
+  background-color: #f0f2f5;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #555;
+  cursor: pointer;
 }
 
 /* 가게 카드 목록을 감싸는 가로 스크롤 컨테이너 */
 .shop-list-container {
-    display: flex;
-    gap: 12px; /* 카드 사이의 간격 */
-    overflow-x: auto; /* 내용이 넘칠 경우 가로 스크롤 생성 */
-    padding-bottom: 10px; /* 스크롤바가 콘텐츠를 가리지 않도록 여백 추가 */
+  display: flex;
+  gap: 12px; /* 카드 사이의 간격 */
+  overflow-x: auto; /* 내용이 넘칠 경우 가로 스크롤 생성 */
+  padding-bottom: 10px; /* 스크롤바가 콘텐츠를 가리지 않도록 여백 추가 */
 }
 
 /* 가로 스크롤바 숨기기 (디자인 개선) */
 .shop-list-container::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 /* 개별 가게 카드 스타일 */
 .shop-item-card {
-    flex: 0 0 150px; /* 카드의 너비를 150px로 고정 (줄어들거나 늘어나지 않음) */
-    display: flex;
-    flex-direction: column;
+  flex: 0 0 150px; /* 카드의 너비를 150px로 고정 (줄어들거나 늘어나지 않음) */
+  display: flex;
+  flex-direction: column;
 }
 
 /* 가게 이미지 영역 (정사각형) */
 .shop-image-placeholder {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* 너비와 높이 비율을 1:1로 유지 */
-    background-color: #f0f2f5;
-    border-radius: 12px;
-    margin-bottom: 8px;
-    position: relative; /* 하트 아이콘 위치의 기준점 */
+  width: 100%;
+  aspect-ratio: 1 / 1; /* 너비와 높이 비율을 1:1로 유지 */
+  border-radius: 12px;
+  margin-bottom: 8px;
+  position: relative; /* 하트 아이콘 위치의 기준점 */
+}
+
+.shop-image {
+  border-radius: 12px;
+
+  height: 150px;
+  width: 150px;
 }
 
 /* 하트 (좋아요) 아이콘 버튼 */
 .shop-like-btn {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 
-    background: transparent;
-    border: none;
-    padding: 0; /* 불필요한 여백 제거 */
-    display: flex; /* 내부 SVG 아이콘 정렬을 위해 추가 */
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0; /* 불필요한 여백 제거 */
+  display: flex; /* 내부 SVG 아이콘 정렬을 위해 추가 */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .shop-like-btn svg {
-    width: 22px;
-    height: 22px;
-    color: #ff7e7e;
-    stroke-width: 1; /* 테두리 두께 */
-    fill: none; /* 내부 채우기 없음 */
-    transition: all 0.2s ease-in-out; /* 부드러운 전환 효과 */
+  width: 22px;
+  height: 22px;
+  color: #ff7e7e;
+  stroke-width: 1; /* 테두리 두께 */
+  fill: none; /* 내부 채우기 없음 */
+  transition: all 0.2s ease-in-out; /* 부드러운 전환 효과 */
 }
 
 .shop-like-btn.liked svg {
-    fill: #ff7e7e; /* 내부를 테두리와 같은 색으로 채움 */
+  fill: #ff7e7e; /* 내부를 테두리와 같은 색으로 채움 */
 }
 
 /* 가게 이름 스타일 */
 .shop-name {
-    font-size: 15px;
-    font-weight: 500;
-    white-space: nowrap; /* 이름이 길어도 한 줄로 표시 */
-    overflow: hidden;
-    text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap; /* 이름이 길어도 한 줄로 표시 */
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
 }

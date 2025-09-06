@@ -203,8 +203,7 @@ const ChallengeDetailPage = () => {
         // 현재 페이지에 머물면서 업데이트된 상태 확인
       }
     } catch (error) {
-      console.error('챌린지 등록 오류:', error);
-      alert('챌린지 등록 중 오류가 발생했습니다.');
+      console.error('챌린지 등록 오류?:', error);
     } finally {
       setIsSubmitting(false);
     }
