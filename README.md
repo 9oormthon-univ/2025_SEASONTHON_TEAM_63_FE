@@ -12,10 +12,14 @@
 6. tanstack/react-query
 7. vite
 8. zustand
+9. portone
+10. axios
+11. html5-qrcode
 
 ## vercel
 
 배포된 사이트 링크 >
+https://2025-seasonthon-team-63-fe.vercel.app/
 
 ## naver map api
 
@@ -36,3 +40,15 @@ https://tanstack.com/query/v3/
 ## zustand
 
 https://zustand-demo.pmnd.rs
+
+## portone
+
+https://portone.io/korea/ko
+
+## axios
+
+https://axios-http.com/kr/docs/intro
+
+## html5-qrcode
+
+https://www.npmjs.com/package/html5-qrcode/v/2.2.7
