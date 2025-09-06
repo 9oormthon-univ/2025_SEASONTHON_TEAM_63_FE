@@ -100,6 +100,21 @@
   border: 1px solid #7547ff;
   border-radius: 12px;
   font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.search-input-container input:hover {
+  border-color: #5a36cc;
+  background-color: #f8f7ff;
+}
+
+.search-input-container input:active {
+  transform: scale(0.98);
 }
 
 .search-input-container .search-icon {
@@ -108,6 +123,19 @@
   top: 50%;
   transform: translateY(-50%);
   color: #666;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.search-input-container .search-icon:hover {
+  background-color: rgba(117, 71, 255, 0.1);
+  color: #7547ff;
+}
+
+.search-input-container .search-icon:active {
+  transform: translateY(-50%) scale(0.9);
 }
 
 .set-location-btn {
@@ -120,4 +148,110 @@
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.set-location-btn:hover {
+  background-color: #6d3ae6;
+  transform: translateY(-1px);
+}
+
+.set-location-btn:active {
+  transform: translateY(0);
+  background-color: #5a36cc;
+}
+
+/* 다음 우편번호 서비스 모달 스타일 */
+.postcode-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.postcode-container {
+  background-color: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.postcode-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.postcode-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.postcode-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.postcode-close:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.postcode-close:active {
+  transform: scale(0.9);
+}
+
+/* 모바일 터치 개선 */
+@media (hover: none) and (pointer: coarse) {
+  .search-input-container input:hover {
+    border-color: #7547ff;
+    background-color: white;
+  }
+
+  .search-input-container .search-icon:hover {
+    background-color: transparent;
+    color: #666;
+  }
+
+  .set-location-btn:hover {
+    background-color: #7d45ff;
+    transform: none;
+  }
+
+  .postcode-close:hover {
+    background-color: transparent;
+    color: #666;
+  }
 }
