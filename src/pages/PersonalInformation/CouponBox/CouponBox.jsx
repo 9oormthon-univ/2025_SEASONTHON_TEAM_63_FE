@@ -32,7 +32,7 @@ export default function CouponBox() {
             };
 
             try {
-                const response = await fetch('http://43.201.107.27:8080/api/coupons/my', { headers });
+                const response = await fetch('/api/coupons/my', { headers });
                 const result = await response.json();
 
                 if (result.success && Array.isArray(result.data)) {
