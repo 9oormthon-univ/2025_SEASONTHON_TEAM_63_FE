@@ -2,14 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Header.css';
 
 // SVG 아이콘을 React 컴포넌트로 임포트
-import AlramIcon from '../../assets/icon/alram.svg?react';
+import AlramIcon from '../../assets/icon/바코드.svg?react';
 import LocaIcon from '../../assets/icon/loca.svg?react';
 import { Link } from 'react-router-dom';
 
-// 부모로부터 setHeaderHeight 함수를 props로 받음
+// --- 수정된 부분 1: useScanner 훅을 context 파일에서 가져옵니다. ---
+import { useScanner } from '../../components/contexts/ScannerContext';
+
+// 부모로부터 setHeaderHeight 함수를 props로 전달받음
 function Header({ setHeaderHeight }) {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+
+    // --- 수정된 부분 2: context에서 스캐너를 여는 함수를 가져옵니다. ---
+    const { openScanner } = useScanner();
 
     // 헤더 DOM 요소를 참조하기 위한 ref
     const headerRef = useRef(null);
@@ -38,12 +44,12 @@ function Header({ setHeaderHeight }) {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [lastScrollY]);
+        // --- 수정된 부분 3: setHeaderHeight를 의존성 배열에 추가하여 안정성을 높입니다. ---
+    }, [lastScrollY, setHeaderHeight]);
 
     return (
         // ref를 연결하고, isVisible 상태에 따라 클래스를 동적으로 변경
         <div ref={headerRef} className={`Header-wrapper ${isVisible ? 'visible' : 'hidden'}`}>
-            {/* "Location" 텍스트를 <LocaIcon /> 컴포넌트로 교체 */}
             <div className="location">
                 <Link to="/locationmap">
                     <LocaIcon />
@@ -52,9 +58,11 @@ function Header({ setHeaderHeight }) {
 
             <div className="logo">RE:visit</div>
 
-            {/* "Alarm" 텍스트를 <AlramIcon /> 컴포넌트로 교체 */}
             <div className="alarm">
-                <AlramIcon />
+                {/* 4. 버튼 클릭 시 context의 openScanner 함수를 호출합니다. */}
+                <button onClick={openScanner} className="header-icon-btn">
+                    <AlramIcon />
+                </button>
             </div>
         </div>
     );
