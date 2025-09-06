@@ -14,6 +14,7 @@ export default function SuccessfulChallenge() {
     return (
         <div className="sc-wrap">
             <main className="sc-list">
+                <div className="title-C">성공한 챌린지</div>
                 {list.map((it) => (
                     <article key={it.id} className="sc-card">
                         <div className="sc-badge">가게이름</div>

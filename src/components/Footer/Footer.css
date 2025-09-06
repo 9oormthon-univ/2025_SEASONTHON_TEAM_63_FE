@@ -8,7 +8,7 @@
 
     background-color: #ffffff;
     border-top: 1px solid #e0e0e0;
-    z-index: 1000;
+    z-index: 999;
 
     /* 아이폰 등 하단에 홈 바가 있는 기기를 위한 여백 (safe area) */
     padding-bottom: env(safe-area-inset-bottom);

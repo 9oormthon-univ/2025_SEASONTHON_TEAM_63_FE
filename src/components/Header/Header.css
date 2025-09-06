@@ -12,7 +12,7 @@
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
     box-sizing: border-box;
-    z-index: 1000;
+    z-index: 999;
     transition: transform 0.4s ease-in-out;
 }
 
