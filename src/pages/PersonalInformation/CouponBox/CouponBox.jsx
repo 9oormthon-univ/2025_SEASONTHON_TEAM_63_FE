@@ -1,8 +1,10 @@
 // src/pages/PersonalInformation/CouponBox/CouponBox.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../../api/auth/axiosInstance'; // axios 인스턴스 import
+import ExpandableList from '../../../components/ExpandableList/ExpandableList';
 import './CouponBox.css';
-import ExpandableList from '../../../components/ExpandableList/ExpandableList'; // 경로에 맞게
+
 // 날짜를 'YYYY.MM.DD' 형식으로 변환하는 헬퍼 함수
 const formatDate = (dateString) => {
     if (!dateString) return '';
@@ -19,29 +21,26 @@ const formatDate = (dateString) => {
 
 export default function CouponBox() {
     const [coupons, setCoupons] = useState([]);
-    const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+    const [isLoading, setIsLoading] = useState(true);
     const nav = useNavigate();
 
     useEffect(() => {
         const fetchCoupons = async () => {
             setIsLoading(true);
-            const token = localStorage.getItem('authToken');
-            const headers = {
-                'Content-Type': 'application/json',
-                ...(token && { Authorization: `Bearer ${token}` }),
-            };
-
             try {
-                const response = await fetch('/api/coupons/my', { headers });
-                const result = await response.json();
+                // fetch 대신 axiosInstance.get 사용
+                const response = await axiosInstance.get('/api/coupons/my');
 
-                if (result.success && Array.isArray(result.data)) {
-                    setCoupons(result.data);
+                if (response.data && response.data.success && Array.isArray(response.data.data)) {
+                    setCoupons(response.data.data);
                 } else {
                     setCoupons([]); // 데이터가 없거나 실패 시 빈 배열로 초기화
                 }
             } catch (error) {
-                console.error('쿠폰 정보를 불러오는 데 실패했습니다:', error);
+                // axios 인터셉터에서 401 에러를 처리하므로 여기서는 그 외의 오류만 로깅
+                if (error.response?.status !== 401) {
+                    console.error('쿠폰 정보를 불러오는 데 실패했습니다:', error);
+                }
                 setCoupons([]); // 에러 발생 시 빈 배열로 초기화
             } finally {
                 setIsLoading(false); // 로딩 종료
@@ -55,7 +54,9 @@ export default function CouponBox() {
         <div className="cp-wrap">
             <main className="cp-list">
                 <div className="title-C">쿠폰함</div>
-                <ExpandableList maxHeight={200}>
+                <ExpandableList maxHeight={400}>
+                    {' '}
+                    {/* 높이는 필요에 따라 조절하세요 */}
                     {isLoading ? (
                         <div className="cp-loading">쿠폰을 불러오는 중...</div>
                     ) : coupons.length > 0 ? (
