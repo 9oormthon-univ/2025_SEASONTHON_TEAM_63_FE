@@ -40,6 +40,13 @@ export default function PersonalInformation() {
     window.location.href = '/';
   };
 
+  // 챌린지 상세보기 핸들러
+  const handleChallengeDetail = (challenge) => {
+    const storeId = challenge.storeId;
+    const challengeId = challenge.challengeId;
+    nav(`/store/${storeId}/challenge/${challengeId}`);
+  };
+
   return (
     <div className="pi-wrap">
       {/* 헤더/프로필 UI */}
@@ -118,7 +125,12 @@ export default function PersonalInformation() {
                   </span>
                 </div>
                 <div className="pi-challenge-actions">
-                  <button className="pi-challenge-detail-btn">상세보기</button>
+                  <button
+                    className="pi-challenge-detail-btn"
+                    onClick={() => handleChallengeDetail(challenge)}
+                  >
+                    상세보기
+                  </button>
                   <button className="pi-challenge-complete-btn">
                     챌린지 완료
                   </button>
