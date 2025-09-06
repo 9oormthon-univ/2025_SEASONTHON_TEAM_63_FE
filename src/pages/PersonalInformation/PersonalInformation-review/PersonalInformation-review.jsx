@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // 이미 설정된 axiosInstance를 가져옵니다. 경로는 실제 파일 위치에 맞게 조정해주세요.
 import './PersonalInformation-review.css';
 import axiosInstance from '../../../api/auth/axiosInstance';
-
+import ExpandableList from '../../../components/ExpandableList/ExpandableList'; // 경로에 맞게
 // 날짜 포맷팅 함수
 const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -96,71 +96,73 @@ export default function ReviewPage() {
         <div className="rv-wrap">
             <main className="rv-list">
                 <div className="title-C">내가 쓴 리뷰</div>
-                {reviews.map((item) => (
-                    <article key={item.id} className="rv-card">
-                        {editingReview && editingReview.id === item.id ? (
-                            // 수정 모드
-                            <div className="rv-edit-mode">
-                                <div className="rv-head">
-                                    <div className="rv-title">
-                                        <div className="rv-store">{item.storeName}</div>
+                <ExpandableList maxHeight={200}>
+                    {reviews.map((item) => (
+                        <article key={item.id} className="rv-card">
+                            {editingReview && editingReview.id === item.id ? (
+                                // 수정 모드
+                                <div className="rv-edit-mode">
+                                    <div className="rv-head">
+                                        <div className="rv-title">
+                                            <div className="rv-store">{item.storeName}</div>
+                                        </div>
+                                        <div className="rv-date">작성일 {formatDate(item.createdAt)}</div>
                                     </div>
-                                    <div className="rv-date">작성일 {formatDate(item.createdAt)}</div>
+                                    <div className="rv-edit-form">
+                                        <div className="rv-stars-edit">
+                                            <span>평점: </span>
+                                            <select
+                                                value={editedRating}
+                                                onChange={(e) => setEditedRating(Number(e.target.value))}
+                                            >
+                                                {[5, 4, 3, 2, 1].map((score) => (
+                                                    <option key={score} value={score}>
+                                                        {renderStars(score)}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <textarea
+                                            className="rv-textarea"
+                                            value={editedContent}
+                                            onChange={(e) => setEditedContent(e.target.value)}
+                                        />
+                                        <div className="rv-edit-actions">
+                                            <button onClick={() => handleUpdate(item.id)} className="rv-save-btn">
+                                                저장
+                                            </button>
+                                            <button onClick={handleEditCancel} className="rv-cancel-btn">
+                                                취소
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="rv-edit-form">
-                                    <div className="rv-stars-edit">
-                                        <span>평점: </span>
-                                        <select
-                                            value={editedRating}
-                                            onChange={(e) => setEditedRating(Number(e.target.value))}
-                                        >
-                                            {[5, 4, 3, 2, 1].map((score) => (
-                                                <option key={score} value={score}>
-                                                    {renderStars(score)}
-                                                </option>
-                                            ))}
-                                        </select>
+                            ) : (
+                                // 일반 모드
+                                <>
+                                    <div className="rv-head">
+                                        <div className="rv-title">
+                                            <div className="rv-store">{item.storeName}</div>
+                                            <div className="rv-stars">{renderStars(item.rating)}</div>
+                                        </div>
+                                        <div className="rv-date">작성일 {formatDate(item.createdAt)}</div>
                                     </div>
-                                    <textarea
-                                        className="rv-textarea"
-                                        value={editedContent}
-                                        onChange={(e) => setEditedContent(e.target.value)}
-                                    />
-                                    <div className="rv-edit-actions">
-                                        <button onClick={() => handleUpdate(item.id)} className="rv-save-btn">
-                                            저장
+                                    <div className="rv-body">
+                                        <p className="rv-text">“ {item.content} ”</p>
+                                    </div>
+                                    <div className="rv-actions">
+                                        <button onClick={() => handleEditStart(item)} className="rv-edit-btn">
+                                            수정
                                         </button>
-                                        <button onClick={handleEditCancel} className="rv-cancel-btn">
-                                            취소
+                                        <button onClick={() => handleDelete(item.id)} className="rv-delete-btn">
+                                            삭제
                                         </button>
                                     </div>
-                                </div>
-                            </div>
-                        ) : (
-                            // 일반 모드
-                            <>
-                                <div className="rv-head">
-                                    <div className="rv-title">
-                                        <div className="rv-store">{item.storeName}</div>
-                                        <div className="rv-stars">{renderStars(item.rating)}</div>
-                                    </div>
-                                    <div className="rv-date">작성일 {formatDate(item.createdAt)}</div>
-                                </div>
-                                <div className="rv-body">
-                                    <p className="rv-text">“ {item.content} ”</p>
-                                </div>
-                                <div className="rv-actions">
-                                    <button onClick={() => handleEditStart(item)} className="rv-edit-btn">
-                                        수정
-                                    </button>
-                                    <button onClick={() => handleDelete(item.id)} className="rv-delete-btn">
-                                        삭제
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </article>
-                ))}
+                                </>
+                            )}
+                        </article>
+                    ))}
+                </ExpandableList>
             </main>
         </div>
     );

@@ -1,7 +1,7 @@
 /* src/pages/PersonalInformation/CouponBox/CouponBox.css */
 .cp-wrap {
     background: #ffffff;
-    min-height: 100vh;
+    min-height: 200px;
 }
 .sub-header {
     position: sticky;
