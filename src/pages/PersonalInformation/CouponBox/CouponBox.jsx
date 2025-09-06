@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CouponBox.css';
-
+import ExpandableList from '../../../components/ExpandableList/ExpandableList'; // 경로에 맞게
 // 날짜를 'YYYY.MM.DD' 형식으로 변환하는 헬퍼 함수
 const formatDate = (dateString) => {
     if (!dateString) return '';
@@ -55,33 +55,35 @@ export default function CouponBox() {
         <div className="cp-wrap">
             <main className="cp-list">
                 <div className="title-C">쿠폰함</div>
-                {isLoading ? (
-                    <div className="cp-loading">쿠폰을 불러오는 중...</div>
-                ) : coupons.length > 0 ? (
-                    coupons.map((c) => (
-                        <article key={c.id} className="cp-card">
-                            <div className="cp-top">
-                                <span className="cp-badge">{c.storeName || '가게이름'}</span>
-                                <span className="cp-exp">~{formatDate(c.expiresAt)}</span>
-                            </div>
-                            <div className="cp-mid">
-                                <div className="cp-left">
-                                    <div className="cp-gift">🎁</div>
-                                    <div className="cp-title">
-                                        {c.discount?.percentage ? `${c.discount.percentage}% 할인쿠폰` : '할인쿠폰'}
-                                    </div>
+                <ExpandableList maxHeight={200}>
+                    {isLoading ? (
+                        <div className="cp-loading">쿠폰을 불러오는 중...</div>
+                    ) : coupons.length > 0 ? (
+                        coupons.map((c) => (
+                            <article key={c.id} className="cp-card">
+                                <div className="cp-top">
+                                    <span className="cp-badge">{c.storeName || '가게이름'}</span>
+                                    <span className="cp-exp">~{formatDate(c.expiresAt)}</span>
                                 </div>
-                                <div className="cp-mascot">🐱</div>
-                            </div>
-                            <div className="cp-bottom">
-                                <span>{c.canUse ? '사용 가능' : '사용 불가'}</span>
-                                <span className="cp-issued">발급일 : {formatDate(c.createdAt)}</span>
-                            </div>
-                        </article>
-                    ))
-                ) : (
-                    <div className="cp-no-coupons">보유한 쿠폰이 없습니다.</div>
-                )}
+                                <div className="cp-mid">
+                                    <div className="cp-left">
+                                        <div className="cp-gift">🎁</div>
+                                        <div className="cp-title">
+                                            {c.discount?.percentage ? `${c.discount.percentage}% 할인쿠폰` : '할인쿠폰'}
+                                        </div>
+                                    </div>
+                                    <div className="cp-mascot">🐱</div>
+                                </div>
+                                <div className="cp-bottom">
+                                    <span>{c.canUse ? '사용 가능' : '사용 불가'}</span>
+                                    <span className="cp-issued">발급일 : {formatDate(c.createdAt)}</span>
+                                </div>
+                            </article>
+                        ))
+                    ) : (
+                        <div className="cp-no-coupons">보유한 쿠폰이 없습니다.</div>
+                    )}
+                </ExpandableList>
             </main>
         </div>
     );

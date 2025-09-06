@@ -2,6 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SuccessfulChallenge.css';
+import ExpandableList from '../../../components/ExpandableList/ExpandableList'; // 경로에 맞게
 
 const list = [1, 2].map((i) => ({
     id: i,
@@ -15,22 +16,26 @@ export default function SuccessfulChallenge() {
         <div className="sc-wrap">
             <main className="sc-list">
                 <div className="title-C">성공한 챌린지</div>
-                {list.map((it) => (
-                    <article key={it.id} className="sc-card">
-                        <div className="sc-badge">가게이름</div>
-                        <div className="sc-top">
-                            <div className="sc-left">
-                                <div className="sc-circle">📷</div>
-                                <div>
-                                    <div className="sc-title">{it.title}</div>
-                                    <div className="sc-sub">{it.issued}</div>
+                <ExpandableList maxHeight={200}>
+                    {' '}
+                    {/* 원하는 높이로 조절 */}
+                    {list.map((it) => (
+                        <article key={it.id} className="sc-card">
+                            <div className="sc-badge">가게이름</div>
+                            <div className="sc-top">
+                                <div className="sc-left">
+                                    <div className="sc-circle">📷</div>
+                                    <div>
+                                        <div className="sc-title">{it.title}</div>
+                                        <div className="sc-sub">{it.issued}</div>
+                                    </div>
                                 </div>
+                                <div className="sc-thumb" />
                             </div>
-                            <div className="sc-thumb" />
-                        </div>
-                        <div className="sc-done">완료됨</div>
-                    </article>
-                ))}
+                            <div className="sc-done">완료됨</div>
+                        </article>
+                    ))}
+                </ExpandableList>
             </main>
         </div>
     );
