@@ -16,6 +16,7 @@ export default function CouponBox() {
     return (
         <div className="cp-wrap">
             <main className="cp-list">
+                <div className="title-C">쿠폰함</div>
                 {coupons.map((c) => (
                     <article key={c.id} className="cp-card">
                         <div className="cp-top">

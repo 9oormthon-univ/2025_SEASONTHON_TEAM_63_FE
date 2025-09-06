@@ -95,6 +95,7 @@ export default function ReviewPage() {
     return (
         <div className="rv-wrap">
             <main className="rv-list">
+                <div className="title-C">내가 쓴 리뷰</div>
                 {reviews.map((item) => (
                     <article key={item.id} className="rv-card">
                         {editingReview && editingReview.id === item.id ? (
