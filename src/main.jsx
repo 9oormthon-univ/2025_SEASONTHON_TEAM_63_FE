@@ -1,14 +1,7 @@
-// src/main.jsx
-
 // 1. 라이브러리 및 컴포넌트 가져오기 (Imports)
 import { StrictMode } from 'react';
 import { Provider } from '@/components/ui/provider';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -39,7 +32,9 @@ import LoginPage from './pages/Auth/LoginPage';
 import SignUpForm from './pages/Auth/SignUpForm';
 import SignUpStep2Page from './pages/Auth/SignUpStep2Page';
 import CompleteUserSignUpForm from './pages/Auth/CompleteUserSignUpForm';
-// import CompleteCorpSignUpForm from './pages/CompleteCorpSignUpForm';
+
+// --- 새로 추가할 컴포넌트 ---
+import JointPayerSelection from './pages/jointpayment/JointPayerSelection'; // ✨ 추가
 
 import './index.css';
 
@@ -48,126 +43,109 @@ const queryClient = new QueryClient();
 
 // 3. 라우트 보호를 위한 헬퍼 컴포넌트
 const PrivateRoute = ({ children }) => {
-  const isLoggedIn = !!localStorage.getItem('authToken');
-  return isLoggedIn ? children : <Navigate to="/" />;
+    const isLoggedIn = !!localStorage.getItem('authToken');
+    return isLoggedIn ? children : <Navigate to="/" />;
 };
 
 const PublicRoute = ({ children }) => {
-  const isLoggedIn = !!localStorage.getItem('authToken');
-  return isLoggedIn ? <Navigate to="/main" /> : children;
+    const isLoggedIn = !!localStorage.getItem('authToken');
+    return isLoggedIn ? <Navigate to="/main" /> : children;
 };
 
 // 4. React 애플리케이션 렌더링
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Provider>
-        <Router>
-          <Routes>
-            {/* --- Public Routes (로그인 안 한 사용자만 접근) --- */}
-            <Route
-              path="/"
-              element={
-                <PublicRoute>
-                  <LoginPage />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <PublicRoute>
-                  <SignUpForm />
-                </PublicRoute>
-              }
-            />
+    <StrictMode>
+        <QueryClientProvider client={queryClient}>
+            <Provider>
+                <Router>
+                    <Routes>
+                        {/* --- Public Routes --- */}
+                        <Route
+                            path="/"
+                            element={
+                                <PublicRoute>
+                                    <LoginPage />
+                                </PublicRoute>
+                            }
+                        />
+                        <Route
+                            path="/signup"
+                            element={
+                                <PublicRoute>
+                                    <SignUpForm />
+                                </PublicRoute>
+                            }
+                        />
 
-            {/* --- Semi-Private Routes (2단계 가입 전용) --- */}
-            <Route
-              path="/signup-step2"
-              element={
-                <PrivateRoute>
-                  <SignUpStep2Page />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/complete-signup/user"
-              element={
-                <PrivateRoute>
-                  <CompleteUserSignUpForm />
-                </PrivateRoute>
-              }
-            />
+                        {/* --- Semi-Private Routes --- */}
+                        <Route
+                            path="/signup-step2"
+                            element={
+                                <PrivateRoute>
+                                    <SignUpStep2Page />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/complete-signup/user"
+                            element={
+                                <PrivateRoute>
+                                    <CompleteUserSignUpForm />
+                                </PrivateRoute>
+                            }
+                        />
 
-            {/* --- Private Routes (가입 완료된 사용자가 접근) --- */}
+                        {/* --- Private Routes (MainLayout) --- */}
+                        <Route
+                            element={
+                                <PrivateRoute>
+                                    <MainLayout />
+                                </PrivateRoute>
+                            }
+                        >
+                            <Route path="/main" element={<Main />} />
+                            <Route path="/favorite" element={<Favorite />} />
+                            <Route path="/payment" element={<PaymentManagement />} />
+                            <Route path="/orders" element={<OrderDetails />} />
+                            <Route path="/personal-information-review" element={<ReviewPage />} />
+                            <Route path="/personal-info" element={<PersonalInformation />}>
+                                <Route index element={<div />} />
+                                <Route path="reviews" element={<ReviewPage />} />
+                                <Route path="successful-challenges" element={<SuccessfulChallenge />} />
+                                <Route path="coupons" element={<CouponBox />} />
+                            </Route>
+                        </Route>
 
-            {/* MainLayout을 사용하는 페이지 그룹 */}
-            <Route
-              element={
-                <PrivateRoute>
-                  <MainLayout />
-                </PrivateRoute>
-              }
-            >
-              <Route path="/main" element={<Main />} />
-              <Route path="/favorite" element={<Favorite />} />
-              <Route path="/payment" element={<PaymentManagement />} />
-              <Route path="/orders" element={<OrderDetails />} />
+                        {/* --- Private Routes (BlankLayout) --- */}
+                        <Route
+                            element={
+                                <PrivateRoute>
+                                    <BlankLayout />
+                                </PrivateRoute>
+                            }
+                        >
+                            <Route path="/store/:storeId" element={<StoreDetail />}>
+                                <Route index element={<StoreMenu />} />
+                                <Route path="menu" element={<StoreMenu />} />
+                                <Route path="challenge" element={<StoreChallenge />} />
+                                <Route path="review" element={<StoreReview />} />
+                                <Route path="info" element={<StoreInfo />} />
+                            </Route>
+                            <Route path="/store/:storeId/challenge/:challengeId" element={<ChallengeDetailPage />} />
+                            <Route path="/store/:storeId/basket" element={<StoreBasket />} />
+                            <Route path="/locationmap" element={<Position />} />
+                            <Route path="/write-review/:orderId" element={<WriteReview />} />
+                            <Route path="/filtered-shops" element={<FilteredShops />} />
 
-              {/* === 수정된 부분 1: 리뷰 페이지 경로 추가 === */}
-              {/* WriteReview 페이지에서 navigate('/personal-information-review')로 이동하기 때문에 해당 경로를 추가합니다. */}
-              <Route
-                path="/personal-information-review"
-                element={<ReviewPage />}
-              />
+                            {/* ✨ 여기에 새로운 라우트 추가 */}
+                            <Route path="/joint-payment" element={<JointPayerSelection />} />
+                        </Route>
 
-              <Route path="/personal-info" element={<PersonalInformation />}>
-                <Route index element={<div />} />
-                <Route path="reviews" element={<ReviewPage />} />
-                <Route
-                  path="successful-challenges"
-                  element={<SuccessfulChallenge />}
-                />
-                <Route path="coupons" element={<CouponBox />} />
-              </Route>
-            </Route>
-
-            {/* BlankLayout을 사용하는 페이지 그룹 */}
-            <Route
-              element={
-                <PrivateRoute>
-                  <BlankLayout />
-                </PrivateRoute>
-              }
-            >
-              <Route path="/store/:storeId" element={<StoreDetail />}>
-                <Route index element={<StoreMenu />} />
-                <Route path="menu" element={<StoreMenu />} />
-                <Route path="challenge" element={<StoreChallenge />} />
-                <Route path="review" element={<StoreReview />} />
-                <Route path="info" element={<StoreInfo />} />
-              </Route>
-              <Route
-                path="/store/:storeId/challenge/:challengeId"
-                element={<ChallengeDetailPage />}
-              />
-              <Route path="/store/:storeId/basket" element={<StoreBasket />} />
-              {/* <Route path="/store-basket" element={<StoreBasket />} /> */}
-              <Route path="/locationmap" element={<Position />} />
-
-              {/* === 수정된 부분 2: 리뷰 작성 페이지 경로 수정 === */}
-              {/* :orderId 파라미터를 받을 수 있도록 경로를 수정합니다. */}
-              <Route path="/write-review/:orderId" element={<WriteReview />} />
-
-              <Route path="/filtered-shops" element={<FilteredShops />} />
-            </Route>
-
-            {/* 일치하는 라우트가 없을 경우 기본 경로로 리디렉션 */}
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </Router>
-      </Provider>
-    </QueryClientProvider>
-  </StrictMode>
+                        {/* --- Fallback Route --- */}
+                        <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
+                </Router>
+            </Provider>
+        </QueryClientProvider>
+    </StrictMode>
 );
