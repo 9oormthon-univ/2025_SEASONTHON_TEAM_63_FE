@@ -1,87 +1,278 @@
 /* src/pages/PersonalInformation/PersonalInformation.css */
 .pi-wrap {
-    background: #ffffff;
-    min-height: 100vh;
-    padding-bottom: 80px;
+  background: #ffffff;
+  min-height: 100vh;
+  padding-bottom: 80px;
 }
 .pi-header {
-    position: sticky;
-    top: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 16px;
-    background: #fff;
-    border-bottom: 1px solid #eee;
-    z-index: 5;
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 5;
 }
 .pi-header h1 {
-    font-size: 18px;
-    margin: 0;
+  font-size: 18px;
+  margin: 0;
 }
 .pi-profile-card {
-    margin: 16px;
-    border-radius: 18px;
-    background: linear-gradient(135deg, #7a57ff, #6e48e8);
-    color: #fff;
-    padding: 18px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 16px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #7a57ff, #6e48e8);
+  color: #fff;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .pi-profile-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
 }
 .pi-avatar {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: #fff;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff;
 }
 .pi-nickname {
-    margin-left: 12px;
-    font-weight: 700;
+  margin-left: 12px;
+  font-weight: 700;
 }
+
+/* 상단 통계 영역 개선 */
 .pi-stats {
-    display: flex;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.18);
-    border-radius: 14px;
-    padding: 10px;
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  padding: 10px;
 }
 .pi-stat {
-    flex: 1;
-    border: 0;
-    background: transparent;
-    color: #fff;
-    text-align: center;
-    cursor: pointer;
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+}
+.pi-stat-item {
+  flex: 1;
+  text-align: center;
+  color: #fff;
+}
+.pi-stat-number {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.pi-stat-label {
+  display: block;
+  font-size: 12px;
+  opacity: 0.9;
 }
 .pi-stat-num {
-    font-weight: 700;
+  font-weight: 700;
 }
+
+/* 참여중인 챌린지 섹션 */
+.pi-challenges-section,
+.pi-account-section,
+.pi-support-section {
+  margin: 16px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.pi-challenges-section h3,
+.pi-account-section h3,
+.pi-support-section h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.pi-challenge-card {
+  border: 1px solid #7547ff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+.pi-challenge-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.pi-challenge-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(117, 71, 255, 0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-right: 12px;
+}
+
+.pi-challenge-info h4 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.pi-challenge-info p {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.pi-challenge-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.pi-challenge-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pi-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.pi-progress-fill {
+  height: 100%;
+  background: #7547ff;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.pi-progress-text {
+  font-size: 12px;
+  color: #7547ff;
+  font-weight: 600;
+}
+
+.pi-challenge-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.pi-challenge-detail-btn,
+.pi-challenge-complete-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pi-challenge-detail-btn {
+  background: transparent;
+  border: 1px solid #7547ff;
+  color: #7547ff;
+}
+
+.pi-challenge-complete-btn {
+  background: #7547ff;
+  border: 1px solid #7547ff;
+  color: white;
+}
+
+.pi-challenge-detail-btn:hover {
+  background: rgba(117, 71, 255, 0.1);
+}
+
+.pi-challenge-complete-btn:hover {
+  background: #6a3edb;
+}
+
+.pi-no-challenges {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.pi-loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+/* 메뉴 리스트 */
+.pi-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pi-menu-item {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: #f8f9fa;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pi-menu-item:hover {
+  background: #e9ecef;
+}
+
+/* 기존 버튼들 (임시 유지) */
+.pi-legacy-buttons {
+  margin: 16px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
 .pi-bottom-nav {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 60px;
-    background: #fff;
-    border-top: 1px solid #eaeaea;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+  background: #fff;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 .pi-bottom-nav .active {
-    color: #6e48e8;
+  color: #6e48e8;
 }
 .pi-logout-button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background-color: #dc3545;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #dc3545;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
