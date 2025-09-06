@@ -206,11 +206,15 @@
   cursor: pointer;
   margin-top: 12px;
   border: none;
-  transition: background-color 0.2s ease;
 }
 
-.challengeDetail-btn:hover {
-  background-color: #6a3edb;
+.challengeDetail-btn.participating {
+  background-color: #5c73ff;
+  cursor: not-allowed;
+}
+
+.challengeDetail-btn.participating:hover {
+  background-color: #6c757d;
 }
 
 /* ===========================================

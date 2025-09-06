@@ -1,8 +1,12 @@
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import PageHeader from '../../components/ui/PageHeader';
 import Footer from '../../components/Footer/Footer';
 import { getStoreInfo } from '../../api/storedetail/storeApi'; // API 함수 임포트
+import {
+  participateChallenge,
+  getParticipatingChallenges,
+} from '../../api/storedetail/challengeRegistration';
 import './styles/ChallengeDetailPage.css';
 import CheckIcon from '@mui/icons-material/Check';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -11,10 +15,13 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 const ChallengeDetailPage = () => {
   const { storeId, challengeId } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const [footerHeight, setFooterHeight] = useState(0);
   const [storeName, setStoreName] = useState('');
   const [showModal, setShowModal] = useState(false); // 팝업 모달 상태 추가
   const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지 상태 추가
+  const [isSubmitting, setIsSubmitting] = useState(false); // 등록 중 상태
+  const [isParticipating, setIsParticipating] = useState(false); // 참여 중 상태
 
   useEffect(() => {
     const fetchStoreName = async () => {
@@ -31,6 +38,36 @@ const ChallengeDetailPage = () => {
       fetchStoreName();
     }
   }, [storeId]);
+
+  // 참여 여부 확인
+  useEffect(() => {
+    const checkParticipationStatus = async () => {
+      try {
+        // API에서 참여중인 챌린지 확인
+        const response = await getParticipatingChallenges();
+        if (response.success) {
+          const isAlreadyParticipating = response.data.some(
+            (challenge) => challenge.challengeId === parseInt(challengeId)
+          );
+          setIsParticipating(isAlreadyParticipating);
+        }
+      } catch (error) {
+        console.error('참여 상태 확인 API 실패, localStorage 확인:', error);
+        // API 실패 시 localStorage에서 확인
+        const localData = JSON.parse(
+          localStorage.getItem('participatingChallenges') || '[]'
+        );
+        const isAlreadyParticipating = localData.some(
+          (challenge) => challenge.challengeId === parseInt(challengeId)
+        );
+        setIsParticipating(isAlreadyParticipating);
+      }
+    };
+
+    if (challengeId) {
+      checkParticipationStatus();
+    }
+  }, [challengeId]);
 
   // 참여하기 버튼을 통해 들어온 경우 자동으로 팝업 열기
   useEffect(() => {
@@ -51,9 +88,9 @@ const ChallengeDetailPage = () => {
     reward: '30% 할인쿠폰 발급',
     period: '2025.08.31 ~',
     rules: [
-      '사장님이 작성한 참여 규칙',
-      '사장님이 작성한 참여 규칙',
-      '사장님이 작성한 참여 규칙',
+      '이벤트는 무조건 주말에만 참여 가능합니다.',
+      '오프라인에서 리뷰 작성히 확인 받아야 합니다.',
+      '이벤트 잘 즐겨주세요 😀',
     ],
   };
 
@@ -103,18 +140,121 @@ const ChallengeDetailPage = () => {
   };
 
   // 등록하기 핸들러
-  const handleSubmit = () => {
-    if (selectedImage) {
-      console.log('등록하기 클릭됨 - 선택된 이미지:', selectedImage.name);
-      // 실제 구현에서는 API 호출 로직 추가
-      // FormData를 사용하여 파일 업로드
-    } else {
+  const handleSubmit = async () => {
+    if (!selectedImage) {
       alert('사진을 먼저 선택해주세요.');
       return;
     }
 
-    setShowModal(false);
-    setSelectedImage(null); // 모달 닫을 때 이미지도 초기화
+    setIsSubmitting(true);
+
+    try {
+      // FormData 생성
+      const formData = new FormData();
+      formData.append('image', selectedImage.file);
+      formData.append('challengeId', challengeId);
+      formData.append('storeId', storeId);
+
+      // API 호출
+      const response = await participateChallenge(challengeId, formData);
+
+      if (response.success) {
+        // 등록 성공 시 참여 정보를 localStorage에 저장 (임시)
+        const participationData = {
+          challengeId: challengeId,
+          storeId: storeId,
+          storeName: challenge.storeName,
+          challengeDescription: challenge.title,
+          challengeType: 'REVIEW', // 예시, 실제로는 API에서 받아온 값
+          currentOrderCount: challenge.progress,
+          targetOrderCount: challenge.total,
+          status: 'PARTICIPATING',
+          participatedAt: new Date().toISOString(),
+        };
+
+        // 기존 참여중인 챌린지 가져오기
+        const existingChallenges = JSON.parse(
+          localStorage.getItem('participatingChallenges') || '[]'
+        );
+
+        // 중복 체크 후 추가
+        const isAlreadyParticipating = existingChallenges.some(
+          (c) => c.challengeId === challengeId
+        );
+        if (!isAlreadyParticipating) {
+          existingChallenges.push(participationData);
+          localStorage.setItem(
+            'participatingChallenges',
+            JSON.stringify(existingChallenges)
+          );
+        }
+
+        alert('챌린지 등록이 완료되었습니다!');
+
+        // 참여 상태를 true로 설정
+        setIsParticipating(true);
+
+        // 모달 닫기 및 상태 초기화
+        setShowModal(false);
+        setSelectedImage(null);
+
+        // 마이페이지로 이동
+        navigate('/personal-info');
+      }
+    } catch (error) {
+      console.error('챌린지 등록 오류:', error);
+
+      // 409 에러 (이미 참여중인 챌린지) 처리
+      if (error.response && error.response.status === 409) {
+        alert('이미 참여중인 챌린지입니다. 마이페이지에서 확인해보세요!');
+
+        // 참여 상태를 true로 설정
+        setIsParticipating(true);
+
+        // 이미 참여중이므로 localStorage에 추가하고 마이페이지로 이동
+        const participationData = {
+          challengeId: challengeId,
+          storeId: storeId,
+          storeName: challenge.storeName,
+          challengeDescription: challenge.title,
+          challengeType: 'REVIEW',
+          currentOrderCount: challenge.progress,
+          targetOrderCount: challenge.total,
+          status: 'PARTICIPATING',
+          participatedAt: new Date().toISOString(),
+        };
+
+        const existingChallenges = JSON.parse(
+          localStorage.getItem('participatingChallenges') || '[]'
+        );
+        const isAlreadyInLocal = existingChallenges.some(
+          (c) => c.challengeId === challengeId
+        );
+
+        if (!isAlreadyInLocal) {
+          existingChallenges.push(participationData);
+          localStorage.setItem(
+            'participatingChallenges',
+            JSON.stringify(existingChallenges)
+          );
+        }
+
+        // 모달 닫기 및 상태 초기화
+        setShowModal(false);
+        setSelectedImage(null);
+
+        // 마이페이지로 이동
+        navigate('/personal-info');
+      } else {
+        // 다른 에러들 처리
+        const errorMessage =
+          error.response?.data?.message ||
+          '챌린지 등록 중 오류가 발생했습니다.';
+        alert(errorMessage);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -209,8 +349,14 @@ const ChallengeDetailPage = () => {
           </ul>
         </div>
 
-        <button className="challengeDetail-btn" onClick={handleOpenModal}>
-          참여하기
+        <button
+          className={`challengeDetail-btn ${
+            isParticipating ? 'participating' : ''
+          }`}
+          onClick={isParticipating ? undefined : handleOpenModal}
+          disabled={isParticipating}
+        >
+          {isParticipating ? '진행중' : '참여하기'}
         </button>
       </div>
 
@@ -275,9 +421,13 @@ const ChallengeDetailPage = () => {
                 onChange={handleFileSelect}
                 style={{ display: 'none' }}
               />
-            </div>{' '}
-            <button className="modal-submit-btn" onClick={handleSubmit}>
-              등록하기
+            </div>
+            <button
+              className="modal-submit-btn"
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? '등록 중...' : '등록하기'}
             </button>
           </div>
         </div>
