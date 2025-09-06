@@ -201,7 +201,7 @@ const ChallengeDetailPage = () => {
 
       {/* 바텀 시트 모달 팝업 */}
       {showModal && (
-        <div className="modal-overlay" onClick={handleCloseModal}>
+        <div className="challenge-modal-overlay" onClick={handleCloseModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="photo-upload-section">
               {selectedImage ? (
