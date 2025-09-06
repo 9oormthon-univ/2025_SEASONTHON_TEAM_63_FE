@@ -69,7 +69,7 @@ const StoreMenu = () => {
       <div className="store-menu-container">
         <main className="menu-list">
           {loading ? (
-            <div className="loading-container">
+            <div className="Menu-loading-container">
               {[1, 2, 3].map((index) => (
                 <div key={index} className="menu-item menu-item-skeleton">
                   <div className="menu-item-image skeleton-image"></div>
@@ -166,7 +166,7 @@ const StoreMenu = () => {
                         </div>
                       ) : (
                         <button
-                          className="add-to-cart-btn"
+                          className="add-cart-btn"
                           onClick={() => handleAddToCart(menu)}
                         >
                           담기
