@@ -150,10 +150,10 @@ const StoreDetail = () => {
         </section>
 
         <nav className="store-nav">
-          <NavLink to="menu">메뉴</NavLink>
+          <NavLink to="menu">상품</NavLink>
           <NavLink to="challenge">챌린지</NavLink>
           <NavLink to="review">리뷰</NavLink>
-          <NavLink to="info">가게정보</NavLink>
+          <NavLink to="info">상세정보</NavLink>
         </nav>
 
         {/* 탭에 따라 다른 컴포넌트가 이 자리에 렌더링됩니다. */}
