@@ -19,13 +19,7 @@ const LayoutContent = () => {
     return (
         <div className="main-layout-wrapper">
             <Header setHeaderHeight={setHeaderHeight} />
-            <main
-                className="main-content"
-                style={{
-                    paddingTop: `${headerHeight}px`,
-                    paddingBottom: `${footerHeight}px`,
-                }}
-            >
+            <main className="main-content" style={{}}>
                 <Outlet />
             </main>
             <Footer setFooterHeight={setFooterHeight} />
