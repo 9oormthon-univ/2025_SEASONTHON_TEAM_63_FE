@@ -7,6 +7,12 @@
   gap: 16px;
 }
 
+.challenge-loading-message {
+  text-align: center;
+  margin-top: 40px;
+  height: 40vh;
+}
+
 .challenge-card {
   border: 1px solid #7547ff;
   border-radius: 12px;
@@ -82,4 +88,78 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.challenge-error-message {
+  color: red;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+/* ===========================================
+   스켈레톤 로딩 애니메이션 (기존 디자인 유지)
+   =========================================== */
+.skeleton-text {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 12px;
+}
+
+.skeleton-challenge-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 12px;
+}
+
+.skeleton-challenge-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.skeleton-challenge-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.skeleton-challenge-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-challenge-title {
+  height: 20px;
+  width: 200px;
+}
+
+.skeleton-challenge-date {
+  height: 16px;
+  width: 120px;
+}
+
+.skeleton-challenge-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.skeleton-button {
+  flex: 1;
+  height: 44px;
+  border-radius: 12px;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }

@@ -43,8 +43,8 @@ const ChallengeDetailPage = () => {
   const challenge = {
     id: challengeId,
     storeName: '토핑맛집 [피자헛]', // 이 부분은 챌린지 데이터에 따라 다를 수 있습니다.
-    title: '피자 5판 먹으면 1판 무료 챌린지',
-    dateRange: '8월 20일 ~ 8월 27일',
+    title: '주말에는 1+1!!',
+    dateRange: '40주년 이벤트',
     progress: 3,
     total: 5,
     goal: 'OO가게 5회이상 방문',
@@ -130,13 +130,28 @@ const ChallengeDetailPage = () => {
 
         <div className="challenge-summary-card">
           <div className="challenge-banner">
-            <div className="challenge-banner-text">
-              <p>{challenge.dateRange}</p>
-              <p>
-                <strong>{challenge.storeName}</strong>
-              </p>
-              <h3>{challenge.title}</h3>
-            </div>
+            <a
+              href="https://www.pizzahut.co.kr/menu/hotdeal/weekends?utm_source=google&utm_medium=SA&utm_campaign=conversion_search_weekend_pickup&utm_content=hellopizzahut_all_a&utm_term=%ED%94%BC%EC%9E%90%ED%97%9B%EC%9D%B4%EB%B2%A4%ED%8A%B8&gad_source=1"
+              target="_blank"
+            >
+              <div className="challenge-banner-content">
+                <div className="banner-left-section">
+                  <img src="/Ad-logo.png" alt="로고" className="banner-logo" />
+                  <div className="banner-text-section">
+                    <p className="banner-date">{challenge.dateRange}</p>
+                    <h2 className="banner-store-name">{challenge.storeName}</h2>
+                    <h3 className="banner-title">{challenge.title}</h3>
+                  </div>
+                </div>
+                <div className="banner-right-section">
+                  <img
+                    src="/banner.png"
+                    alt="피자헛"
+                    className="banner-image"
+                  />
+                </div>
+              </div>
+            </a>
           </div>
         </div>
 
